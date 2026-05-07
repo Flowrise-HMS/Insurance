@@ -1,0 +1,37 @@
+{
+    "name": "flowrise-hms/insurance",
+    "description": "Multi-payer insurance orchestration module for NHIS and private insurers",
+    "type": "laravel-module",
+    "authors": [
+        {
+            "name": "Flowrise Digital",
+            "email": "flowrisedigitals@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "flowrise-hms/core": "dev-main",
+        "flowrise-hms/patient": "dev-main",
+        "flowrise-hms/billing": "dev-main"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Insurance\\": "app/",
+            "Modules\\Insurance\\Database\\Factories\\": "database/factories/",
+            "Modules\\Insurance\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Insurance\\Tests\\": "tests/"
+        }
+    }
+}

@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('name', 128);
             $table->string('type', 32); // nhis | private
             $table->boolean('is_active')->default(true);
-            $table->json('config')->nullable();
+            $table->text('config')->nullable();
             $table->timestamps();
         });
 

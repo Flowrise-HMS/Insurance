@@ -2,8 +2,6 @@
 
 namespace Modules\Insurance\Services\Connectors\Nhis;
 
-use Modules\Insurance\Models\InsuranceClaim;
-
 class NhisXmlEncoder
 {
     public function encodeClaim(object $claim): string

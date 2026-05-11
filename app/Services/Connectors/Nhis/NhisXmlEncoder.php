@@ -6,7 +6,7 @@ use Modules\Insurance\Models\InsuranceClaim;
 
 class NhisXmlEncoder
 {
-    public function encodeClaim(InsuranceClaim|object $claim): string
+    public function encodeClaim(object $claim): string
     {
         if (method_exists($claim, 'loadMissing')) {
             $claim->loadMissing(['patient', 'lines']);

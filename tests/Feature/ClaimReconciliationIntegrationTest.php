@@ -46,7 +46,7 @@ class ClaimReconciliationIntegrationTest extends TestCase
             'organization_id' => $branch->organization_id,
             'branch_id' => $branch->id,
             'patient_id' => $patient->id,
-            'invoice_number' => Invoice::generateInvoiceNumber(),
+            'invoice_number' => Invoice::generateInvoiceNumber((string) $branch->id),
             'status' => InvoiceStatus::Issued,
             'invoice_type' => InvoiceType::Standalone,
             'currency' => 'GHS',

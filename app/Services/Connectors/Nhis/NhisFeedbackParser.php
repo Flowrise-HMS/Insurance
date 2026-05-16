@@ -22,8 +22,8 @@ class NhisFeedbackParser
         if (trim($feedbackXml) === '') {
             return [
                 'external_reference' => null,
-                'decision_status' => ClaimDecisionStatus::Pending->value,
-                'rejection_class' => RejectionClass::TransportRejected->value,
+                'decision_status' => ClaimDecisionStatus::PENDING->value,
+                'rejection_class' => RejectionClass::TRANSPORT_REJECTED->value,
                 'rejection_code' => 'EMPTY_FEEDBACK',
                 'rejection_reason' => 'Empty feedback payload received from payer.',
                 'normalized_payload' => [],
@@ -34,8 +34,8 @@ class NhisFeedbackParser
         if ($xml === false) {
             return [
                 'external_reference' => null,
-                'decision_status' => ClaimDecisionStatus::Rejected->value,
-                'rejection_class' => RejectionClass::SchemaRejected->value,
+                'decision_status' => ClaimDecisionStatus::REJECTED->value,
+                'rejection_class' => RejectionClass::SCHEMA_REJECTED->value,
                 'rejection_code' => 'INVALID_XML',
                 'rejection_reason' => 'Feedback payload is not valid XML.',
                 'normalized_payload' => [],
@@ -48,14 +48,14 @@ class NhisFeedbackParser
         $errorMessage = (string) ($xml->ErrorDescription ?? '');
 
         $decision = match ($status) {
-            'approved', 'accepted' => ClaimDecisionStatus::Approved,
-            'partial' => ClaimDecisionStatus::Partial,
-            'rejected', 'denied' => ClaimDecisionStatus::Rejected,
-            default => ClaimDecisionStatus::Pending,
+            'approved', 'accepted' => ClaimDecisionStatus::APPROVED,
+            'partial' => ClaimDecisionStatus::PARTIAL,
+            'rejected', 'denied' => ClaimDecisionStatus::REJECTED,
+            default => ClaimDecisionStatus::PENDING,
         };
 
         $rejectionClass = null;
-        if ($decision === ClaimDecisionStatus::Rejected || $decision === ClaimDecisionStatus::Partial) {
+        if ($decision === ClaimDecisionStatus::REJECTED || $decision === ClaimDecisionStatus::PARTIAL) {
             $rejectionClass = $this->mapErrorCodeToRejectionClass($errorCode)?->value;
         }
 
@@ -76,21 +76,21 @@ class NhisFeedbackParser
     protected function mapErrorCodeToRejectionClass(?string $errorCode): ?RejectionClass
     {
         if (! $errorCode) {
-            return RejectionClass::PayerRejected;
+            return RejectionClass::PAYER_REJECTED;
         }
 
         if (in_array($errorCode, ['HTTP_TIMEOUT', 'TEMP_UNAVAILABLE'], true)) {
-            return RejectionClass::TransportRejected;
+            return RejectionClass::TRANSPORT_REJECTED;
         }
 
         if (str_starts_with($errorCode, '2')) {
-            return RejectionClass::SchemaRejected;
+            return RejectionClass::SCHEMA_REJECTED;
         }
 
         if (str_starts_with($errorCode, '3')) {
-            return RejectionClass::BusinessRejected;
+            return RejectionClass::BUSINESS_REJECTED;
         }
 
-        return RejectionClass::PayerRejected;
+        return RejectionClass::PAYER_REJECTED;
     }
 }

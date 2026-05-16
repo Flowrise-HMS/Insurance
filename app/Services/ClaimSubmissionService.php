@@ -40,7 +40,7 @@ class ClaimSubmissionService
             ]);
 
             $claim->update([
-                'status' => ClaimStatus::Submitted,
+                'status' => ClaimStatus::SUBMITTED,
                 'submitted_at' => now(),
             ]);
 

@@ -42,7 +42,7 @@ class NhisConnector implements PayerConnectorContract
                 'external_reference' => null,
                 'request_payload' => $payload,
                 'response_payload' => null,
-                'status' => RejectionClass::TransportRejected->value,
+                'status' => RejectionClass::TRANSPORT_REJECTED->value,
             ];
         }
 
@@ -59,7 +59,7 @@ class NhisConnector implements PayerConnectorContract
             'external_reference' => $claim->claim_number,
             'request_payload' => $payload,
             'response_payload' => $response->body(),
-            'status' => $response->successful() ? ClaimDecisionStatus::Pending->value : RejectionClass::TransportRejected->value,
+            'status' => $response->successful() ? ClaimDecisionStatus::PENDING->value : RejectionClass::TRANSPORT_REJECTED->value,
         ];
     }
 

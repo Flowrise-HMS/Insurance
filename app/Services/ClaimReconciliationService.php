@@ -33,7 +33,7 @@ class ClaimReconciliationService
                     'claim_submission_id' => data_get($feedback, 'claim_submission_id'),
                     'external_reference' => data_get($feedback, 'external_reference'),
                     'feedback_type' => data_get($feedback, 'feedback_type', 'status'),
-                    'decision_status' => data_get($feedback, 'decision_status', ClaimDecisionStatus::Pending->value),
+                    'decision_status' => data_get($feedback, 'decision_status', ClaimDecisionStatus::PENDING->value),
                     'rejection_class' => data_get($feedback, 'rejection_class'),
                     'rejection_code' => data_get($feedback, 'rejection_code'),
                     'rejection_reason' => data_get($feedback, 'rejection_reason'),
@@ -44,16 +44,16 @@ class ClaimReconciliationService
             );
 
             foreach ($claim->lines as $claimLine) {
-                $this->applyClaimLineDecision($claimLine, (string) $record->decision_status);
+                $this->applyClaimLineDecision($claimLine, $record->decision_status->value);
             }
 
             $claim->refresh();
             $claim->update([
                 'status' => match ($record->decision_status) {
-                    ClaimDecisionStatus::Approved->value => ClaimStatus::Accepted,
-                    ClaimDecisionStatus::Partial->value => ClaimStatus::Partial,
-                    ClaimDecisionStatus::Rejected->value => ClaimStatus::Rejected,
-                    default => ClaimStatus::Submitted,
+                    ClaimDecisionStatus::APPROVED => ClaimStatus::ACCEPTED,
+                    ClaimDecisionStatus::PARTIAL => ClaimStatus::PARTIAL,
+                    ClaimDecisionStatus::REJECTED => ClaimStatus::REJECTED,
+                    default => ClaimStatus::SUBMITTED,
                 },
                 'reconciled_at' => now(),
             ]);
@@ -78,15 +78,15 @@ class ClaimReconciliationService
             return;
         }
 
-        if ($decisionStatus === ClaimDecisionStatus::Approved->value) {
+        if ($decisionStatus === ClaimDecisionStatus::APPROVED->value) {
             $claimLine->approved_amount = $claimLine->billed_amount;
             $claimLine->rejected_amount = '0.00';
             $invoiceLine->patient_responsibility_amount = '0.00';
-        } elseif ($decisionStatus === ClaimDecisionStatus::Partial->value) {
+        } elseif ($decisionStatus === ClaimDecisionStatus::PARTIAL->value) {
             $approved = (string) $claimLine->approved_amount;
             $claimLine->rejected_amount = bcsub((string) $claimLine->billed_amount, $approved, 2);
             $invoiceLine->patient_responsibility_amount = $claimLine->rejected_amount;
-        } elseif ($decisionStatus === ClaimDecisionStatus::Rejected->value) {
+        } elseif ($decisionStatus === ClaimDecisionStatus::REJECTED->value) {
             $claimLine->approved_amount = '0.00';
             $claimLine->rejected_amount = (string) $claimLine->billed_amount;
             $invoiceLine->patient_responsibility_amount = (string) $claimLine->billed_amount;

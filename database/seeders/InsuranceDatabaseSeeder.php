@@ -17,7 +17,7 @@ class InsuranceDatabaseSeeder extends Seeder
             ['code' => 'nhis'],
             [
                 'name' => 'National Health Insurance Scheme (Ghana)',
-                'type' => PayerType::Nhis,
+                'type' => PayerType::NHIS,
                 'is_active' => true,
                 'config' => [
                     'xml_version' => config('insurance.nhis.xml_version', '8.6'),
@@ -29,7 +29,7 @@ class InsuranceDatabaseSeeder extends Seeder
             ['code' => 'private-generic'],
             [
                 'name' => 'Private Insurance (Generic)',
-                'type' => PayerType::Private,
+                'type' => PayerType::PRIVATE,
                 'is_active' => true,
             ]
         );

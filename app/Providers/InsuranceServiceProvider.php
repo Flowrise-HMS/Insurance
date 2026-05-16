@@ -8,6 +8,7 @@ use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Services\DefaultInsurancePricingService;
+use Modules\Insurance\Services\PatientInsuranceService;
 use Modules\Patient\Models\Patient;
 use Nwidart\Modules\Support\ModuleServiceProvider;
 
@@ -49,6 +50,7 @@ class InsuranceServiceProvider extends ModuleServiceProvider
         }
 
         $this->app->bind(InsurancePricingResolver::class, DefaultInsurancePricingService::class);
+        $this->app->singleton(PatientInsuranceService::class);
     }
 
     public function boot(): void

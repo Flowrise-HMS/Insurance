@@ -38,7 +38,7 @@ class ClaimReconciliationIntegrationTest extends TestCase
         $payer = Payer::query()->create([
             'code' => 'nhis',
             'name' => 'NHIS',
-            'type' => PayerType::Nhis,
+            'type' => PayerType::NHIS,
             'is_active' => true,
         ]);
 

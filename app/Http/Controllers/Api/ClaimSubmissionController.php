@@ -34,7 +34,7 @@ class ClaimSubmissionController extends Controller
             'patient_id' => $data['patient_id'],
             'invoice_id' => $data['invoice_id'] ?? null,
             'claim_number' => strtoupper('CLM-'.Str::random(12)),
-            'status' => ClaimStatus::Validated,
+            'status' => ClaimStatus::VALIDATED,
             'total_billed_amount' => collect($data['lines'])->sum('billed_amount'),
             'currency' => strtoupper((string) ($data['currency'] ?? 'GHS')),
         ]);
@@ -51,14 +51,14 @@ class ClaimSubmissionController extends Controller
         }
 
         $claim->update([
-            'status' => ClaimStatus::Queued,
+            'status' => ClaimStatus::QUEUED,
         ]);
         SubmitInsuranceClaimJob::dispatch((string) $claim->id);
 
         return response()->json([
             'claim_id' => $claim->id,
             'claim_number' => $claim->claim_number,
-            'status' => ClaimStatus::Queued->value,
+            'status' => ClaimStatus::QUEUED->value,
         ], 201);
     }
 }

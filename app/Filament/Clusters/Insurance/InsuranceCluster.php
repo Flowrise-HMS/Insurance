@@ -8,5 +8,7 @@ use Filament\Support\Icons\Heroicon;
 
 class InsuranceCluster extends Cluster
 {
+    protected static ?string $slug = 'insurance-cluster';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquares2x2;
 }

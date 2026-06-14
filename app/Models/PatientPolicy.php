@@ -3,13 +3,14 @@
 namespace Modules\Insurance\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Patient\Models\Patient;
 
 class PatientPolicy extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
 
     protected $table = 'insurance_patient_policies';
 

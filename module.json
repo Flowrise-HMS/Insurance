@@ -1,8 +1,8 @@
 {
     "name": "Insurance",
     "alias": "insurance",
-    "description": "",
-    "keywords": [],
+    "description": "Payer management, patient policies, insurance claims, pricing, and payer catalog sync.",
+    "keywords": ["flowrise", "hms", "insurance", "claims", "payer", "policy"],
     "priority": 0,
     "providers": [
         "Modules\\Insurance\\Providers\\InsuranceServiceProvider"

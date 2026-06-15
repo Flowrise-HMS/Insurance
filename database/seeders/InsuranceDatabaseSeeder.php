@@ -16,7 +16,7 @@ class InsuranceDatabaseSeeder extends Seeder
         Payer::query()->firstOrCreate(
             ['code' => 'nhis'],
             [
-                'name' => 'National Health Insurance Scheme (Ghana)',
+                'name' => 'National Health Insurance Scheme (NHIS)',
                 'type' => PayerType::NHIS,
                 'is_active' => true,
                 'config' => [

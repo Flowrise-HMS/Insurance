@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Database\Factories\BranchFactory;
 use Modules\Insurance\Enums\PayerType;
@@ -14,13 +15,13 @@ use Tests\TestCase;
 
 class InsurancePricingIntegrationTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        foreach (['Patient', 'Clinical', 'Appointment', 'Billing', 'Insurance'] as $module) {
-            $this->artisan('module:migrate', ['module' => $module, '--force' => true]);
-        }
+        $this->migrateModules(['Patient', 'Billing', 'Insurance']);
     }
 
     public function test_pricing_resolver_applies_insurer_tariff_and_patient_copay(): void
@@ -30,12 +31,14 @@ class InsurancePricingIntegrationTest extends TestCase
             'branch_id' => $branch->id,
         ]));
 
-        $payer = Payer::query()->create([
-            'code' => 'nhis',
-            'name' => 'NHIS',
-            'type' => PayerType::NHIS,
-            'is_active' => true,
-        ]);
+        $payer = Payer::query()->firstOrCreate(
+            ['code' => 'nhis'],
+            [
+                'name' => 'National Health Insurance Scheme (NHIS)',
+                'type' => PayerType::NHIS,
+                'is_active' => true,
+            ]
+        );
 
         $policy = PatientPolicy::query()->create([
             'payer_id' => $payer->id,

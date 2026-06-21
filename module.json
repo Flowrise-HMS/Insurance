@@ -7,5 +7,9 @@
     "providers": [
         "Modules\\Insurance\\Providers\\InsuranceServiceProvider"
     ],
-    "files": []
+    "files": [],
+    "requires": [
+        "Modules\\Core",
+        "Modules\\Patient"
+    ]
 }

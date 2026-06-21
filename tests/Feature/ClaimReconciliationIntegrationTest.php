@@ -13,19 +13,20 @@ use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\ClaimReconciliationService;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Modules\Patient\Models\Patient;
 use Tests\TestCase;
 
 class ClaimReconciliationIntegrationTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        foreach (['Patient', 'Clinical', 'Appointment', 'Billing', 'Insurance'] as $module) {
-            $this->artisan('module:migrate', ['module' => $module, '--force' => true]);
-        }
+        $this->migrateModules(['Patient', 'Clinical', 'Appointment', 'Billing', 'Insurance']);
     }
 
     public function test_reconciliation_updates_billing_patient_responsibility_on_rejection(): void
@@ -35,12 +36,14 @@ class ClaimReconciliationIntegrationTest extends TestCase
             'branch_id' => $branch->id,
         ]));
 
-        $payer = Payer::query()->create([
-            'code' => 'nhis',
-            'name' => 'NHIS',
-            'type' => PayerType::NHIS,
-            'is_active' => true,
-        ]);
+        $payer = Payer::query()->firstOrCreate(
+            ['code' => 'nhis'],
+            [
+                'name' => 'National Health Insurance Scheme (NHIS)',
+                'type' => PayerType::NHIS,
+                'is_active' => true,
+            ]
+        );
 
         $invoice = Invoice::withoutEvents(fn () => Invoice::query()->withoutGlobalScopes()->create([
             'organization_id' => $branch->organization_id,

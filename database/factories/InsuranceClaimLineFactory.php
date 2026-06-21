@@ -19,6 +19,7 @@ class InsuranceClaimLineFactory extends Factory
         return [
             'claim_id' => InsuranceClaim::factory(),
             'invoice_line_id' => InvoiceLine::factory(),
+            'description' => fake()->sentence(),
             'billed_amount' => $billedAmount,
             'approved_amount' => $billedAmount,
             'rejected_amount' => 0,

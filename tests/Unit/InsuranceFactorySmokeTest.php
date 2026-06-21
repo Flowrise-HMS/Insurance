@@ -2,7 +2,7 @@
 
 namespace Modules\Insurance\Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Insurance\Models\InsuranceCatalogSync;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimFeedback;
@@ -15,14 +15,12 @@ use Tests\TestCase;
 
 class InsuranceFactorySmokeTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->artisan('module:migrate', ['module' => 'Core', '--force' => true]);
-        $this->artisan('module:migrate', ['module' => 'Patient', '--force' => true]);
-        $this->artisan('module:migrate', ['module' => 'Insurance', '--force' => true]);
+        $this->migrateModules(['Core', 'Patient', 'Billing', 'Insurance']);
     }
 
     public function test_payer_factory(): void
@@ -41,7 +39,6 @@ class InsuranceFactorySmokeTest extends TestCase
 
     public function test_insurance_claim_factory(): void
     {
-        $this->artisan('module:migrate', ['module' => 'Billing', '--force' => true]);
         $claim = InsuranceClaim::factory()->create();
         $this->assertInstanceOf(InsuranceClaim::class, $claim);
         $this->assertTrue($claim->exists);
@@ -49,7 +46,6 @@ class InsuranceFactorySmokeTest extends TestCase
 
     public function test_insurance_claim_line_factory(): void
     {
-        $this->artisan('module:migrate', ['module' => 'Billing', '--force' => true]);
         $line = InsuranceClaimLine::factory()->create();
         $this->assertInstanceOf(InsuranceClaimLine::class, $line);
         $this->assertTrue($line->exists);
@@ -57,7 +53,6 @@ class InsuranceFactorySmokeTest extends TestCase
 
     public function test_insurance_claim_submission_factory(): void
     {
-        $this->artisan('module:migrate', ['module' => 'Billing', '--force' => true]);
         $submission = InsuranceClaimSubmission::factory()->create();
         $this->assertInstanceOf(InsuranceClaimSubmission::class, $submission);
         $this->assertTrue($submission->exists);
@@ -65,7 +60,6 @@ class InsuranceFactorySmokeTest extends TestCase
 
     public function test_insurance_claim_feedback_factory(): void
     {
-        $this->artisan('module:migrate', ['module' => 'Billing', '--force' => true]);
         $feedback = InsuranceClaimFeedback::factory()->create();
         $this->assertInstanceOf(InsuranceClaimFeedback::class, $feedback);
         $this->assertTrue($feedback->exists);

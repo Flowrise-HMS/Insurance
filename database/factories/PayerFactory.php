@@ -14,7 +14,7 @@ class PayerFactory extends Factory
     {
         return [
             'code' => strtoupper(fake()->bothify('PAYER###')),
-            'name' => fake()->company() . ' Insurance',
+            'name' => fake()->company().' Insurance',
             'type' => PayerType::PRIVATE,
             'is_active' => true,
         ];

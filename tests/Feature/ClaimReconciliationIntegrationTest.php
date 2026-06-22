@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Billing\Enums\InvoiceLineStatus;
 use Modules\Billing\Enums\InvoiceStatus;
 use Modules\Billing\Enums\InvoiceType;
@@ -13,7 +14,6 @@ use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\ClaimReconciliationService;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Modules\Patient\Models\Patient;
 use Tests\TestCase;

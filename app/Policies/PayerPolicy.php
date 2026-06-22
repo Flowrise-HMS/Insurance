@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Insurance\Policies;
 
+use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Modules\Insurance\Models\Payer;
-use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PayerPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny Payer');
@@ -66,5 +66,4 @@ class PayerPolicy
     {
         return $authUser->can('Reorder Payer');
     }
-
 }

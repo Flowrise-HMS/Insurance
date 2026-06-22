@@ -21,7 +21,7 @@ class InsuranceClaimFactory extends Factory
             'policy_id' => PatientPolicy::factory(),
             'patient_id' => Patient::factory(),
             'invoice_id' => Invoice::factory(),
-            'claim_number' => 'CLM-' . strtoupper(fake()->bothify('####??')),
+            'claim_number' => 'CLM-'.strtoupper(fake()->bothify('####??')),
             'status' => ClaimStatus::DRAFT,
             'total_billed_amount' => fake()->randomFloat(2, 100, 10000),
             'total_approved_amount' => 0,

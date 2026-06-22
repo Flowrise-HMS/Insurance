@@ -5,6 +5,7 @@ namespace Modules\Insurance\Providers;
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Billing\Models\InvoiceLine;
 use Modules\Core\Contracts\InsurancePricingResolver;
+use Modules\Core\Support\AppSettings;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Services\DefaultInsurancePricingService;
@@ -87,7 +88,7 @@ class InsuranceServiceProvider extends ModuleServiceProvider
         }
 
         try {
-            $settings = app(\Modules\Core\Support\AppSettings::class);
+            $settings = app(AppSettings::class);
 
             return $settings->insurance()->module_enabled && $settings->features()->insurance_enabled;
         } catch (\Throwable) {

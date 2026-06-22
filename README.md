@@ -32,7 +32,8 @@ flowchart LR
 
 ## What you can do with it
 
-- Manage payers, tariffs, patient policies, and claim records.
+- Manage payers, tariffs, patient policies, and claim records through services and API endpoints.
+- Use the **Payers** Filament resource for payer administration.
 - Submit claims through authenticated API endpoints.
 - Process payer feedback and reconcile statuses.
 - Support both NHIS-specific XML workflows and private insurer connectors.
@@ -70,6 +71,11 @@ flowchart LR
 - `flowrise-hms/billing`
 
 See [module status](../../docs/shared/module-status.md) for current rollout state.
+
+## Further reading
+
+- **Admin setup:** [Insurance Administration](../../docs/admin-guide/insurance.md)
+- **Billing context:** [Billing Workflows](../../docs/user-guide/billing.md)
 
 ## For developers
 

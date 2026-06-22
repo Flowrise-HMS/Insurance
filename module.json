@@ -10,6 +10,7 @@
     "files": [],
     "requires": [
         "Modules\\Core",
-        "Modules\\Patient"
+        "Modules\\Patient",
+        "Modules\\Billing"
     ]
 }

@@ -45,7 +45,7 @@ class InsuranceServiceProvider extends ModuleServiceProvider
     {
         parent::register();
 
-        if (! config('insurance.enabled', true)) {
+        if (! $this->insuranceModuleEnabled()) {
             return;
         }
 
@@ -57,7 +57,7 @@ class InsuranceServiceProvider extends ModuleServiceProvider
     {
         parent::boot();
 
-        if (! config('insurance.enabled', true)) {
+        if (! $this->insuranceModuleEnabled()) {
             return;
         }
 
@@ -79,4 +79,19 @@ class InsuranceServiceProvider extends ModuleServiceProvider
     // {
     //     $schedule->command('inspire')->hourly();
     // }
+
+    protected function insuranceModuleEnabled(): bool
+    {
+        if (! config('insurance.enabled', true)) {
+            return false;
+        }
+
+        try {
+            $settings = app(\Modules\Core\Support\AppSettings::class);
+
+            return $settings->insurance()->module_enabled && $settings->features()->insurance_enabled;
+        } catch (\Throwable) {
+            return config('insurance.enabled', true);
+        }
+    }
 }

@@ -4,10 +4,16 @@ namespace Modules\Insurance\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Modules\Billing\Models\InvoiceLine;
+use Modules\Clinical\Models\Encounter;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Support\AppSettings;
+use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
+use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
+use Modules\Insurance\Schemes\Nhis\NhisSchemeHandler;
+use Modules\Insurance\Services\ClaimBatchService;
+use Modules\Insurance\Services\ClaimGenerationService;
 use Modules\Insurance\Services\DefaultInsurancePricingService;
 use Modules\Insurance\Services\PatientInsuranceService;
 use Modules\Patient\Models\Patient;
@@ -24,13 +30,6 @@ class InsuranceServiceProvider extends ModuleServiceProvider
      * The lowercase version of the module name.
      */
     protected string $nameLower = 'insurance';
-
-    /**
-     * Command classes to register.
-     *
-     * @var string[]
-     */
-    // protected array $commands = [];
 
     /**
      * Provider classes to register.
@@ -52,6 +51,14 @@ class InsuranceServiceProvider extends ModuleServiceProvider
 
         $this->app->bind(InsurancePricingResolver::class, DefaultInsurancePricingService::class);
         $this->app->singleton(PatientInsuranceService::class);
+        $this->app->singleton(InsuranceSchemeRegistry::class, function ($app) {
+            $registry = new InsuranceSchemeRegistry;
+            $registry->register($app->make(NhisSchemeHandler::class));
+
+            return $registry;
+        });
+        $this->app->singleton(ClaimGenerationService::class);
+        $this->app->singleton(ClaimBatchService::class);
     }
 
     public function boot(): void
@@ -69,17 +76,11 @@ class InsuranceServiceProvider extends ModuleServiceProvider
         InvoiceLine::resolveRelationUsing('insuranceClaimLines', function (InvoiceLine $line) {
             return $line->hasMany(InsuranceClaimLine::class, 'invoice_line_id');
         });
-    }
 
-    /**
-     * Define module schedules.
-     *
-     * @param  $schedule
-     */
-    // protected function configureSchedules(Schedule $schedule): void
-    // {
-    //     $schedule->command('inspire')->hourly();
-    // }
+        Encounter::resolveRelationUsing('insuranceClaims', function (Encounter $encounter) {
+            return $encounter->hasMany(InsuranceClaim::class, 'encounter_id');
+        });
+    }
 
     protected function insuranceModuleEnabled(): bool
     {

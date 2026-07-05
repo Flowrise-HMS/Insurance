@@ -17,7 +17,12 @@ class PayerForm
                 TextInput::make('code')->required(),
                 TextInput::make('name')->required(),
                 Select::make('type')
-                    ->options(PayerType::class)
+                    ->options(
+                        collect(PayerType::cases())
+                            ->reject(fn (PayerType $type) => $type === PayerType::NHIS)
+                            ->mapWithKeys(fn (PayerType $type) => [$type->value => $type->getLabel()])
+                            ->all()
+                    )
                     ->required(),
                 KeyValue::make('config'),
             ]);

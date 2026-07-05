@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceCatalogSync;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimFeedback;
@@ -77,5 +78,12 @@ class InsuranceFactorySmokeTest extends TestCase
         $item = TariffItem::factory()->create();
         $this->assertInstanceOf(TariffItem::class, $item);
         $this->assertTrue($item->exists);
+    }
+
+    public function test_claim_batch_factory(): void
+    {
+        $batch = ClaimBatch::factory()->create();
+        $this->assertInstanceOf(ClaimBatch::class, $batch);
+        $this->assertTrue($batch->exists);
     }
 }

@@ -37,6 +37,7 @@ flowchart LR
 - Submit claims through authenticated API endpoints.
 - Process payer feedback and reconcile statuses.
 - Support both NHIS-specific XML workflows and private insurer connectors.
+- **NHIS claims workflow:** filter encounters → generate batch → review/vet claims → export NHIA v8.6 XML for Claim-It upload.
 
 ## How it works (simple)
 

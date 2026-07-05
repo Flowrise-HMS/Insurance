@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\User;
 use Modules\Billing\Models\Invoice;
+use Modules\Clinical\Models\Encounter;
 use Modules\Insurance\Enums\ClaimStatus;
 use Modules\Patient\Models\Patient;
 
@@ -21,9 +23,11 @@ class InsuranceClaim extends Model
 
     protected $fillable = [
         'payer_id',
+        'batch_id',
         'policy_id',
         'patient_id',
         'invoice_id',
+        'encounter_id',
         'claim_number',
         'status',
         'total_billed_amount',
@@ -31,8 +35,11 @@ class InsuranceClaim extends Model
         'total_rejected_amount',
         'currency',
         'submitted_at',
+        'reviewed_at',
+        'reviewed_by',
         'reconciled_at',
         'metadata',
+        'nhia_payload',
     ];
 
     protected $casts = [
@@ -41,13 +48,30 @@ class InsuranceClaim extends Model
         'total_approved_amount' => 'decimal:2',
         'total_rejected_amount' => 'decimal:2',
         'submitted_at' => 'datetime',
+        'reviewed_at' => 'datetime',
         'reconciled_at' => 'datetime',
         'metadata' => 'array',
+        'nhia_payload' => 'array',
     ];
+
+    public function batch(): BelongsTo
+    {
+        return $this->belongsTo(ClaimBatch::class, 'batch_id');
+    }
 
     public function payer(): BelongsTo
     {
         return $this->belongsTo(Payer::class, 'payer_id');
+    }
+
+    public function encounter(): BelongsTo
+    {
+        return $this->belongsTo(Encounter::class, 'encounter_id');
+    }
+
+    public function reviewedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
     }
 
     public function policy(): BelongsTo

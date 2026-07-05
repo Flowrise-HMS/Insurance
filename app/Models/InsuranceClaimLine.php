@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Billing\Models\InvoiceLine;
 use Modules\Insurance\Enums\ClaimDecisionStatus;
+use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Enums\RejectionClass;
 
 class InsuranceClaimLine extends Model
@@ -21,6 +22,7 @@ class InsuranceClaimLine extends Model
     protected $fillable = [
         'claim_id',
         'invoice_line_id',
+        'line_type',
         'external_item_code',
         'description',
         'quantity',
@@ -35,6 +37,7 @@ class InsuranceClaimLine extends Model
     ];
 
     protected $casts = [
+        'line_type' => ClaimLineType::class,
         'quantity' => 'integer',
         'billed_amount' => 'decimal:2',
         'approved_amount' => 'decimal:2',

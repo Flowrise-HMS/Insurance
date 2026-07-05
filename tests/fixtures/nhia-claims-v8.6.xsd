@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:simpleType name="DecimalType">
+<xs:restriction base="xs:decimal">
+<xs:fractionDigits value="2"/>
+<xs:minInclusive value="0"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="DateType">
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-3][0-9]/[0-1][0-9]/[1-9][0-9][0-9][0-9]"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="DateYearType">
+<xs:restriction base="xs:string">
+<xs:pattern value="[1-9][0-9][0-9][0-9]"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="DateMonthType">
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-1][0-9]"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="BooleanType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Yes"/>
+<xs:enumeration value="No"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="GenderEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="F"/>
+<xs:enumeration value="M"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ServiceTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="OUT"/>
+<xs:enumeration value="INP"/>
+<xs:enumeration value="DIA"/>
+<xs:enumeration value="CAP"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="OutcomeTypeEnum">
+<xs:restriction base="xs:string">
+
+
+
+<xs:enumeration value="ABS"/>
+<xs:enumeration value="DAA"/>
+<xs:enumeration value="DIE"/>
+<xs:enumeration value="DIS"/>
+<xs:enumeration value="TFR"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="AdmissionTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="CRO"/>
+<xs:enumeration value="EME"/>
+<xs:enumeration value="ACU"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TreatmentTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="Diagnosis"/>
+<xs:enumeration value="Procedure"/>
+<xs:enumeration value="Investigation"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="FirstVerificationLevelErrorCodeEnum">
+<xs:restriction base="xs:int">
+<xs:enumeration value="101"/>
+<xs:enumeration value="102"/>
+<xs:enumeration value="103"/>
+<xs:enumeration value="104"/>
+<xs:enumeration value="105"/>
+<xs:enumeration value="106"/>
+<xs:enumeration value="107"/>
+<xs:enumeration value="108"/>
+<xs:enumeration value="109"/>
+<xs:enumeration value="110"/>
+<xs:enumeration value="111"/>
+<xs:enumeration value="112"/>
+<xs:enumeration value="113"/>
+<xs:enumeration value="114"/>
+<xs:enumeration value="115"/>
+<xs:enumeration value="116"/>
+<xs:enumeration value="117"/>
+<xs:enumeration value="118"/>
+<xs:enumeration value="119"/>
+<xs:enumeration value="120"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="PatientSecondVerificationLevelErrorCodeEnum">
+<xs:restriction base="xs:int">
+<xs:enumeration value="200"/>
+<xs:enumeration value="201"/>
+
+
+
+<xs:enumeration value="202"/>
+<xs:enumeration value="203"/>
+<xs:enumeration value="204"/>
+<xs:enumeration value="205"/>
+<xs:enumeration value="235"/>
+<xs:enumeration value="236"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="ClaimSecondVerificationLevelErrorCodeEnum">
+<xs:restriction base="xs:int">
+<xs:enumeration value="206"/>
+<xs:enumeration value="207"/>
+<xs:enumeration value="208"/>
+<xs:enumeration value="209"/>
+<xs:enumeration value="210"/>
+<xs:enumeration value="211"/>
+<xs:enumeration value="212"/>
+<xs:enumeration value="213"/>
+<xs:enumeration value="214"/>
+<xs:enumeration value="215"/>
+<xs:enumeration value="216"/>
+<xs:enumeration value="217"/>
+<xs:enumeration value="218"/>
+<xs:enumeration value="219"/>
+<xs:enumeration value="220"/>
+<xs:enumeration value="221"/>
+<xs:enumeration value="234"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TreatmentSecondVerificationLevelErrorCodeEnum">
+<xs:restriction base="xs:int">
+<xs:enumeration value="222"/>
+<xs:enumeration value="223"/>
+<xs:enumeration value="224"/>
+<xs:enumeration value="225"/>
+<xs:enumeration value="226"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="MedicineSecondVerificationLevelErrorCodeEnum">
+<xs:restriction base="xs:int">
+<xs:enumeration value="227"/>
+<xs:enumeration value="228"/>
+<xs:enumeration value="229"/>
+<xs:enumeration value="230"/>
+<xs:enumeration value="231"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="AmountValidationType">
+
+
+
+<xs:all>
+<xs:element name="ReasonCode" type="xs:string" minOccurs="0"/>
+<xs:element name="AdjustmentValue " type="DecimalType" minOccurs="0"/>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="FirstVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ErrorCode " type="FirstVerificationLevelErrorCodeEnum" minOccurs="0"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PatientSecondVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ErrorCode " type="PatientSecondVerificationLevelErrorCodeEnum"
+minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ClaimSecondVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ErrorCode " type="ClaimSecondVerificationLevelErrorCodeEnum"
+minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TreatmentSecondVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ErrorCode " type="TreatmentSecondVerificationLevelErrorCodeEnum"
+minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="MedicineSecondVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ErrorCode " type="MedicineSecondVerificationLevelErrorCodeEnum"
+minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ClaimThirdVerificationLevelType">
+<xs:sequence>
+<xs:element name="Accepted" type="BooleanType" minOccurs="0"/>
+<xs:element name="ClaimRejectionReason" type="xs:string" minOccurs="0"/>
+<xs:element name="OutPatientTariffAmountValidation" type="AmountValidationType"
+minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="InPatientTariffAmountValidation" type="AmountValidationType"
+minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="TotalCostValidation" type="AmountValidationType" minOccurs="0"
+
+
+
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="TreatmentThirdVerificationLevelType">
+<xs:sequence>
+<xs:element name="TariffValidation" type="AmountValidationType" minOccurs="0"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="MedicineThirdVerificationLevelType">
+<xs:sequence>
+<xs:element name="MedicineTotalValidation" type="AmountValidationType" minOccurs="0"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="VersionInformationType">
+<xs:all>
+<xs:element name="XMLFormatVersion" type="xs:string"/>
+<xs:element name="MedicineVersion" type="xs:string" minOccurs="0"/>
+<xs:element name="GDRGVersion" type="xs:string" minOccurs="0"/>
+<xs:element name="TariffVersion" type="xs:string" minOccurs="0"/>
+<xs:element name="ICDVersion" type="xs:string" minOccurs="0"/>
+<xs:element name="OpenHDDVersion" type="xs:string" minOccurs="0"/>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="BatchInformationType">
+<xs:all>
+<xs:element name="BatchNumber" type="xs:string"/>
+<xs:element name="BatchAmount" type="DecimalType"/>
+<xs:element name="BatchCurrency" type="xs:string"/>
+<xs:element name="ClaimsCount" type="xs:int"/>
+<xs:element name="CreationDate" type="DateType"/>
+<xs:element name="ServiceYear" type="DateYearType"/>
+<xs:element name="ServiceMonth" type="DateMonthType"/>
+<xs:element name="IDPayer" type="xs:int" minOccurs="0"/>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="ProviderInformationType">
+<xs:all>
+<xs:element name="ProviderAccreditationNumber" type="xs:string"/>
+<xs:element name="eClaimAuthorizationNumber" type="xs:int"/>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="PatientDataType">
+<xs:all>
+<xs:element name="Surname" type="xs:string"/>
+<xs:element name="OtherName" type="xs:string"/>
+<xs:element name="Infant" type="BooleanType" minOccurs="0"/>
+
+
+
+<xs:element name="DateOfBirth" type="DateType"/>
+<xs:element name="MemberNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="TemporaryCardNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="HospitalRecordNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="CardSerialNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="Gender" type="GenderEnum"/>
+<xs:element name="SecondVerificationLevel" type="PatientSecondVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="Claims">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Claim" type="ClaimType"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="ClaimType">
+<xs:all>
+<xs:element name="ClaimIdentificationNumber" type="xs:string"/>
+<xs:element name="ServiceType" type="ServiceTypeEnum"/>
+<xs:element name="PharmacyIncluded" type="BooleanType"/>
+<xs:element name="AllInclusive" type="BooleanType"/>
+<xs:element name="OutcomeType" type="OutcomeTypeEnum"/>
+<xs:element name="DurationLength" type="xs:int" minOccurs="0"/>
+<xs:element name="AdmissionType" type="AdmissionTypeEnum"/>
+<xs:element name="SpecialityCode" type="xs:string"/>
+<xs:element name="AdmissionDate" type="DateType"/>
+<xs:element name="DischargeDate" type="DateType" minOccurs="0"/>
+<xs:element name="InPatientCode" type="xs:string" minOccurs="0"/>
+<xs:element name="OutpatientCode" type="xs:string" minOccurs="0" />
+<xs:element name="InvestigationCode" type="xs:string" minOccurs="0" />
+<xs:element name="OutPatientTariffAmount" type="DecimalType" minOccurs="0"/>
+<xs:element name="InPatientTariffAmount" type="DecimalType" minOccurs="0"/>
+<xs:element name="TotalCost" type="DecimalType"/>
+<xs:element name="ReferralNo" type="xs:string" minOccurs="0"/>
+<xs:element name="TreatmentsCount" type="xs:int"/>
+<xs:element name="MedicinesCount" type="xs:int"/>
+<xs:element name="SecondVerificationLevel" type="ClaimSecondVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="ThirdVerificationLevel" type="ClaimThirdVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="Treatments">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Treatment" type="TreatmentType"
+maxOccurs="unbounded"/>
+</xs:sequence>
+
+
+
+</xs:complexType>
+</xs:element>
+<xs:element name="Medicines">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Medicine" type="MedicineType"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="TreatmentType">
+<xs:all>
+<xs:element name="Date" type="DateType" minOccurs="0"/>
+<xs:element name="Type" type="TreatmentTypeEnum"/>
+<xs:element name="TreatmentCode" type="xs:string"/>
+<xs:element name="ICDCode" type="xs:string" minOccurs="0"/>
+<xs:element name="Tariff" type="DecimalType" minOccurs="0"/>
+<xs:element name="SecondVerificationLevel" type="TreatmentSecondVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="ThirdVerificationLevel" type="TreatmentThirdVerificationLevelType"
+minOccurs="0"/>
+</xs:all>
+</xs:complexType>
+<xs:complexType name="MedicineType">
+<xs:all>
+<xs:element name="MedicineCode" type="xs:string"/>
+<xs:element name="Quantity" type="DecimalType"/>
+<xs:element name="UnitPrice" type="DecimalType"/>
+<xs:element name="MedicineTotal" type="DecimalType"/>
+<xs:element name="SecondVerificationLevel" type="MedicineSecondVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="ThirdVerificationLevel" type="MedicineThirdVerificationLevelType"
+minOccurs="0"/>
+</xs:all>
+</xs:complexType>
+<xs:element name="Batch">
+<xs:complexType>
+<xs:all>
+<xs:element name="FirstVerificationLevel" type="FirstVerificationLevelType"
+minOccurs="0"/>
+<xs:element name="GeneralInformation">
+<xs:complexType>
+<xs:all>
+<xs:element name="VersionInformation"
+type="VersionInformationType"/>
+<xs:element name="BatchInformation"
+
+
+
+type="BatchInformationType"/>
+<xs:element name="ProviderInformation"
+type="ProviderInformationType"/>
+</xs:all>
+</xs:complexType>
+</xs:element>
+<xs:element name="Patients">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="PatientData" type="PatientDataType"
+maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:all>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+
+

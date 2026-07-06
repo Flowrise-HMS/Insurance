@@ -21,6 +21,10 @@ class ClaimBatchService
 
     public function vetClaim(InsuranceClaim $claim): InsuranceClaim
     {
+        if (! $claim->status->canMarkReady()) {
+            return $claim->fresh();
+        }
+
         $result = $this->validator->validate($claim);
 
         if (! $result->valid) {
@@ -49,7 +53,7 @@ class ClaimBatchService
 
         DB::transaction(function () use ($batch, $force) {
             foreach ($batch->claims as $claim) {
-                if ($claim->status === ClaimStatus::VALIDATED) {
+                if (! $claim->status->canMarkReady()) {
                     continue;
                 }
 

@@ -13,6 +13,7 @@ use Modules\Clinical\Models\EncounterDiagnosis;
 use Modules\Clinical\Models\RequestItem;
 use Modules\Core\Enums\CoverageType;
 use Modules\Core\Settings\InsuranceSettings;
+use Modules\Core\Support\Currency;
 use Modules\Insurance\DTOs\ClaimGenerationResult;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Enums\ClaimStatus;
@@ -103,6 +104,8 @@ class NhisClaimAssembler
             'duration_length' => $this->calculateDurationDays($encounter),
         ];
 
+        $currency = strtoupper(substr((string) ($invoice?->currency ?? Currency::defaultCode()), 0, 3));
+
         $claim = InsuranceClaim::query()->create([
             'payer_id' => $payer->id,
             'batch_id' => $batch->id,
@@ -112,7 +115,7 @@ class NhisClaimAssembler
             'encounter_id' => $encounter->id,
             'claim_number' => $this->generateClaimNumber($batch),
             'status' => ClaimStatus::DRAFT,
-            'currency' => 'GHS',
+            'currency' => $currency,
             'nhia_payload' => $nhiaPayload,
         ]);
 
@@ -295,8 +298,12 @@ class NhisClaimAssembler
                 $q->whereHas('serviceRequests.items', fn ($item) => $item->where('service_id', $criteria->serviceId));
             })
             ->when($medicationEncounterIds !== null, fn ($q) => $q->whereIn('id', $medicationEncounterIds))
-            ->whereDoesntHave('insuranceClaims', function ($claimQuery) {
-                $claimQuery->whereNotIn('status', [ClaimStatus::REJECTED->value]);
+            ->whereNotExists(function ($query) {
+                $claim = new InsuranceClaim;
+
+                $query->from($claim->getTable())
+                    ->whereColumn($claim->qualifyColumn('encounter_id'), (new Encounter)->qualifyColumn('id'))
+                    ->whereNotIn($claim->qualifyColumn('status'), [ClaimStatus::REJECTED->value]);
             });
     }
 

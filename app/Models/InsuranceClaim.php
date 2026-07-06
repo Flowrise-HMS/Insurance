@@ -2,12 +2,12 @@
 
 namespace Modules\Insurance\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\User;
 use Modules\Billing\Models\Invoice;
 use Modules\Clinical\Models\Encounter;
 use Modules\Insurance\Enums\ClaimStatus;

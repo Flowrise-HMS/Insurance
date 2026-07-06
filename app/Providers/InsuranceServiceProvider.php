@@ -2,7 +2,6 @@
 
 namespace Modules\Insurance\Providers;
 
-use Illuminate\Console\Scheduling\Schedule;
 use Modules\Billing\Models\InvoiceLine;
 use Modules\Clinical\Models\Encounter;
 use Modules\Core\Contracts\InsurancePricingResolver;

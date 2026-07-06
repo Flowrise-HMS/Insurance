@@ -6,7 +6,10 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Modules\Core\Filament\Tables\Columns\CurrencyColumn;
+use Modules\Core\Support\Currency;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\InsuranceClaimResource;
+use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Services\ClaimBatchService;
 
 class ClaimsRelationManager extends RelationManager
@@ -22,7 +25,8 @@ class ClaimsRelationManager extends RelationManager
                 TextColumn::make('claim_number')->searchable(),
                 TextColumn::make('patient.first_name')->label('Patient'),
                 TextColumn::make('encounter.admitted_at')->label('Visit')->dateTime(),
-                TextColumn::make('total_billed_amount')->money('GHS'),
+                CurrencyColumn::make('total_billed_amount')
+                    ->currency(fn (InsuranceClaim $record): string => (string) ($record->currency ?? $record->batch?->currency ?? Currency::defaultCode())),
                 TextColumn::make('status')->badge(),
             ])
             ->recordActions([
@@ -32,6 +36,7 @@ class ClaimsRelationManager extends RelationManager
                 Action::make('markReady')
                     ->label('Mark Ready')
                     ->requiresConfirmation()
+                    ->visible(fn (InsuranceClaim $record): bool => $record->status->canMarkReady())
                     ->action(function ($record, ClaimBatchService $service) {
                         $service->vetClaim($record);
                     }),

@@ -4,6 +4,7 @@ namespace Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\P
 
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Storage;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\ClaimBatchResource;
 use Modules\Insurance\Services\ClaimBatchService;
 
@@ -27,9 +28,9 @@ class ViewClaimBatch extends ViewRecord
                 ->action(function (ClaimBatchService $service) {
                     $exported = $service->export($this->record);
 
-                    return response()->download(
-                        storage_path('app/'.$exported->path),
-                        $exported->filename
+                    return Storage::disk('local')->download(
+                        $exported->path,
+                        $exported->filename,
                     );
                 }),
         ];

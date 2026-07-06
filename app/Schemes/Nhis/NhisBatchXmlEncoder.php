@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Schemes\Nhis;
 
+use Carbon\Carbon;
 use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Models\ClaimBatch;
@@ -185,7 +186,7 @@ class NhisBatchXmlEncoder
         }
 
         try {
-            return \Carbon\Carbon::parse((string) $value)->format('d/m/Y');
+            return Carbon::parse((string) $value)->format('d/m/Y');
         } catch (\Throwable) {
             return (string) $value;
         }
@@ -203,7 +204,7 @@ class NhisBatchXmlEncoder
         }
 
         try {
-            return \Carbon\Carbon::parse($dateOfBirth)->age < 1;
+            return Carbon::parse($dateOfBirth)->age < 1;
         } catch (\Throwable) {
             return false;
         }

@@ -10,10 +10,12 @@ use Modules\Clinical\Enums\EncounterType;
 use Modules\Core\Database\Factories\BranchFactory;
 use Modules\Core\Enums\CoverageType;
 use Modules\Insurance\Enums\ClaimBatchStatus;
+use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Enums\PayerType;
 use Modules\Insurance\Models\ClaimBatch;
-use Modules\Insurance\Models\Payer;
+use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
+use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\ClaimBatchService;
 use Modules\Insurance\Services\ClaimGenerationService;
 use Modules\Insurance\Support\ClaimBatchCriteria;
@@ -124,9 +126,9 @@ class ClaimGenerationTest extends TestCase
         ]);
 
         if ($claim->lines()->count() === 0) {
-            \Modules\Insurance\Models\InsuranceClaimLine::query()->create([
+            InsuranceClaimLine::query()->create([
                 'claim_id' => $claim->id,
-                'line_type' => \Modules\Insurance\Enums\ClaimLineType::TREATMENT,
+                'line_type' => ClaimLineType::TREATMENT,
                 'external_item_code' => 'CONS01',
                 'description' => 'Consultation',
                 'quantity' => 1,

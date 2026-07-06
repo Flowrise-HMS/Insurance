@@ -2,7 +2,8 @@
 
 namespace Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\Schemas;
 
-use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Component;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
@@ -10,14 +11,14 @@ use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
 class InsuranceClaimForm
 {
     /**
-     * @return array<int, \Filament\Forms\Components\Component>
+     * @return array<int, Component>
      */
     public static function baseComponents(): array
     {
         return [
-            Placeholder::make('patient_summary')
+            TextEntry::make('patient_summary')
                 ->label('Patient')
-                ->content(function (?InsuranceClaim $record) {
+                ->state(function (?InsuranceClaim $record) {
                     if (! $record) {
                         return '';
                     }
@@ -25,9 +26,9 @@ class InsuranceClaimForm
 
                     return ($record->patient?->full_name ?? 'Unknown').' (MRN: '.($record->patient?->mrn ?? 'N/A').')';
                 }),
-            Placeholder::make('validation_summary')
+            TextEntry::make('validation_summary')
                 ->label('Validation')
-                ->content(function (?InsuranceClaim $record) {
+                ->state(function (?InsuranceClaim $record) {
                     if (! $record) {
                         return '';
                     }

@@ -3,6 +3,8 @@
 namespace Modules\Insurance\Services;
 
 use Illuminate\Support\Facades\Auth;
+use Modules\Core\Settings\InsuranceSettings;
+use Modules\Core\Support\Currency;
 use Modules\Insurance\Enums\ClaimBatchStatus;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\Payer;
@@ -36,7 +38,7 @@ class ClaimGenerationService
             'service_year' => $criteria->year ?? (int) now()->format('Y'),
             'service_month' => $criteria->month ?? (int) now()->format('n'),
             'status' => ClaimBatchStatus::GENERATED,
-            'master_table_versions' => app(\Modules\Core\Settings\InsuranceSettings::class)->master_table_versions,
+            'master_table_versions' => app(InsuranceSettings::class)->master_table_versions,
             'created_by' => Auth::id(),
         ]);
 
@@ -45,6 +47,7 @@ class ClaimGenerationService
         $batch->update([
             'claims_count' => $result->claims->count(),
             'batch_amount' => $result->claims->sum(fn ($claim) => (float) $claim->total_billed_amount),
+            'currency' => $result->claims->first()?->currency ?? Currency::defaultCode(),
         ]);
 
         return $batch->fresh(['claims.patient', 'claims.lines']);

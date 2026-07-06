@@ -14,6 +14,9 @@ use Filament\Support\Icons\Heroicon;
 use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 
+/**
+ * @property-read Schema $form
+ */
 class ManageInsuranceSettings extends Page implements HasForms
 {
     use InteractsWithForms;

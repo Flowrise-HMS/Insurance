@@ -20,6 +20,9 @@ use Modules\Insurance\Support\ClaimBatchCriteria;
 use Modules\Patient\Models\Patient;
 use Modules\Pharmacy\Models\Medication;
 
+/**
+ * @property-read Schema $form
+ */
 class GenerateClaims extends Page implements HasForms
 {
     use InteractsWithForms;

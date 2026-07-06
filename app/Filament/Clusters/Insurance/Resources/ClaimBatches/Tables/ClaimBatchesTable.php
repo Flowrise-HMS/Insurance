@@ -7,7 +7,10 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
+use Modules\Core\Filament\Tables\Columns\CurrencyColumn;
+use Modules\Core\Support\Currency;
 use Modules\Insurance\Enums\ClaimBatchStatus;
+use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Services\ClaimBatchService;
 
 class ClaimBatchesTable
@@ -20,7 +23,8 @@ class ClaimBatchesTable
                 TextColumn::make('service_year')->label('Year'),
                 TextColumn::make('service_month')->label('Month'),
                 TextColumn::make('claims_count')->label('Claims'),
-                TextColumn::make('batch_amount')->money('GHS'),
+                CurrencyColumn::make('batch_amount')
+                    ->currency(fn (ClaimBatch $record): string => (string) ($record->currency ?? Currency::defaultCode())),
                 TextColumn::make('status')->badge(),
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])
@@ -35,18 +39,18 @@ class ClaimBatchesTable
                     ->action(function ($record, ClaimBatchService $batchService) {
                         $exported = $batchService->export($record, force: false);
 
-                        return response()->download(
-                            Storage::disk('local')->path($exported->path),
-                            $exported->filename
+                        return Storage::disk('local')->download(
+                            $exported->path,
+                            $exported->filename,
                         );
                     }),
                 Action::make('download')
                     ->label('Download XML')
                     ->icon('heroicon-o-document-arrow-down')
                     ->visible(fn ($record) => filled($record->exported_xml_path))
-                    ->action(fn ($record) => response()->download(
-                        Storage::disk('local')->path($record->exported_xml_path),
-                        basename($record->exported_xml_path)
+                    ->action(fn ($record) => Storage::disk('local')->download(
+                        $record->exported_xml_path,
+                        basename($record->exported_xml_path),
                     )),
             ]);
     }

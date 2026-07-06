@@ -64,4 +64,9 @@ enum ClaimStatus: string implements HasColor, HasDescription, HasLabel
     {
         return array_column(self::cases(), 'value');
     }
+
+    public function canMarkReady(): bool
+    {
+        return $this === self::DRAFT;
+    }
 }

@@ -6,7 +6,9 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
+use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\ClaimBatchResource;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\Pages\EditInsuranceClaim;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\Schemas\InsuranceClaimForm;
 use Modules\Insurance\Models\InsuranceClaim;
@@ -34,6 +36,14 @@ class InsuranceClaimResource extends Resource
         return [
             'edit' => EditInsuranceClaim::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * @param  array<mixed>  $parameters
+     */
+    public static function getIndexUrl(array $parameters = [], bool $isAbsolute = true, ?string $panel = null, ?Model $tenant = null, bool $shouldGuessMissingParameters = false): string
+    {
+        return ClaimBatchResource::getIndexUrl($parameters, $isAbsolute, $panel, $tenant, $shouldGuessMissingParameters);
     }
 
     public static function getFormSchemaForClaim(InsuranceClaim $claim): array

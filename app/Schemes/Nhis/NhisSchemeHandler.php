@@ -14,7 +14,6 @@ use Modules\Insurance\DTOs\ExportedFile;
 use Modules\Insurance\DTOs\ValidationResult;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
-use Modules\Insurance\Schemes\Nhis\NhisClaimAssembler;
 use Modules\Insurance\Support\ClaimBatchCriteria;
 
 class NhisSchemeHandler implements InsuranceSchemeContract

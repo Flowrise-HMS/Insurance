@@ -7,6 +7,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\ClaimBatchResource;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\Pages\EditInsuranceClaim;
@@ -23,6 +24,8 @@ class InsuranceClaimResource extends Resource
     protected static bool $shouldRegisterNavigation = false;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
+
+    protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::CLINICAL;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

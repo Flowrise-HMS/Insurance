@@ -7,6 +7,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Payers\Pages\CreatePayer;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Payers\Pages\EditPayer;
@@ -22,6 +23,8 @@ class PayerResource extends Resource
     protected static ?string $model = Payer::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::CLINICAL;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

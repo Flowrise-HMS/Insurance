@@ -6,6 +6,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\GenerateClaims;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\ListClaimBatches;
@@ -25,6 +26,8 @@ class ClaimBatchResource extends Resource
     protected static ?string $pluralModelLabel = 'Claim Batches';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::CLINICAL;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

@@ -30,6 +30,12 @@ flowchart LR
   Billing --> Insurance
 ```
 
+## Current status
+
+**Complete** for operational claims workflows. Deferred: Phase 2 feedback XML import, NHIS catalog sync implementation, dedicated PatientPolicy/TariffItem Filament resources, and private insurer connector beyond the generic stub.
+
+See [module status](../../docs/shared/module-status.md) for the canonical matrix.
+
 ## What you can do with it
 
 - Manage payers, tariffs, patient policies, and claim records through services and API endpoints.

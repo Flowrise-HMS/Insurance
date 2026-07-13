@@ -21,7 +21,6 @@ use Modules\Clinical\Models\Encounter;
 use Modules\Clinical\Models\EncounterDiagnosis;
 use Modules\Clinical\Models\RequestItem;
 use Modules\Clinical\Models\ServiceRequest;
-use Modules\Core\Enums\CoverageType;
 use Modules\Core\Models\Branch;
 use Modules\Core\Models\Department;
 use Modules\Core\Models\Organization;
@@ -89,7 +88,6 @@ class NhisClaimsDemoSeeder extends Seeder
             gender: Gender::MALE,
             dateOfBirth: Carbon::parse('1990-04-12'),
             memberNumber: '59340265',
-            cardSerial: 'UWJPL120A0093',
             encounterNumber: 'DEMO-ENC-001',
             chiefComplaint: 'Cough, sore throat and fever for 2 days',
             visitDate: $visitDate,
@@ -115,7 +113,6 @@ class NhisClaimsDemoSeeder extends Seeder
             gender: Gender::FEMALE,
             dateOfBirth: Carbon::parse('1985-08-20'),
             memberNumber: '28471936',
-            cardSerial: 'UWJPL120B0041',
             encounterNumber: 'DEMO-ENC-002',
             chiefComplaint: 'Follow-up for hypertension',
             visitDate: $visitDate->copy()->addDay(),
@@ -138,7 +135,6 @@ class NhisClaimsDemoSeeder extends Seeder
             gender: Gender::MALE,
             dateOfBirth: Carbon::parse('1978-01-15'),
             memberNumber: '71829354',
-            cardSerial: 'UWJPL120C0088',
             encounterNumber: 'DEMO-ENC-003',
             chiefComplaint: 'Fever and body aches — malaria suspected',
             visitDate: $visitDate->copy()->addDays(2),
@@ -225,9 +221,6 @@ class NhisClaimsDemoSeeder extends Seeder
                             'name' => $definition['service_name'],
                             'description' => 'Demo NHIS medicine for claims walkthrough',
                             'price' => $definition['tariff'],
-                            'insurance_price' => $definition['tariff'],
-                            'is_insurance_covered' => true,
-                            'coverage_type' => CoverageType::NHIS,
                             'requires_payment_before' => false,
                             'requires_prescription' => true,
                             'is_billable' => true,
@@ -246,9 +239,6 @@ class NhisClaimsDemoSeeder extends Seeder
                 'metadata' => array_merge($service->metadata ?? [], [
                     'nhis_code' => $definition['nhis_code'],
                 ]),
-                'insurance_price' => $definition['tariff'],
-                'is_insurance_covered' => true,
-                'coverage_type' => CoverageType::NHIS,
             ]);
 
             TariffItem::query()->updateOrCreate(
@@ -321,7 +311,6 @@ class NhisClaimsDemoSeeder extends Seeder
         Gender $gender,
         Carbon $dateOfBirth,
         string $memberNumber,
-        string $cardSerial,
         string $encounterNumber,
         string $chiefComplaint,
         Carbon $visitDate,
@@ -386,7 +375,6 @@ class NhisClaimsDemoSeeder extends Seeder
             'is_active' => true,
             'is_primary' => true,
             'effective_from' => now()->subYear(),
-            'metadata' => ['card_serial_number' => $cardSerial],
         ]);
 
         $encounter = Encounter::query()->create([
@@ -396,7 +384,6 @@ class NhisClaimsDemoSeeder extends Seeder
             'department_id' => $department?->id,
             'type' => EncounterType::OUTPATIENT,
             'status' => EncounterStatus::FINISHED,
-            'coverage_type' => CoverageType::NHIS,
             'chief_complaint' => $chiefComplaint,
             'admitted_at' => $visitDate,
             'discharged_at' => $visitDate->copy()->addHours(2),

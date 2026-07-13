@@ -69,10 +69,6 @@ class NhisBatchXmlEncoder
             $patientData->addChild('MemberNumber', htmlspecialchars((string) ($policy?->member_number ?? '')));
             $patientData->addChild('TemporaryCardNumber', htmlspecialchars((string) data_get($policy?->metadata, 'temporary_card_number', '')));
             $patientData->addChild('HospitalRecordNumber', htmlspecialchars((string) ($patient?->mrn ?? '')));
-            $patientData->addChild('CardSerialNumber', htmlspecialchars((string) (
-                data_get($firstClaim->nhia_payload, 'card_serial_number')
-                ?? data_get($policy?->metadata, 'card_serial_number', '')
-            )));
             $patientData->addChild('Gender', htmlspecialchars(strtoupper(substr((string) ($patient?->gender?->value ?? 'M'), 0, 1))));
 
             $claimsNode = $patientData->addChild('Claims');

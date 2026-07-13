@@ -4,6 +4,7 @@ namespace Modules\Insurance\Services;
 
 use Carbon\Carbon;
 use Modules\Core\Contracts\InsurancePricingResolver;
+use Modules\Core\Models\Service;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Models\TariffItem;
 
@@ -40,6 +41,11 @@ class DefaultInsurancePricingService implements InsurancePricingResolver
                 'policy_id' => $policy?->id,
                 'payer_id' => $policy?->payer_id,
             ];
+        }
+
+        if ($itemType === 'service') {
+            $service = Service::query()->find($externalCode);
+            $externalCode = $service?->metadata['nhis_code'] ?? $externalCode;
         }
 
         $tariff = TariffItem::query()

@@ -28,16 +28,18 @@ class PatientInsuranceSchema
                 TextInput::make('insurance_member_number')
                     ->label('Member Number')
                     ->required(fn ($get) => filled($get('insurance_payer_id')))
-                    ->placeholder('e.g. NHIS-123456'),
+                    ->placeholder('e.g. 123456139'),
 
                 DatePicker::make('insurance_effective_from')
                     ->label('Effective From')
                     ->native(false)
+                    ->visible(false)
                     ->displayFormat('d M Y'),
 
                 DatePicker::make('insurance_effective_to')
                     ->label('Effective To')
                     ->native(false)
+                    ->visible(false)
                     ->displayFormat('d M Y')
                     ->after('insurance_effective_from'),
             ])

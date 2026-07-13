@@ -95,7 +95,6 @@ class ClaimGenerationTest extends TestCase
             'member_number' => 'NHIS-999999',
             'is_active' => true,
             'is_primary' => true,
-            'metadata' => ['card_serial_number' => 'UWJPL120A0093'],
         ]);
 
         EncounterFactory::new()->create([

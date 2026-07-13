@@ -24,13 +24,6 @@ class NhisClaimValidator
             $errors[] = 'NHIS member number is required.';
         }
 
-        $cardSerial = data_get($claim->nhia_payload, 'card_serial_number')
-            ?? data_get($claim->policy?->metadata, 'card_serial_number');
-
-        if (! filled($cardSerial)) {
-            $warnings[] = 'Card serial number is missing (required by NHIA for most claims).';
-        }
-
         $serviceType = data_get($claim->nhia_payload, 'service_type');
         if (! filled($serviceType)) {
             $errors[] = 'Service type (OUT/INP/DIA/CAP) is required.';

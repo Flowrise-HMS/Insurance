@@ -86,10 +86,6 @@ class NhisCodeMapper
             }
         }
 
-        if ($service?->insurance_price) {
-            return (string) $service->insurance_price;
-        }
-
         return $fallback;
     }
 

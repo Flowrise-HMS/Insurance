@@ -23,7 +23,6 @@ use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Support\ClaimBatchCriteria;
-use Modules\Patient\Models\PatientIdentifier;
 use Modules\Pharmacy\Models\Dispense;
 
 class NhisClaimAssembler
@@ -85,11 +84,6 @@ class NhisClaimAssembler
             ->latest('issued_at')
             ->first();
 
-        $cardSerial = PatientIdentifier::query()
-            ->where('patient_id', $encounter->patient_id)
-            ->whereIn('type', ['nhis', 'nhis_card', 'card_serial'])
-            ->value('value');
-
         $nhiaPayload = [
             'service_type' => $this->mapServiceType($encounter),
             'pharmacy_included' => 'NO',
@@ -100,7 +94,6 @@ class NhisClaimAssembler
             'admission_date' => $encounter->admitted_at?->toDateString(),
             'discharge_date' => $encounter->discharged_at?->toDateString(),
             'referral_no' => data_get($encounter->metadata, 'referral_no'),
-            'card_serial_number' => $cardSerial,
             'duration_length' => $this->calculateDurationDays($encounter),
         ];
 

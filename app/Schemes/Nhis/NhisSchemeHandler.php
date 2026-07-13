@@ -88,7 +88,6 @@ class NhisSchemeHandler implements InsuranceSchemeContract
                 TextInput::make('nhia_payload.outpatient_code')->label('Outpatient Code'),
                 TextInput::make('nhia_payload.outpatient_tariff_amount')->label('Outpatient Tariff Amount')->numeric(),
                 TextInput::make('nhia_payload.referral_no')->label('Referral Number'),
-                TextInput::make('nhia_payload.card_serial_number')->label('Card Serial Number'),
             ])->columns(2),
             Section::make('Treatments & Medicines')->schema([
                 Repeater::make('lines')

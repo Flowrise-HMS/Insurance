@@ -2,12 +2,15 @@
 
 namespace Modules\Insurance\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Insurance\Observers\PatientPolicyObserver;
 use Modules\Patient\Models\Patient;
 
+#[ObservedBy(PatientPolicyObserver::class)]
 class PatientPolicy extends Model
 {
     use HasFactory, HasUuids;

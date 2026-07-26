@@ -1,7 +1,8 @@
 {
     "name": "flowrise-hms/insurance",
-    "description": "Multi-payer insurance orchestration module for NHIS and private insurers",
     "type": "laravel-module",
+    "description": "Multi-payer insurance orchestration module for NHIS and private insurers",
+    "license": "MIT",
     "authors": [
         {
             "name": "Flowrise Digital",
@@ -17,9 +18,7 @@
     "extra": {
         "laravel": {
             "providers": [],
-            "aliases": {
-
-            }
+            "aliases": {}
         }
     },
     "autoload": {
@@ -33,5 +32,7 @@
         "psr-4": {
             "Modules\\Insurance\\Tests\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

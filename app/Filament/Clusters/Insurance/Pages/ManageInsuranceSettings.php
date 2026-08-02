@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Filament\Clusters\Insurance\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -19,7 +20,7 @@ use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
  */
 class ManageInsuranceSettings extends Page implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, HasPageShield;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

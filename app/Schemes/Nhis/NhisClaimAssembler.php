@@ -94,6 +94,7 @@ class NhisClaimAssembler
             'admission_date' => $encounter->admitted_at?->toDateString(),
             'discharge_date' => $encounter->discharged_at?->toDateString(),
             'referral_no' => data_get($encounter->metadata, 'referral_no'),
+            'claim_check_code' => $encounter->claim_check_code,
             'duration_length' => $this->calculateDurationDays($encounter),
         ];
 

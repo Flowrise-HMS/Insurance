@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Tables;
 
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -52,6 +53,7 @@ class ClaimBatchesTable
                         $record->exported_xml_path,
                         basename($record->exported_xml_path),
                     )),
+                DeleteAction::make(),
             ]);
     }
 }

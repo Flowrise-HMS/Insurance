@@ -34,6 +34,17 @@ class ClaimGenerationTest extends TestCase
         $this->migrateModules(['Core', 'Patient', 'Clinical', 'Appointment', 'Billing', 'Pharmacy', 'Insurance']);
     }
 
+    /**
+     * @return array{admitted_at: \Illuminate\Support\Carbon, discharged_at: \Illuminate\Support\Carbon}
+     */
+    private function withinCurrentMonthDates(): array
+    {
+        return [
+            'admitted_at' => now()->startOfMonth(),
+            'discharged_at' => now()->startOfMonth()->addDay(),
+        ];
+    }
+
     public function test_claim_generation_creates_batch_from_nhis_encounter(): void
     {
         $branch = BranchFactory::new()->create();
@@ -58,8 +69,7 @@ class ClaimGenerationTest extends TestCase
             'type' => EncounterType::OUTPATIENT,
             'status' => EncounterStatus::FINISHED,
             'coverage_type' => CoverageType::NHIS,
-            'admitted_at' => now()->subDays(2),
-            'discharged_at' => now()->subDay(),
+            ...$this->withinCurrentMonthDates(),
         ]);
 
         $batch = app(ClaimGenerationService::class)->generate(new ClaimBatchCriteria(
@@ -77,6 +87,47 @@ class ClaimGenerationTest extends TestCase
             'batch_id' => $batch->id,
             'patient_id' => $patient->id,
         ]);
+    }
+
+    public function test_claim_generation_carries_encounter_claim_check_code_into_payload(): void
+    {
+        $branch = BranchFactory::new()->create();
+        $patient = Patient::withoutEvents(fn () => PatientFactory::new()->create(['branch_id' => $branch->id]));
+
+        $payer = Payer::query()->firstOrCreate(
+            ['code' => 'nhis'],
+            ['name' => 'NHIS', 'type' => PayerType::NHIS, 'is_active' => true]
+        );
+
+        PatientPolicy::query()->create([
+            'payer_id' => $payer->id,
+            'patient_id' => $patient->id,
+            'member_number' => 'NHIS-777777',
+            'is_active' => true,
+            'is_primary' => true,
+        ]);
+
+        EncounterFactory::new()->create([
+            'patient_id' => $patient->id,
+            'branch_id' => $branch->id,
+            'type' => EncounterType::OUTPATIENT,
+            'status' => EncounterStatus::FINISHED,
+            'coverage_type' => CoverageType::NHIS,
+            'claim_check_code' => '4654351214657',
+            ...$this->withinCurrentMonthDates(),
+        ]);
+
+        $batch = app(ClaimGenerationService::class)->generate(new ClaimBatchCriteria(
+            schemeCode: 'nhis',
+            branchId: (string) $branch->id,
+            patientId: (string) $patient->id,
+            year: (int) now()->year,
+            month: (int) now()->month,
+        ));
+
+        $claim = $batch->claims()->first();
+
+        $this->assertSame('4654351214657', data_get($claim->nhia_payload, 'claim_check_code'));
     }
 
     public function test_batch_export_marks_claims_submitted(): void
@@ -103,8 +154,7 @@ class ClaimGenerationTest extends TestCase
             'type' => EncounterType::OUTPATIENT,
             'status' => EncounterStatus::FINISHED,
             'coverage_type' => CoverageType::NHIS,
-            'admitted_at' => now()->subDays(3),
-            'discharged_at' => now()->subDays(2),
+            ...$this->withinCurrentMonthDates(),
         ]);
 
         $batch = app(ClaimGenerationService::class)->generate(new ClaimBatchCriteria(

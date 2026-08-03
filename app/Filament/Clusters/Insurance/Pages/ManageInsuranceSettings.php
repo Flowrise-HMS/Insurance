@@ -6,10 +6,12 @@ use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Modules\Core\Settings\InsuranceSettings;
@@ -20,7 +22,7 @@ use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
  */
 class ManageInsuranceSettings extends Page implements HasForms
 {
-    use InteractsWithForms, HasPageShield;
+    use HasPageShield, InteractsWithForms;
 
     protected static ?string $cluster = InsuranceCluster::class;
 
@@ -53,6 +55,15 @@ class ManageInsuranceSettings extends Page implements HasForms
     {
         return $schema
             ->components([
+                Section::make('NHIS Claims')
+                    ->description('Control NHIS claim processing behaviour')
+                    ->schema([
+                        Toggle::make('nhis_enabled')
+                            ->label('Enable NHIS'),
+                        Toggle::make('require_claim_check_code')
+                            ->label('Require claim check code before export')
+                            ->helperText('When enabled, NHIS claims must carry a valid claim check code (dial *842# option 1) before they can be marked ready and exported.'),
+                    ]),
                 TextInput::make('provider_accreditation_number')
                     ->label('Provider Accreditation Number')
                     ->maxLength(64),
@@ -78,6 +89,7 @@ class ManageInsuranceSettings extends Page implements HasForms
         $settings->eclaim_authorization_number = $state['eclaim_authorization_number'] ?? null;
         $settings->default_speciality_code = $state['default_speciality_code'] ?? null;
         $settings->master_table_versions = $state['master_table_versions'] ?? $settings->master_table_versions;
+        $settings->nhis_enabled = (bool) ($state['nhis_enabled'] ?? false);
         $settings->require_claim_check_code = (bool) ($state['require_claim_check_code'] ?? false);
         $settings->save();
 

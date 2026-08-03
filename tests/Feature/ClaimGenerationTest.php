@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Modules\Clinical\Database\Factories\EncounterFactory;
 use Modules\Clinical\Enums\EncounterStatus;
@@ -35,7 +36,7 @@ class ClaimGenerationTest extends TestCase
     }
 
     /**
-     * @return array{admitted_at: \Illuminate\Support\Carbon, discharged_at: \Illuminate\Support\Carbon}
+     * @return array{admitted_at: Carbon, discharged_at: Carbon}
      */
     private function withinCurrentMonthDates(): array
     {

@@ -2,12 +2,16 @@
 
 namespace Modules\Insurance\Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Modules\Clinical\Database\Factories\EncounterFactory;
+use Modules\Clinical\Enums\DiagnosisCertainty;
+use Modules\Clinical\Enums\DiagnosisType;
 use Modules\Clinical\Enums\EncounterStatus;
 use Modules\Clinical\Enums\EncounterType;
+use Modules\Clinical\Models\EncounterDiagnosis;
 use Modules\Core\Database\Factories\BranchFactory;
 use Modules\Core\Enums\CoverageType;
 use Modules\Insurance\Enums\ClaimBatchStatus;
@@ -129,6 +133,63 @@ class ClaimGenerationTest extends TestCase
         $claim = $batch->claims()->first();
 
         $this->assertSame('4654351214657', data_get($claim->nhia_payload, 'claim_check_code'));
+    }
+
+    public function test_claim_generation_prefers_local_icd10_code_over_who_icd11_code(): void
+    {
+        $branch = BranchFactory::new()->create();
+        $patient = Patient::withoutEvents(fn () => PatientFactory::new()->create(['branch_id' => $branch->id]));
+
+        $payer = Payer::query()->firstOrCreate(
+            ['code' => 'nhis'],
+            ['name' => 'NHIS', 'type' => PayerType::NHIS, 'is_active' => true]
+        );
+
+        PatientPolicy::query()->create([
+            'payer_id' => $payer->id,
+            'patient_id' => $patient->id,
+            'member_number' => 'NHIS-ICD10',
+            'is_active' => true,
+            'is_primary' => true,
+        ]);
+
+        $encounter = EncounterFactory::new()->create([
+            'patient_id' => $patient->id,
+            'branch_id' => $branch->id,
+            'type' => EncounterType::OUTPATIENT,
+            'status' => EncounterStatus::FINISHED,
+            'coverage_type' => CoverageType::NHIS,
+            ...$this->withinCurrentMonthDates(),
+        ]);
+
+        $user = User::factory()->create(['branch_id' => $branch->id]);
+
+        EncounterDiagnosis::query()->create([
+            'encounter_id' => $encounter->id,
+            'patient_id' => $patient->id,
+            'icd_code' => '1A00',
+            'icd10_code' => 'A00.0',
+            'icd_entity_id' => '123',
+            'description' => 'Cholera',
+            'type' => DiagnosisType::Primary,
+            'is_new_case' => false,
+            'certainty' => DiagnosisCertainty::Provisional,
+            'ordered_by' => $user->id,
+            'is_active' => true,
+        ]);
+
+        $batch = app(ClaimGenerationService::class)->generate(new ClaimBatchCriteria(
+            schemeCode: 'nhis',
+            branchId: (string) $branch->id,
+            patientId: (string) $patient->id,
+            year: (int) now()->year,
+            month: (int) now()->month,
+        ));
+
+        $claim = $batch->claims()->first();
+        $line = $claim->lines()->where('line_type', ClaimLineType::TREATMENT)->first();
+
+        $this->assertSame('A00.0', data_get($line->metadata, 'icd_code'));
     }
 
     public function test_batch_export_marks_claims_submitted(): void

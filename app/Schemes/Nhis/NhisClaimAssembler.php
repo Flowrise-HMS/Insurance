@@ -123,7 +123,8 @@ class NhisClaimAssembler
             ->with('diagnosisCode')
             ->get();
 
-        $primaryIcd = $diagnoses->first()?->icd_code
+        $primaryIcd = $diagnoses->first()?->icd10_code
+            ?? $diagnoses->first()?->icd_code
             ?? $diagnoses->first()?->diagnosisCode?->code;
 
         $requestItems = RequestItem::query()
@@ -171,7 +172,7 @@ class NhisClaimAssembler
                     'billed_amount' => '0.00',
                     'metadata' => [
                         'treatment_type' => 'Diagnosis',
-                        'icd_code' => $diagnosis->icd_code ?? $diagnosis->diagnosisCode?->code,
+                        'icd_code' => $diagnosis->icd10_code ?? $diagnosis->icd_code ?? $diagnosis->diagnosisCode?->code,
                         'tariff' => '0.00',
                     ],
                 ]);

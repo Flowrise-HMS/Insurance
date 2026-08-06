@@ -6,6 +6,7 @@ use Modules\Billing\Models\InvoiceLine;
 use Modules\Clinical\Models\Encounter;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Support\AppSettings;
+use Modules\Insurance\Console\ImportMasterData;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
@@ -29,6 +30,15 @@ class InsuranceServiceProvider extends ModuleServiceProvider
      * The lowercase version of the module name.
      */
     protected string $nameLower = 'insurance';
+
+    /**
+     * Console commands to register.
+     *
+     * @var string[]
+     */
+    protected array $commands = [
+        ImportMasterData::class,
+    ];
 
     /**
      * Provider classes to register.

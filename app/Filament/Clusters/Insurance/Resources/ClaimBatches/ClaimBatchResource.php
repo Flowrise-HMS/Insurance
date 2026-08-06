@@ -10,6 +10,7 @@ use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\GenerateClaims;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\ListClaimBatches;
+use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\PreFlightReport;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Pages\ViewClaimBatch;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\RelationManagers\ClaimsRelationManager;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\Tables\ClaimBatchesTable;
@@ -51,6 +52,7 @@ class ClaimBatchResource extends Resource
             'index' => ListClaimBatches::route('/'),
             'generate' => GenerateClaims::route('/generate'),
             'view' => ViewClaimBatch::route('/{record}'),
+            'preflight' => PreFlightReport::route('/{record}/preflight'),
         ];
     }
 }

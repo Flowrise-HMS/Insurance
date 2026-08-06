@@ -28,7 +28,28 @@ class PatientInsuranceSchema
                 TextInput::make('insurance_member_number')
                     ->label('Member Number')
                     ->required(fn ($get) => filled($get('insurance_payer_id')))
-                    ->placeholder('e.g. 123456139'),
+                    ->minLength(8)
+                    ->placeholder('e.g. 123456139')
+                    ->helperText('NHIA member number (minimum 8 characters).'),
+
+                TextInput::make('insurance_card_serial_number')
+                    ->label('Card Serial Number')
+                    ->length(13)
+                    ->required(fn ($get) => filled($get('insurance_payer_id')))
+                    ->placeholder('e.g. UWJPL120A0093')
+                    ->helperText('Exactly 13 alphanumeric characters from the NHIS card.'),
+
+                TextInput::make('insurance_mother_member_number')
+                    ->label('Mother Member Number')
+                    ->minLength(8)
+                    ->helperText('Required for infants under 3 months without their own NHIS membership.')
+                    ->visible(fn ($get) => filled($get('insurance_payer_id'))),
+
+                TextInput::make('insurance_mother_card_serial_number')
+                    ->label('Mother Card Serial Number')
+                    ->length(13)
+                    ->helperText('Mother card serial when claiming for an infant under 3 months.')
+                    ->visible(fn ($get) => filled($get('insurance_payer_id'))),
 
                 DatePicker::make('insurance_effective_from')
                     ->label('Effective From')

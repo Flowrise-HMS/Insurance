@@ -22,6 +22,10 @@ class ViewClaimBatch extends ViewRecord
                     $service->vetAll($this->record, force: false);
                     $this->refreshFormData(['status', 'claims_count']);
                 }),
+            Action::make('preflight')
+                ->label('Pre-flight Report')
+                ->icon('heroicon-o-clipboard-document-check')
+                ->url(PreFlightReport::getUrl(['record' => $this->record])),
             Action::make('export')
                 ->label('Export XML')
                 ->requiresConfirmation()

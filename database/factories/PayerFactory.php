@@ -13,7 +13,7 @@ class PayerFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => strtoupper(fake()->bothify('PAYER###')),
+            'code' => strtoupper(fake()->unique()->bothify('PAYER###')),
             'name' => fake()->company().' Insurance',
             'type' => PayerType::PRIVATE,
             'is_active' => true,

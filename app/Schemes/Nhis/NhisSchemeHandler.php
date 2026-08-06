@@ -49,7 +49,10 @@ class NhisSchemeHandler implements InsuranceSchemeContract
     {
         return [
             Section::make('NHIS Claim Header')->schema([
-                TextInput::make('nhia_payload.claim_check_code')->label('Claim Check Code'),
+                TextInput::make('nhia_payload.claim_check_code')
+                    ->label('Claim Check Code')
+                    ->helperText('5 characters (non-biometric) or 13 characters (biometric). Dial *842# option 1.')
+                    ->rule('nullable|regex:/^([A-Za-z0-9]{5}|[A-Za-z0-9]{13})$/'),
                 Select::make('nhia_payload.service_type')
                     ->label('Service Type')
                     ->options([
@@ -82,7 +85,11 @@ class NhisSchemeHandler implements InsuranceSchemeContract
                         'ACU' => 'Acute Episode',
                     ])
                     ->required(),
-                TextInput::make('nhia_payload.speciality_code')->label('Speciality Code'),
+                Select::make('nhia_payload.speciality_code')
+                    ->label('Speciality Code')
+                    ->options(collect(NhisSpecialityCodes::ALLOW_LIST)->mapWithKeys(fn (string $code) => [$code => $code])->all())
+                    ->searchable()
+                    ->required(),
                 DatePicker::make('nhia_payload.admission_date')->label('Admission Date'),
                 DatePicker::make('nhia_payload.discharge_date')->label('Discharge Date'),
                 TextInput::make('nhia_payload.outpatient_code')->label('Outpatient Code'),
@@ -104,7 +111,14 @@ class NhisSchemeHandler implements InsuranceSchemeContract
                         TextInput::make('description')->required(),
                         TextInput::make('quantity')->numeric()->required(),
                         TextInput::make('billed_amount')->numeric()->required(),
-                        TextInput::make('metadata.treatment_type')->label('Treatment Type'),
+                        Select::make('metadata.treatment_type')
+                            ->label('Treatment Type')
+                            ->options([
+                                'Diagnosis' => 'Diagnosis',
+                                'Procedure' => 'Procedure',
+                                'Investigation' => 'Investigation',
+                            ])
+                            ->default('Diagnosis'),
                         TextInput::make('metadata.icd_code')->label('ICD Code'),
                         TextInput::make('metadata.unit_price')->label('Unit Price')->numeric(),
                         DatePicker::make('metadata.medicine_date')->label('Medicine Date'),

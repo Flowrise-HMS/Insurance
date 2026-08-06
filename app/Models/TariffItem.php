@@ -17,6 +17,7 @@ class TariffItem extends Model
 
     protected $fillable = [
         'payer_id',
+        'tariff_book_id',
         'item_type',
         'external_code',
         'name',
@@ -24,6 +25,9 @@ class TariffItem extends Model
         'currency',
         'source_version',
         'source_updated_at',
+        'effective_from',
+        'effective_to',
+        'admission_type',
         'is_active',
         'metadata',
     ];
@@ -31,6 +35,8 @@ class TariffItem extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'source_updated_at' => 'datetime',
+        'effective_from' => 'date',
+        'effective_to' => 'date',
         'is_active' => 'boolean',
         'metadata' => 'array',
     ];
@@ -38,5 +44,10 @@ class TariffItem extends Model
     public function payer(): BelongsTo
     {
         return $this->belongsTo(Payer::class, 'payer_id');
+    }
+
+    public function tariffBook(): BelongsTo
+    {
+        return $this->belongsTo(TariffBook::class, 'tariff_book_id');
     }
 }

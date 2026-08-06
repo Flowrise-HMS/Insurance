@@ -11,12 +11,15 @@ use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
 use Modules\Insurance\Schemes\Nhis\NhisClaimValidator;
+use Modules\Insurance\Validation\ClaimValidationEngine;
+use Modules\Insurance\Validation\ValidationReport;
 
 class ClaimBatchService
 {
     public function __construct(
         protected InsuranceSchemeRegistry $schemes,
         protected NhisClaimValidator $validator,
+        protected ClaimValidationEngine $engine,
     ) {}
 
     public function vetClaim(InsuranceClaim $claim): InsuranceClaim
@@ -88,6 +91,21 @@ class ClaimBatchService
             $this->vetAll($batch, $force);
         }
 
+        $report = $this->engine->validateBatch($batch->fresh(['claims', 'claims.lines']));
+
+        if (! $report->valid() && ! $force) {
+            throw new \InvalidArgumentException(
+                'Batch validation failed. '.$this->describeReport($report)
+            );
+        }
+
+        $batch->update([
+            'metadata' => array_merge($batch->metadata ?? [], [
+                'validation_report' => $report->toArray(),
+                'validation_forced' => $force && ! $report->valid(),
+            ]),
+        ]);
+
         $scheme = $this->schemes->forCode($batch->scheme_code);
         $exported = $scheme->exportBatch($batch->fresh(['claims.patient', 'claims.policy', 'claims.lines']));
 
@@ -105,6 +123,22 @@ class ClaimBatchService
         });
 
         return $exported;
+    }
+
+    protected function describeReport(ValidationReport $report): string
+    {
+        $messages = $report->errors()
+            ->map(fn ($item) => "[{$item->code}] {$item->message}")
+            ->take(5)
+            ->implode('; ');
+
+        $total = $report->errors()->count();
+
+        if ($total > 5) {
+            return "{$messages}; and ".($total - 5).' more error(s).';
+        }
+
+        return "{$messages}.";
     }
 
     protected function syncBatchReviewStatus(ClaimBatch $batch): void

@@ -7,6 +7,7 @@ use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
+use Modules\Patient\Models\Patient;
 
 class NhisBatchXmlEncoder
 {
@@ -42,8 +43,7 @@ class NhisBatchXmlEncoder
         $batchInfo->addChild('ClaimsCount', (string) $batch->claims_count);
         $batchInfo->addChild('CreationDate', now()->format('d/m/Y'));
         $batchInfo->addChild('ServiceYear', (string) ($batch->service_year ?? now()->year));
-        $batchInfo->addChild('ServiceMonth', (string) ($batch->service_month ?? now()->month));
-        $batchInfo->addChild('IDPayer', '');
+        $batchInfo->addChild('ServiceMonth', sprintf('%02d', (int) ($batch->service_month ?? now()->month)));
 
         $provider = $general->addChild('ProviderInformation');
         $provider->addChild('ProviderAccreditationNumber', htmlspecialchars((string) ($this->settings->provider_accreditation_number ?? '')));
@@ -58,17 +58,25 @@ class NhisBatchXmlEncoder
             $firstClaim = $claims->first();
             $patient = $firstClaim->patient;
             $policy = $firstClaim->policy;
+            $referenceDate = $this->resolveReferenceDate($firstClaim, $batch);
+            $isInfant = $this->isInfant($patient?->date_of_birth, $referenceDate);
+            $names = $this->patientNames($patient);
+            [$memberNumber, $cardSerial] = $this->resolveMemberIdentity($policy, $isInfant);
 
             $patientData = $patientsNode->addChild('PatientData');
-            $names = $this->splitName($patient?->full_name ?? 'Unknown Patient');
-
             $patientData->addChild('Surname', htmlspecialchars($names['surname']));
             $patientData->addChild('OtherName', htmlspecialchars($names['other']));
             $patientData->addChild('DateOfBirth', $this->formatDate($patient?->date_of_birth));
-            $patientData->addChild('Infant', $this->isInfant($patient?->date_of_birth) ? 'Yes' : 'No');
-            $patientData->addChild('MemberNumber', htmlspecialchars((string) ($policy?->member_number ?? '')));
-            $patientData->addChild('TemporaryCardNumber', htmlspecialchars((string) data_get($policy?->metadata, 'temporary_card_number', '')));
+            $patientData->addChild('Infant', $isInfant ? 'Yes' : 'No');
+            $patientData->addChild('MemberNumber', htmlspecialchars($memberNumber));
+
+            $temporaryCard = (string) data_get($policy?->metadata, 'temporary_card_number', '');
+            if ($temporaryCard !== '') {
+                $patientData->addChild('TemporaryCardNumber', htmlspecialchars($temporaryCard));
+            }
+
             $patientData->addChild('HospitalRecordNumber', htmlspecialchars((string) ($patient?->mrn ?? '')));
+            $patientData->addChild('CardSerialNumber', htmlspecialchars($cardSerial));
             $patientData->addChild('Gender', htmlspecialchars(strtoupper(substr((string) ($patient?->gender?->value ?? 'M'), 0, 1))));
 
             $claimsNode = $patientData->addChild('Claims');
@@ -87,19 +95,31 @@ class NhisBatchXmlEncoder
         $claimNode = $claimsNode->addChild('Claim');
 
         $claimNode->addChild('ClaimIdentificationNumber', htmlspecialchars((string) $claim->claim_number));
-        $claimNode->addChild('ClaimCheckCode', htmlspecialchars((string) data_get($payload, 'claim_check_code', '')));
+
+        $claimCheckCode = (string) data_get($payload, 'claim_check_code', '');
+        if ($claimCheckCode !== '') {
+            $claimNode->addChild('ClaimCheckCode', htmlspecialchars($claimCheckCode));
+        }
+
         $claimNode->addChild('ServiceType', htmlspecialchars((string) data_get($payload, 'service_type', 'OUT')));
-        $claimNode->addChild('PharmacyIncluded', data_get($payload, 'pharmacy_included', 'NO'));
-        $claimNode->addChild('AllInclusive', data_get($payload, 'all_inclusive', 'NO'));
+        $claimNode->addChild('PharmacyIncluded', $this->formatYesNo(data_get($payload, 'pharmacy_included', 'NO')));
+        $claimNode->addChild('AllInclusive', $this->formatYesNo(data_get($payload, 'all_inclusive', 'NO')));
         $claimNode->addChild('OutcomeType', htmlspecialchars((string) data_get($payload, 'outcome_type', 'DIS')));
 
         if (data_get($payload, 'service_type') === 'INP' && filled(data_get($payload, 'duration_length'))) {
             $claimNode->addChild('DurationLength', (string) data_get($payload, 'duration_length'));
         }
 
-        $claimNode->addChild('AdmissionType', htmlspecialchars((string) data_get($payload, 'admission_type', 'ACU')));
-        $claimNode->addChild('SpecialityCode', htmlspecialchars((string) data_get($payload, 'speciality_code', $this->settings->default_speciality_code ?? '')));
-        $claimNode->addChild('AdmissionDate', $this->formatDateValue(data_get($payload, 'admission_date')));
+        $admissionType = strtoupper((string) data_get($payload, 'admission_type', 'ACU'));
+        if (! NhisSpecialityCodes::isValidAdmissionType($admissionType)) {
+            $admissionType = 'ACU';
+        }
+        $claimNode->addChild('AdmissionType', htmlspecialchars($admissionType));
+        $claimNode->addChild('SpecialityCode', htmlspecialchars($this->resolveSpecialityCode($payload)));
+
+        if (filled(data_get($payload, 'admission_date'))) {
+            $claimNode->addChild('AdmissionDate', $this->formatDateValue(data_get($payload, 'admission_date')));
+        }
 
         if (filled(data_get($payload, 'discharge_date'))) {
             $claimNode->addChild('DischargeDate', $this->formatDateValue(data_get($payload, 'discharge_date')));
@@ -114,13 +134,24 @@ class NhisBatchXmlEncoder
 
         $claimNode->addChild('TreatmentsCount', (string) $treatments->count());
         $claimNode->addChild('MedicinesCount', (string) $medicines->count());
-        $claimNode->addChild('ReferralNo', htmlspecialchars((string) data_get($payload, 'referral_no', '')));
+
+        if (filled(data_get($payload, 'referral_no'))) {
+            $claimNode->addChild('ReferralNo', htmlspecialchars((string) data_get($payload, 'referral_no')));
+        }
 
         if ($treatments->isNotEmpty()) {
             $treatmentsNode = $claimNode->addChild('Treatments');
             foreach ($treatments as $line) {
                 $treatment = $treatmentsNode->addChild('Treatment');
-                $treatment->addChild('Type', htmlspecialchars((string) data_get($line->metadata, 'treatment_type', 'Diagnosis')));
+                $treatmentType = $this->normalizeTreatmentType((string) data_get($line->metadata, 'treatment_type', 'Diagnosis'));
+                $performanceDate = data_get($line->metadata, 'performance_date')
+                    ?? data_get($payload, 'admission_date');
+
+                if (filled($performanceDate)) {
+                    $treatment->addChild('Date', $this->formatDateValue($performanceDate));
+                }
+
+                $treatment->addChild('Type', htmlspecialchars($treatmentType));
                 $treatment->addChild('TreatmentCode', htmlspecialchars((string) ($line->external_item_code ?? '')));
                 $treatment->addChild('ICDCode', htmlspecialchars((string) data_get($line->metadata, 'icd_code', '')));
                 $treatment->addChild('Tariff', $this->formatDecimal((string) data_get($line->metadata, 'tariff', $line->billed_amount)));
@@ -133,7 +164,7 @@ class NhisBatchXmlEncoder
                 $medicine = $medicinesNode->addChild('Medicine');
                 $unitPrice = data_get($line->metadata, 'unit_price', bcdiv((string) $line->billed_amount, (string) max(1, $line->quantity), 2));
                 $medicine->addChild('MedicineCode', htmlspecialchars((string) ($line->external_item_code ?? '')));
-                $medicine->addChild('Quantity', (string) $line->quantity);
+                $medicine->addChild('Quantity', $this->formatDecimal((string) $line->quantity));
                 $medicine->addChild('UnitPrice', $this->formatDecimal((string) $unitPrice));
                 $medicine->addChild('MedicineTotal', $this->formatDecimal((string) $line->billed_amount));
                 $medicine->addChild('MedicineDate', $this->formatDateValue(data_get($line->metadata, 'medicine_date')));
@@ -144,22 +175,76 @@ class NhisBatchXmlEncoder
     /**
      * @return array{surname: string, other: string}
      */
-    protected function splitName(string $fullName): array
+    protected function patientNames(?Patient $patient): array
     {
-        $parts = preg_split('/\s+/', trim($fullName)) ?: [];
+        $surname = trim((string) ($patient?->last_name ?? ''));
+        $other = trim(implode(' ', array_filter([
+            trim((string) ($patient?->first_name ?? '')),
+            trim((string) ($patient?->middle_name ?? '')),
+        ])));
 
-        if (count($parts) === 0) {
+        if ($surname === '' && $other === '') {
             return ['surname' => 'UNKNOWN', 'other' => ''];
         }
 
-        if (count($parts) === 1) {
-            return ['surname' => $parts[0], 'other' => ''];
+        if ($surname === '') {
+            return ['surname' => $other, 'other' => ''];
+        }
+
+        return ['surname' => $surname, 'other' => $other];
+    }
+
+    /**
+     * @return array{0: string, 1: string}
+     */
+    protected function resolveMemberIdentity(mixed $policy, bool $isInfant): array
+    {
+        if ($isInfant) {
+            $motherMember = (string) data_get($policy?->metadata, 'mother_member_number', '');
+            $motherSerial = (string) data_get($policy?->metadata, 'mother_card_serial_number', '');
+
+            if ($motherMember !== '' || $motherSerial !== '') {
+                return [$motherMember, $motherSerial];
+            }
         }
 
         return [
-            'surname' => array_pop($parts),
-            'other' => implode(' ', $parts),
+            (string) ($policy?->member_number ?? ''),
+            (string) data_get($policy?->metadata, 'card_serial_number', ''),
         ];
+    }
+
+    protected function resolveSpecialityCode(array $payload): string
+    {
+        $code = strtoupper(trim((string) data_get(
+            $payload,
+            'speciality_code',
+            $this->settings->default_speciality_code ?? 'OPDC'
+        )));
+
+        if ($code === '' || ! NhisSpecialityCodes::isValid($code)) {
+            return 'OPDC';
+        }
+
+        return $code;
+    }
+
+    protected function resolveReferenceDate(InsuranceClaim $claim, ClaimBatch $batch): Carbon
+    {
+        $admissionDate = data_get($claim->nhia_payload, 'admission_date');
+
+        if (filled($admissionDate)) {
+            try {
+                return Carbon::parse((string) $admissionDate)->startOfDay();
+            } catch (\Throwable) {
+                // Fall through to batch month end.
+            }
+        }
+
+        $year = (int) ($batch->service_year ?? now()->year);
+        $month = (int) ($batch->service_month ?? now()->month);
+
+        return Carbon::create($year, $month, 1)->endOfMonth()->startOfDay();
     }
 
     protected function formatDate(mixed $value): string
@@ -193,14 +278,27 @@ class NhisBatchXmlEncoder
         return number_format((float) $amount, 2, '.', '');
     }
 
-    protected function isInfant(mixed $dateOfBirth): bool
+    protected function normalizeTreatmentType(string $type): string
+    {
+        return ucfirst(strtolower(trim($type)));
+    }
+
+    protected function formatYesNo(mixed $value): string
+    {
+        $normalized = strtoupper(trim((string) $value));
+
+        return in_array($normalized, ['YES', 'Y', '1', 'TRUE'], true) ? 'YES' : 'NO';
+    }
+
+    protected function isInfant(mixed $dateOfBirth, Carbon $referenceDate): bool
     {
         if (! $dateOfBirth) {
             return false;
         }
 
         try {
-            return Carbon::parse($dateOfBirth)->age < 1;
+            return Carbon::parse($dateOfBirth)->startOfDay()
+                ->greaterThan($referenceDate->copy()->startOfDay()->subMonths(3));
         } catch (\Throwable) {
             return false;
         }

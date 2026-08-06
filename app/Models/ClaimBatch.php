@@ -34,6 +34,7 @@ class ClaimBatch extends Model
         'batch_amount',
         'currency',
         'master_table_versions',
+        'metadata',
         'exported_xml_path',
         'exported_at',
         'created_by',
@@ -47,6 +48,7 @@ class ClaimBatch extends Model
         'claims_count' => 'integer',
         'batch_amount' => 'decimal:2',
         'master_table_versions' => 'array',
+        'metadata' => 'array',
         'exported_at' => 'datetime',
     ];
 

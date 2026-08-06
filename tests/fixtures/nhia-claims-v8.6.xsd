@@ -25,6 +25,8 @@
 <xs:restriction base="xs:string">
 <xs:enumeration value="Yes"/>
 <xs:enumeration value="No"/>
+<xs:enumeration value="YES"/>
+<xs:enumeration value="NO"/>
 </xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="GenderEnum">
@@ -241,7 +243,7 @@ maxOccurs="unbounded"/>
 <xs:complexType name="ProviderInformationType">
 <xs:all>
 <xs:element name="ProviderAccreditationNumber" type="xs:string"/>
-<xs:element name="eClaimAuthorizationNumber" type="xs:int"/>
+<xs:element name="eClaimAuthorizationNumber" type="xs:string"/>
 </xs:all>
 </xs:complexType>
 <xs:complexType name="PatientDataType">
@@ -273,6 +275,7 @@ maxOccurs="unbounded"/>
 <xs:complexType name="ClaimType">
 <xs:all>
 <xs:element name="ClaimIdentificationNumber" type="xs:string"/>
+<xs:element name="ClaimCheckCode" type="xs:string" minOccurs="0"/>
 <xs:element name="ServiceType" type="ServiceTypeEnum"/>
 <xs:element name="PharmacyIncluded" type="BooleanType"/>
 <xs:element name="AllInclusive" type="BooleanType"/>
@@ -283,8 +286,8 @@ maxOccurs="unbounded"/>
 <xs:element name="AdmissionDate" type="DateType"/>
 <xs:element name="DischargeDate" type="DateType" minOccurs="0"/>
 <xs:element name="InPatientCode" type="xs:string" minOccurs="0"/>
-<xs:element name="OutpatientCode" type="xs:string" minOccurs="0" />
-<xs:element name="InvestigationCode" type="xs:string" minOccurs="0" />
+<xs:element name="OutPatientCode" type="xs:string" minOccurs="0"/>
+<xs:element name="InvestigationCode" type="xs:string" minOccurs="0"/>
 <xs:element name="OutPatientTariffAmount" type="DecimalType" minOccurs="0"/>
 <xs:element name="InPatientTariffAmount" type="DecimalType" minOccurs="0"/>
 <xs:element name="TotalCost" type="DecimalType"/>
@@ -295,18 +298,15 @@ maxOccurs="unbounded"/>
 minOccurs="0"/>
 <xs:element name="ThirdVerificationLevel" type="ClaimThirdVerificationLevelType"
 minOccurs="0"/>
-<xs:element name="Treatments">
+<xs:element name="Treatments" minOccurs="0">
 <xs:complexType>
 <xs:sequence>
 <xs:element name="Treatment" type="TreatmentType"
 maxOccurs="unbounded"/>
 </xs:sequence>
-
-
-
 </xs:complexType>
 </xs:element>
-<xs:element name="Medicines">
+<xs:element name="Medicines" minOccurs="0">
 <xs:complexType>
 <xs:sequence>
 <xs:element name="Medicine" type="MedicineType"
@@ -335,6 +335,7 @@ minOccurs="0"/>
 <xs:element name="Quantity" type="DecimalType"/>
 <xs:element name="UnitPrice" type="DecimalType"/>
 <xs:element name="MedicineTotal" type="DecimalType"/>
+<xs:element name="MedicineDate" type="DateType" minOccurs="0"/>
 <xs:element name="SecondVerificationLevel" type="MedicineSecondVerificationLevelType"
 minOccurs="0"/>
 <xs:element name="ThirdVerificationLevel" type="MedicineThirdVerificationLevelType"

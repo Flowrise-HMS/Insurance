@@ -29,6 +29,7 @@ class NhisClaimAssembler
 {
     public function __construct(
         protected NhisCodeMapper $codeMapper,
+        protected NhisGdrgResolver $gdrgResolver,
         protected InsuranceSettings $settings,
     ) {}
 
@@ -90,8 +91,9 @@ class NhisClaimAssembler
             'all_inclusive' => 'NO',
             'outcome_type' => $this->mapOutcomeType($encounter->discharge_disposition),
             'admission_type' => $encounter->type === EncounterType::EMERGENCY ? 'EME' : 'ACU',
-            'speciality_code' => data_get($encounter->department?->metadata, 'nhis_speciality_code', $this->settings->default_speciality_code),
-            'admission_date' => $encounter->admitted_at?->toDateString(),
+            'speciality_code' => data_get($encounter->department?->metadata, 'nhis_speciality_code')
+                ?: ($this->settings->default_speciality_code ?: 'OPDC'),
+            'admission_date' => ($encounter->admitted_at ?? $encounter->created_at)?->toDateString(),
             'discharge_date' => $encounter->discharged_at?->toDateString(),
             'referral_no' => data_get($encounter->metadata, 'referral_no'),
             'claim_check_code' => $encounter->claim_check_code,
@@ -121,11 +123,28 @@ class NhisClaimAssembler
             ->where('encounter_id', $encounter->id)
             ->where('is_active', true)
             ->with('diagnosisCode')
+            ->orderByRaw("CASE WHEN type = 'primary' THEN 0 ELSE 1 END")
+            ->orderByDesc('is_new_case')
             ->get();
 
         $primaryIcd = $diagnoses->first()?->icd10_code
             ?? $diagnoses->first()?->icd_code
             ?? $diagnoses->first()?->diagnosisCode?->code;
+
+        if ($primaryIcd) {
+            $gdrg = $this->gdrgResolver->resolve(
+                $payer,
+                $primaryIcd,
+                'OUT',
+                $nhiaPayload['admission_date']
+            );
+
+            if ($gdrg !== null) {
+                $primaryOutpatientCode = $gdrg['code'];
+                $primaryOutpatientTariff = $gdrg['tariff'];
+                $total = bcadd($total, $gdrg['tariff'], 2);
+            }
+        }
 
         $requestItems = RequestItem::query()
             ->whereHas('serviceRequest', fn ($q) => $q->where('encounter_id', $encounter->id))

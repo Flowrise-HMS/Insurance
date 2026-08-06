@@ -98,4 +98,9 @@ class InsuranceClaim extends Model
     {
         return $this->hasMany(InsuranceClaimSubmission::class, 'claim_id');
     }
+
+    public function feedbacks(): HasMany
+    {
+        return $this->hasMany(InsuranceClaimFeedback::class, 'claim_id');
+    }
 }

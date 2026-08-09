@@ -3,7 +3,6 @@
 namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Database\Factories\ClaimBatchFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimLineFactory;
@@ -15,6 +14,7 @@ use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Schemes\Nhis\NhisBatchXmlEncoder;
 use Modules\Insurance\Schemes\Nhis\NhsXmlSchemaValidator;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Tests\TestCase;
 

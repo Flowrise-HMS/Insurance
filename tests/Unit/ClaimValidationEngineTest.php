@@ -4,7 +4,6 @@ namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Storage;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Database\Factories\ClaimBatchFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimLineFactory;
@@ -19,6 +18,7 @@ use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\ClaimBatchService;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Validation\ClaimValidationEngine;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Tests\TestCase;

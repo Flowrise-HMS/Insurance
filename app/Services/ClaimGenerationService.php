@@ -3,13 +3,13 @@
 namespace Modules\Insurance\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Core\Support\Currency;
 use Modules\Insurance\Enums\ClaimBatchStatus;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
 use Modules\Insurance\Schemes\Nhis\NhisClaimAssembler;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Support\ClaimBatchCriteria;
 
 class ClaimGenerationService

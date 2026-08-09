@@ -3,10 +3,10 @@
 namespace Modules\Insurance\Schemes\Nhis;
 
 use Carbon\Carbon;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Patient\Models\Patient;
 
 class NhisBatchXmlEncoder

@@ -7,13 +7,13 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Contracts\InsuranceSchemeContract;
 use Modules\Insurance\DTOs\ClaimGenerationResult;
 use Modules\Insurance\DTOs\ExportedFile;
 use Modules\Insurance\DTOs\ValidationResult;
 use Modules\Insurance\Models\ClaimBatch;
 use Modules\Insurance\Models\InsuranceClaim;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Support\ClaimBatchCriteria;
 
 class NhisSchemeHandler implements InsuranceSchemeContract

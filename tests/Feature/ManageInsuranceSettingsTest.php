@@ -5,8 +5,8 @@ namespace Modules\Insurance\Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Livewire\Livewire;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Filament\Clusters\Insurance\Pages\ManageInsuranceSettings;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 

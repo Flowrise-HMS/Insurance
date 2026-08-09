@@ -4,7 +4,6 @@ namespace Modules\Insurance\Validation;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\NhisMedicine;
@@ -12,6 +11,7 @@ use Modules\Insurance\Models\ProviderCredentialing;
 use Modules\Insurance\Models\TariffBook;
 use Modules\Insurance\Schemes\Nhis\NhisGdrgResolver;
 use Modules\Insurance\Services\MemberVerificationService;
+use Modules\Insurance\Settings\InsuranceSettings;
 
 class NhisBusinessValidator
 {

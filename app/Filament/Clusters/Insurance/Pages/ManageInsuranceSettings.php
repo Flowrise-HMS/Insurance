@@ -15,8 +15,8 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
+use Modules\Insurance\Settings\InsuranceSettings;
 
 /**
  * @property-read Schema $form

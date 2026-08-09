@@ -12,7 +12,6 @@ use Modules\Clinical\Models\Encounter;
 use Modules\Clinical\Models\EncounterDiagnosis;
 use Modules\Clinical\Models\RequestItem;
 use Modules\Core\Enums\CoverageType;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Core\Support\Currency;
 use Modules\Insurance\DTOs\ClaimGenerationResult;
 use Modules\Insurance\Enums\ClaimLineType;
@@ -22,6 +21,7 @@ use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Models\Payer;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Support\ClaimBatchCriteria;
 use Modules\Pharmacy\Models\Dispense;
 

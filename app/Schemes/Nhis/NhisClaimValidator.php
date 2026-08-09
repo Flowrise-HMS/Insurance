@@ -3,10 +3,10 @@
 namespace Modules\Insurance\Schemes\Nhis;
 
 use Carbon\Carbon;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\DTOs\ValidationResult;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Models\InsuranceClaim;
+use Modules\Insurance\Settings\InsuranceSettings;
 
 class NhisClaimValidator
 {

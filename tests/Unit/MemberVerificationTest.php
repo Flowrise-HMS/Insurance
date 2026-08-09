@@ -3,11 +3,11 @@
 namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Database\Factories\MembersMasterFactory;
 use Modules\Insurance\Database\Factories\PatientPolicyFactory;
 use Modules\Insurance\Models\MembersMaster;
 use Modules\Insurance\Services\MemberVerificationService;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Verification\OfflineMasterVerifier;
 use Tests\TestCase;
 

@@ -3,12 +3,12 @@
 namespace Modules\Insurance\Services;
 
 use Illuminate\Support\Carbon;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Contracts\MemberVerifier;
 use Modules\Insurance\Models\MembersMaster;
 use Modules\Insurance\Models\NhisMedicine;
 use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Models\TariffItem;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Verification\MemberVerification;
 use Modules\Insurance\Verification\OfflineMasterVerifier;
 

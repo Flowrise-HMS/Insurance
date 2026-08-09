@@ -4,7 +4,6 @@ namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Storage;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Database\Factories\ClaimBatchFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimLineFactory;
@@ -16,6 +15,7 @@ use Modules\Insurance\Enums\PayerType;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Schemes\Nhis\NhisBatchExporter;
 use Modules\Insurance\Schemes\Nhis\NhsXmlSchemaValidator;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Tests\TestCase;
 

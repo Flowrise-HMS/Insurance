@@ -3,7 +3,6 @@
 namespace Modules\Insurance\Tests\Unit;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Modules\Core\Settings\InsuranceSettings;
 use Modules\Insurance\Database\Factories\InsuranceClaimFactory;
 use Modules\Insurance\Database\Factories\InsuranceClaimLineFactory;
 use Modules\Insurance\Database\Factories\PatientPolicyFactory;
@@ -12,6 +11,7 @@ use Modules\Insurance\Enums\PayerType;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Schemes\Nhis\NhisClaimValidator;
+use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Patient\Database\Factories\PatientFactory;
 use Tests\TestCase;
 

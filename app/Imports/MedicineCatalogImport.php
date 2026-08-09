@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Imports;
 
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Models\NhisMedicine;
 
 class MedicineCatalogImport extends CsvMasterDataImporter
@@ -19,11 +20,22 @@ class MedicineCatalogImport extends CsvMasterDataImporter
             return ['error' => 'Missing medicine code.'];
         }
 
+        $level = NhisPrescribingLevel::resolve(
+            $row['prescribing_level_code'] ?? null,
+            $row['prescribing_level'] ?? null,
+        );
+
+        if ($level === null) {
+            return ['error' => "Medicine [{$code}] has an invalid prescribing level."];
+        }
+
         $attributes = [
             'name' => trim((string) ($row['name'] ?? '')),
             'strength' => $this->nullable($row['strength'] ?? ''),
             'form' => $this->nullable($row['form'] ?? ''),
-            'prescribing_level' => max(1, min(3, (int) ($row['prescribing_level'] ?? 1))),
+            'prescribing_level_code' => $level['code'],
+            'prescribing_level' => $level['ordinal'],
+            'unit_of_pricing' => $this->nullable($row['unit_of_pricing'] ?? ''),
             'effective_from' => $this->nullableDate($row['effective_from'] ?? ''),
             'effective_to' => $this->nullableDate($row['effective_to'] ?? ''),
             'is_active' => $this->toBool($row['is_active'] ?? '1'),

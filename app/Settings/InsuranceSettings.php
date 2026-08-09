@@ -25,7 +25,7 @@ class InsuranceSettings extends Settings
     /** @var array<string, string> */
     public array $master_table_versions = [
         'XMLFormatVersion' => '1',
-        'MedicineVersion' => '1',
+        'MedicineVersion' => '2025',
         'GDRGVersion' => '1',
         'TariffVersion' => '1',
         'ICDVersion' => '1',

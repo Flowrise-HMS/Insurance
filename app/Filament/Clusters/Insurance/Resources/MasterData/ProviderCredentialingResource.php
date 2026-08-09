@@ -19,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Modules\Core\Enums\NavigationGroup;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\MasterData\ProviderCredentialingResource\Pages\CreateProviderCredentialing;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\MasterData\ProviderCredentialingResource\Pages\EditProviderCredentialing;
@@ -46,11 +47,11 @@ class ProviderCredentialingResource extends Resource
                     ->searchable()
                     ->nullable(),
                 TextInput::make('provider_name'),
-                TextInput::make('prescribing_level')
-                    ->numeric()
-                    ->minValue(1)
-                    ->maxValue(3)
-                    ->default(1),
+                Select::make('prescribing_level_code')
+                    ->label('Prescribing level')
+                    ->options(NhisPrescribingLevel::options())
+                    ->required()
+                    ->default(NhisPrescribingLevel::A->value),
                 TagsInput::make('specialities'),
                 TextInput::make('accreditation_number'),
                 TextInput::make('level_of_care'),
@@ -67,7 +68,7 @@ class ProviderCredentialingResource extends Resource
             ->columns([
                 TextColumn::make('staff.name')->searchable()->placeholder('—'),
                 TextColumn::make('provider_name')->searchable(),
-                TextColumn::make('prescribing_level'),
+                TextColumn::make('prescribing_level_code')->label('Level'),
                 TextColumn::make('accreditation_number')->searchable(),
                 TextColumn::make('level_of_care'),
                 TextColumn::make('valid_from')->date(),
@@ -75,7 +76,9 @@ class ProviderCredentialingResource extends Resource
                 IconColumn::make('is_active')->boolean(),
             ])
             ->filters([
-                SelectFilter::make('prescribing_level')->options([1, 2, 3]),
+                SelectFilter::make('prescribing_level_code')
+                    ->label('Prescribing level')
+                    ->options(NhisPrescribingLevel::options()),
                 SelectFilter::make('is_active')->options(['1' => 'Active', '0' => 'Inactive']),
             ])
             ->recordActions([

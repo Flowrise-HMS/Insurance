@@ -45,22 +45,27 @@ class MasterDataImportTest extends TestCase
         $this->assertSame(0, $second->created);
         $this->assertSame(2, $second->updated);
         $this->assertSame(2, NhisMedicine::query()->count());
-        $this->assertSame(1, NhisMedicine::query()->where('code', 'MED001')->first()->prescribing_level);
+        $medicine = NhisMedicine::query()->where('code', 'MED001')->first();
+        $this->assertSame(1, $medicine->prescribing_level);
+        $this->assertSame('A', $medicine->prescribing_level_code);
     }
 
-    public function test_medicine_import_clamps_prescribing_level_and_skips_bad_rows(): void
+    public function test_medicine_import_accepts_official_level_codes_and_skips_invalid_rows(): void
     {
         $path = $this->writeCsv([
-            ['code', 'name', 'prescribing_level'],
-            ['MED003', 'Valid', '9'],
-            ['', 'Missing Code', '1'],
+            ['code', 'name', 'prescribing_level_code'],
+            ['MED003', 'Specialist Drug', 'SM'],
+            ['MED004', 'Bad Level', 'ZZ'],
+            ['', 'Missing Code', 'A'],
         ]);
 
         $result = app(MedicineCatalogImport::class)->import($path);
 
         $this->assertSame(1, $result->created);
-        $this->assertSame(1, $result->skipped);
-        $this->assertSame(3, NhisMedicine::query()->where('code', 'MED003')->first()->prescribing_level);
+        $this->assertSame(2, $result->skipped);
+        $medicine = NhisMedicine::query()->where('code', 'MED003')->first();
+        $this->assertSame('SM', $medicine->prescribing_level_code);
+        $this->assertSame(7, $medicine->prescribing_level);
     }
 
     public function test_members_master_import_upserts_on_member_and_card_pair(): void
@@ -123,7 +128,10 @@ class MasterDataImportTest extends TestCase
         $this->assertSame(1, $first->created);
         $this->assertSame(1, $second->updated);
         $this->assertSame(1, ProviderCredentialing::query()->count());
-        $this->assertSame(['OPDC', 'ORTH'], ProviderCredentialing::query()->first()->specialities);
+        $credential = ProviderCredentialing::query()->first();
+        $this->assertSame(['OPDC', 'ORTH'], $credential->specialities);
+        $this->assertSame('M', $credential->prescribing_level_code);
+        $this->assertSame(2, $credential->prescribing_level);
     }
 
     public function test_tariff_book_import_seeds_book_and_items(): void

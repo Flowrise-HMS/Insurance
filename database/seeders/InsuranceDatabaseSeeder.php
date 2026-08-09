@@ -33,5 +33,7 @@ class InsuranceDatabaseSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+
+        $this->call(NhisMedicinesList2025Seeder::class);
     }
 }

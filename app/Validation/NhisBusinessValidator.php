@@ -5,6 +5,7 @@ namespace Modules\Insurance\Validation;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Modules\Insurance\Enums\ClaimLineType;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\NhisMedicine;
 use Modules\Insurance\Models\ProviderCredentialing;
@@ -287,27 +288,33 @@ class NhisBusinessValidator
             ->where('is_active', true)
             ->first();
 
-        $maxMedicineLevel = $claim->lines
+        $highestMedicine = $claim->lines
             ->where('line_type', ClaimLineType::MEDICINE)
             ->map(function ($line) {
-                $medicine = NhisMedicine::query()
+                return NhisMedicine::query()
                     ->where('code', $line->external_item_code)
                     ->first();
-
-                return $medicine?->prescribing_level ?? 1;
             })
-            ->max();
+            ->filter()
+            ->sortByDesc(fn (NhisMedicine $medicine): int => $medicine->prescribing_level)
+            ->first();
 
-        if (! $maxMedicineLevel) {
+        if (! $highestMedicine) {
             return [];
         }
 
-        $prescribingLevel = $credentialing?->prescribing_level ?? 1;
+        $prescribingLevel = $credentialing?->prescribing_level ?? $this->settings->prescribing_level ?? 1;
+        $prescriberCode = $credentialing?->prescribing_level_code
+            ?? NhisPrescribingLevel::tryFromOrdinal((int) $prescribingLevel)?->value
+            ?? (string) $prescribingLevel;
+        $medicineCode = $highestMedicine->prescribing_level_code
+            ?? NhisPrescribingLevel::tryFromOrdinal((int) $highestMedicine->prescribing_level)?->value
+            ?? (string) $highestMedicine->prescribing_level;
 
-        if ($maxMedicineLevel > $prescribingLevel) {
+        if ($highestMedicine->prescribing_level > $prescribingLevel) {
             $items[] = new ValidationItem(
                 code: '231',
-                message: "Prescriber is credentialled to level {$prescribingLevel} but a medicine requires level {$maxMedicineLevel}.",
+                message: "Prescriber is credentialled to level {$prescriberCode} but a medicine requires level {$medicineCode}.",
                 severity: 'warning',
                 claimNumber: $claim->claim_number,
             );

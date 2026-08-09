@@ -15,6 +15,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Settings\InsuranceSettings;
 
@@ -70,8 +71,12 @@ class ManageInsuranceSettings extends Page implements HasForms
                             ->helperText('When enabled, NHIS claims must carry a valid claim check code (dial *842# option 1) before they can be marked ready and exported.'),
                         Select::make('prescribing_level')
                             ->label('Default Prescribing Level')
-                            ->options([1 => 'Level 1', 2 => 'Level 2', 3 => 'Level 3'])
-                            ->helperText('NHIA medicines prescribing level; providers may override via credentialing.'),
+                            ->options(collect(NhisPrescribingLevel::cases())
+                                ->mapWithKeys(fn (NhisPrescribingLevel $level): array => [
+                                    $level->ordinal() => (string) $level->getLabel(),
+                                ])
+                                ->all())
+                            ->helperText('Facility default NHIS prescribing level (A–SM). Credentialing may override per prescriber.'),
                         Toggle::make('enable_prescribing_level_warning')
                             ->label('Warn on prescribing level breaches'),
                         Select::make('member_verification_mode')

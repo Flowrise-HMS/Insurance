@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Insurance\Database\Factories\ProviderCredentialingFactory;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 
 class ProviderCredentialing extends Model
 {
@@ -21,6 +22,7 @@ class ProviderCredentialing extends Model
     protected $fillable = [
         'staff_id',
         'provider_name',
+        'prescribing_level_code',
         'prescribing_level',
         'specialities',
         'accreditation_number',
@@ -40,6 +42,18 @@ class ProviderCredentialing extends Model
         'is_active' => 'boolean',
         'imported_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (ProviderCredentialing $credentialing): void {
+            if (filled($credentialing->prescribing_level_code)) {
+                $level = NhisPrescribingLevel::tryFromCode($credentialing->prescribing_level_code);
+                if ($level) {
+                    $credentialing->prescribing_level = $level->ordinal();
+                }
+            }
+        });
+    }
 
     public function staff(): BelongsTo
     {

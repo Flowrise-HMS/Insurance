@@ -6,6 +6,7 @@ use BackedEnum;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -16,6 +17,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Modules\Core\Enums\NavigationGroup;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\MasterData\NhisMedicineResource\Pages\CreateNhisMedicine;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\MasterData\NhisMedicineResource\Pages\EditNhisMedicine;
@@ -41,11 +43,12 @@ class NhisMedicineResource extends Resource
                 TextInput::make('name')->required(),
                 TextInput::make('strength'),
                 TextInput::make('form'),
-                TextInput::make('prescribing_level')
-                    ->numeric()
-                    ->minValue(1)
-                    ->maxValue(3)
-                    ->required(),
+                Select::make('prescribing_level_code')
+                    ->label('Prescribing level')
+                    ->options(NhisPrescribingLevel::options())
+                    ->required()
+                    ->default(NhisPrescribingLevel::A->value),
+                TextInput::make('unit_of_pricing'),
                 DatePicker::make('effective_from'),
                 DatePicker::make('effective_to'),
                 Toggle::make('is_active')->default(true),
@@ -61,13 +64,16 @@ class NhisMedicineResource extends Resource
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('strength'),
                 TextColumn::make('form'),
-                TextColumn::make('prescribing_level'),
+                TextColumn::make('prescribing_level_code')->label('Level')->sortable(),
+                TextColumn::make('unit_of_pricing')->toggleable(),
                 TextColumn::make('effective_from')->date(),
                 TextColumn::make('effective_to')->date(),
                 IconColumn::make('is_active')->boolean(),
             ])
             ->filters([
-                SelectFilter::make('prescribing_level')->options([1, 2, 3]),
+                SelectFilter::make('prescribing_level_code')
+                    ->label('Prescribing level')
+                    ->options(NhisPrescribingLevel::options()),
                 SelectFilter::make('is_active')->options(['1' => 'Active', '0' => 'Inactive']),
             ])
             ->recordActions([

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Insurance\Database\Factories\NhisMedicineFactory;
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 
 class NhisMedicine extends Model
 {
@@ -21,7 +22,9 @@ class NhisMedicine extends Model
         'name',
         'strength',
         'form',
+        'prescribing_level_code',
         'prescribing_level',
+        'unit_of_pricing',
         'effective_from',
         'effective_to',
         'is_active',
@@ -36,6 +39,18 @@ class NhisMedicine extends Model
         'is_active' => 'boolean',
         'imported_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (NhisMedicine $medicine): void {
+            if (filled($medicine->prescribing_level_code)) {
+                $level = NhisPrescribingLevel::tryFromCode($medicine->prescribing_level_code);
+                if ($level) {
+                    $medicine->prescribing_level = $level->ordinal();
+                }
+            }
+        });
+    }
 
     protected static function newFactory(): Factory
     {

@@ -1,0 +1,552 @@
+code,name,strength,form,unit_of_pricing,price,prescribing_level_code,effective_from,is_active
+ACETAZIN1,Acetazolamide,500 mg,Injection,Ampoule,17.16,C,2025-03-01,1
+ACETAZTA1,Acetazolamide,250 mg,Tablet,Tablet,0.88,C,2025-03-01,1
+ACETYLIN1,Acetylcysteine,200 mg/mL,Injection,1 mL,62.98,B1,2025-03-01,1
+ACETYLTA1,Acetylsalicylic Acid,300 mg,Tablet,Tablet,0.55,A,2025-03-01,1
+ACETYLDT1,Acetylsalicylic Acid,75 mg (Dispersible),Dispersible Tablet,Tablet,0.33,B2,2025-03-01,1
+ACTINOIN1,Actinomycin D Injection 0.5 mg Intravenous,,Injection,Vial,205.57,D,2025-03-01,1
+ACTCHAPO1,Activated Charcoal Powder,50 g,Powder/Granules,50 G,38.56,A,2025-03-01,1
+ACICLOCR1,Acyclovir,5%,Cream,5G,38.50,C,2025-03-01,1
+ACICLOEO1,Acyclovir,3%,Eye Ointment,2G,52.03,C,2025-03-01,1
+ACICLOIN1,Acyclovir,250 mg vial,Injection,Vial,136.13,C,2025-03-01,1
+ACICLOSU2,Acyclovir,200 mg/5 mL,Suspension,20 mL,276.91,B2,2025-03-01,1
+ACICLOTA1,Acyclovir,200 mg,Tablet,Tablet,1.98,B2,2025-03-01,1
+ADRENAIN1,Adrenaline,1 mg/1mL (1:1000),Injection,1 mL,7.70,M,2025-03-01,1
+ADRENAIN2,"Adrenaline Injection, 1:10",000,Injection,Vial,6.55,M,2025-03-01,1
+ADRIAMIN1,Adriamycin,50 mg,Injection,Vial,172.59,D,2025-03-01,1
+ALBENDSY1,Albendazole,100 mg/5 mL,Syrup,20 mL,4.10,A,2025-03-01,1
+ALBENDTA1,Albendazole,200 mg,Tablet,Tablet,4.68,A,2025-03-01,1
+ALBENDTA2,Albendazole,400 mg,Tablet,Tablet,1.17,A,2025-03-01,1
+ALLOPUTA1,Allopurinol,100 mg,Tablet,Tablet,0.94,B1,2025-03-01,1
+ALLOPUTA2,Allopurinol,300 mg,Tablet,Tablet,1.10,B1,2025-03-01,1
+AMIACIIN1,Amino Acid Solution,10%,Injection,200 mL,106.00,D,2025-03-01,1
+AMIACIIN2,Amino Acid Solution,20%,Injection,200 mL,48.05,D,2025-03-01,1
+AMINOPIN1,Aminophylline,250 mg/10 mL,Injection,Ampoule,11.55,B2,2025-03-01,1
+AMIODATA1,Amiodarone,200 mg,Tablet,Tablet,1.93,SM,2025-03-01,1
+AMITRITA1,Amitriptyline,10 mg,Tablet,Tablet,0.66,B1,2025-03-01,1
+AMITRITA2,Amitriptyline,25 mg,Tablet,Tablet,0.18,B2,2025-03-01,1
+AMITRITA3,Amitriptyline,50 mg,Tablet,Tablet,0.66,B1,2025-03-01,1
+AMLODITA2,Amlodipine,10 mg,Tablet,Tablet,0.12,B1,2025-03-01,1
+AMLODITA1,Amlodipine,5 mg,Tablet,Tablet,0.11,B1,2025-03-01,1
+AMOARTPO2,Amodiaquine + Artesunate,150 mg + 50 mg,Powder/Granules,Sachet,5.78,A,2025-03-01,1
+AMOARTPO1,Amodiaquine + Artesunate,75 mg + 25 mg,Powder/Granules,Sachet,13.97,A,2025-03-01,1
+AMOARTTA2,Amodiaquine + Artesunate,135 mg + 50 mg (12 tabs),Tablet,1 Course,5.07,A,2025-03-01,1
+AMOARTTA4,Amodiaquine + Artesunate,135 mg + 50 mg (3's),Tablet,1 Course,0.70,A,2025-03-01,1
+AMOARTTA5,Amodiaquine + Artesunate,270 mg + 100 mg (3's),Tablet,1 Course,1.28,A,2025-03-01,1
+AMOARTTA6,Amodiaquine + Artesunate,270 mg + 100 mg (6's),Tablet,1 Course,2.15,A,2025-03-01,1
+AMOARTTA3,Amodiaquine + Artesunate,67.5 mg + 25 mg (3's),Tablet,1 Course,0.65,A,2025-03-01,1
+AMOARTTA1,Amodiaquine + Artesunate,67.5 mg + 25 mg (6 tabs),Tablet,1 Course,5.15,A,2025-03-01,1
+COAMOXIN2,Amoxicillin + Clavulanic Acid,1.2g,Injection,Vial,16.30,B2,2025-03-01,1
+COAMOXIN1,Amoxicillin + Clavulanic Acid,500 mg + 100 mg,Injection,Vial,18.70,B2,2025-03-01,1
+COAMOXSU1,Amoxicillin + Clavulanic Acid,250 mg + 62 mg,Suspension,70 mL,19.52,B1,2025-03-01,1
+COAMOXSU2,Amoxicillin + Clavulanic Acid,400 mg + 57 mg,Suspension,70 mL,25.86,B1,2025-03-01,1
+COAMOXTA1,Amoxicillin + Clavulanic Acid,500 mg + 125 mg,Tablet,Tablet,2.31,B1,2025-03-01,1
+COAMOXTA2,Amoxicillin + Clavulanic Acid,875 mg + 125 mg,Tablet,Tablet,2.98,B2,2025-03-01,1
+AMOXICDT1,Amoxicillin 250 mg,,Dispersible Tablet,Tablet,1.87,A,2025-03-01,1
+AMOXICCA1,Amoxicillin,250 mg,Capsule,Capsule,0.47,A,2025-03-01,1
+AMOXICCA2,Amoxicillin,500 mg,Capsule,Capsule,0.83,A,2025-03-01,1
+AMOXICSU1,Amoxicillin,125 mg/5 mL,Suspension,100 mL,16.50,A,2025-03-01,1
+AMPICIIN1,Ampicillin,500 mg,Injection,Vial,3.85,B1,2025-03-01,1
+ANASTRTA1,Anastrozole,1 mg,Tablet,Tablet,9.68,SM,2025-03-01,1
+ANIMGLIN1,Anti RH Immunoglobulin,1500IU /5ml,Injection,Vial,827.20,C,2025-03-01,1
+ANTESEIN1,Anti Tetanus Serum Injection 1500 IU,,Injection,Vial,42.85,B1,2025-03-01,1
+AQUEOUCR1,Aqueous Cream BP,,Cream,100 G,29.98,A,2025-03-01,1
+ARTLUMSU1,Artemether + Lumefantrine,(Powder For Reconstitution) 20 mg + 120 mg / 5 mL,Suspension,100 mL,25.85,A,2025-03-01,1
+ARTLUMTA3,Artemether + Lumefantrine,20 mg + 120 mg (12's),Tablet,1 Course,1.25,A,2025-03-01,1
+ARTLUMTA4,Artemether + Lumefantrine,20 mg + 120 mg (18's),Tablet,1 Course,1.88,A,2025-03-01,1
+ARTLUMTA1,Artemether + Lumefantrine,20 mg + 120 mg (24’s),Tablet,1 Course,2.24,A,2025-03-01,1
+ARTLUMTA2,Artemether + Lumefantrine,20 mg + 120 mg (6's),Tablet,1 Course,0.61,A,2025-03-01,1
+ARTEMEIN2,Artemether Injection 80mg/mL,,Injection,Ampoule,5.50,B2,2025-03-01,1
+ARTLUMDT1,Artermether + Lumefantrine Dispersible,(20 mg + 6 Tablets 120 mg) Tablet,Dispersible Tablet,,4.39,A,2025-03-01,1
+ARTESUIN3,Artesunate injection 120mg,,Injection,Vial,6.25,B2,2025-03-01,1
+ARTESUIN1,Artesunate,30 mg,Injection,Vial,3.18,B2,2025-03-01,1
+ARTESUIN2,Artesunate,60 mg,Injection,Vial,3.18,B2,2025-03-01,1
+ARTESURE2,Artesunate suppository 100mg,,Suppository,Supp,6.05,A,2025-03-01,1
+ARTESURE1,Artesunate,50 mg,Suppository,Supp.,5.49,A,2025-03-01,1
+ATEHYDTA2,Atenolol + Hydrochlorthiazide,100 mg + 25 mg,Tablet,Tablet,1.20,B2,2025-03-01,1
+ATEHYDTA1,Atenolol + Hydrochlorthiazide,50 mg + 25 mg,Tablet,Tablet,0.77,B2,2025-03-01,1
+ATENOLIN1,Atenolol,500 microgram/10 mL,Injection,Ampoule,8.98,D,2025-03-01,1
+ATENOLTA3,Atenolol,100 mg,Tablet,Tablet,1.10,B2,2025-03-01,1
+ATENOLTA1,Atenolol,25 mg,Tablet,Tablet,1.10,B2,2025-03-01,1
+ATENOLTA2,Atenolol,50 mg,Tablet,Tablet,0.54,B2,2025-03-01,1
+ATORVATA1,Atorvastatin,10 mg,Tablet,Tablet,0.23,C,2025-03-01,1
+ATORVATA2,Atorvastatin,20 mg,Tablet,Tablet,0.30,C,2025-03-01,1
+ATROPIID1,Atropine,1%,Eye Drops,10 mL,36.30,C,2025-03-01,1
+ATROPIIN1,Atropine,0.6 mg/mL,Injection,1 mL,5.50,B2,2025-03-01,1
+AZITHRCA1,Azithromycin,250 mg,Capsule,Capsule,3.58,C,2025-03-01,1
+AZITHRSU1,Azithromycin Oral,200 mg/5 mL/15mL,Suspension,15 mL,35.20,C,2025-03-01,1
+AZITHRSU2,Azithromycin Oral,200 mg/5 mL/30mL,Suspension,30 mL,40.13,C,2025-03-01,1
+BADOESIN1,Badoe's Solution,1000 mL,Injection,1000 mL,22.00,B1,2025-03-01,1
+BECDIPGA2,Beclometasone dipropionate Inhaler,100 Inhaler microgram/metered dose (200 doses),Gaseous,,87.94,B2,2025-03-01,1
+BECDIPGA3,Beclometasone dipropionate Inhaler,200 Inhaler microgram/metered dose (200 doses),Gaseous,,87.94,B2,2025-03-01,1
+BECDIPGA1,Beclometasone dipropionate Inhaler,50 Inhaler microgram/metered dose (200 doses),Gaseous,,119.90,B2,2025-03-01,1
+BENDROTA1,Bendroflumethiazide,2.5 mg,Tablet,Tablet,0.12,B1,2025-03-01,1
+BENZATIN1,Benzatropine,1 mg/mL,Injection,1 mL,110.20,C,2025-03-01,1
+BENZATTA1,Benzatropine,2 mg,Tablet,Tablet,6.93,C,2025-03-01,1
+BEACSAOI1,Benzoic Acid + Salicylic Acid,6% + 3%,Ointment,25 G,17.60,B1,2025-03-01,1
+BENPERCR2,Benzoyl Peroxide,10%,Cream,30 G,131.45,C,2025-03-01,1
+BENPERCR1,Benzoyl Peroxide,5%,Cream,30 G,118.25,C,2025-03-01,1
+BENBENLO1,Benzyl Benzoate,25%,Lotion,30mL,24.86,A,2025-03-01,1
+BENBENLO2,Benzyl Benzoate,25%,Lotion,100 mL,28.60,A,2025-03-01,1
+BENZYLIN1,Benzylpenicillin,1 MU,Injection,Vial,3.30,B1,2025-03-01,1
+BENZYLIN2,Benzylpenicillin,5 MU,Injection,Vial,11.00,B1,2025-03-01,1
+BETVALCR2,Betamethasone Valerate,0.1%,Cream,15 G,38.50,D,2025-03-01,1
+BETAXOID1,Betaxolol HCL,0.5%,Eye Drops,5 mL,19.89,C,2025-03-01,1
+BISACOTA1,Bisacodyl,5 mg,Tablet,Tablet,1.10,B1,2025-03-01,1
+BISOPRTA2,Bisoprolol Tablet 10 mg,,Tablet,Tablet,1.02,B2,2025-03-01,1
+BISOPRTA1,Bisoprolol Tablet 5 mg,,Tablet,Tablet,0.98,B2,2025-03-01,1
+BROMOCTA1,Bromocriptine,2.5 mg,Tablet,Tablet,9.46,D,2025-03-01,1
+BUDFORGA2,Budesonide + Formoterol Inhaler 160 Inhaler microgram/4.5 microgram (60 Doses),,Gaseous,,151.25,B2,2025-03-01,1
+BUDFORGA1,Budesonide + Formoterol Inhaler 80 microgram/4.5 Inhaler microgram (60 Doses),,Gaseous,,143.00,B2,2025-03-01,1
+BUDESOGA1,Budesonide DPI,100 microgram (100 Doses),Gaseous,Inhaler,108.11,B2,2025-03-01,1
+BUDESOGA2,Budesonide DPI,200 microgram (100 Doses),Gaseous,Inhaler,212.78,B2,2025-03-01,1
+CALAMICR1,Calamine,15%,Cream,40 G,18.04,A,2025-03-01,1
+CALAMILO1,Calamine,15%,Lotion,200 mL,11.55,A,2025-03-01,1
+CALCIFTA1,"Calciferol Tablet, 10",000 units,Tablet,Tablet,4.78,D,2025-03-01,1
+CALGLUIN1,Calcium Gluconate,100 mg/mL in 10 mL,Injection,Ampoule,29.70,B2,2025-03-01,1
+CALCARTA1,Calcium Carbonate,500 mg,Tablet,Tablet,3.30,B1,2025-03-01,1
+CALVITTA1,Calcium with Vitamin D,(97 mg + 10 microgram),Tablet,Tablet,1.47,M,2025-03-01,1
+CAPECITA1,Capecitabine,500 mg,Tablet,Tablet,19.14,D,2025-03-01,1
+CARBAMTA3,Carbamazepine Sustained-Release,200 mg,Tablet,Tablet,2.92,C,2025-03-01,1
+CARBAMTA4,Carbamazepine Sustained-Release,400 mg,Tablet,Tablet,6.22,C,2025-03-01,1
+CARBAMTA1,Carbamazepine,100 mg,Tablet,Tablet,1.21,B2,2025-03-01,1
+CARBAMTA2,Carbamazepine,200 mg,Tablet,Tablet,1.05,B2,2025-03-01,1
+CARBIMTA2,Carbimazole,20 mg,Tablet,Tablet,2.20,C,2025-03-01,1
+CARBIMTA1,Carbimazole,5 mg,Tablet,Tablet,1.16,C,2025-03-01,1
+CARBOCSY1,Carbocisteine Paediatric,125 mg/5 mL,Syrup,100 mL,14.30,B1,2025-03-01,1
+CARBOCSY2,Carbocisteine,250 mg/5 mL,Syrup,100 mL,11.06,B1,2025-03-01,1
+CARBOPIN1,Carboplatin,150 mg Intravenous,Injection,Vial,385.00,D,2025-03-01,1
+CARBOPIN2,Carboplatin,450 mg Intravenous,Injection,Vial,559.68,D,2025-03-01,1
+CARVEDTA2,Carvedilol Tablet 12.5 mg,,Tablet,Tablet,1.41,D,2025-03-01,1
+CARVEDTA1,Carvedilol Tablet 3.125 mg,,Tablet,Tablet,1.05,D,2025-03-01,1
+CEFACLCA1,Cefaclor,250 mg,Capsule,Capsule,6.86,B2,2025-03-01,1
+CEFACLCA2,Cefaclor,500 mg,Capsule,Capsule,12.65,B2,2025-03-01,1
+CEFACLSU1,Cefaclor,125 mg/5 mL,Suspension,100 mL,40.15,B2,2025-03-01,1
+CEFACLSU2,Cefaclor,250 mg/5 mL,Suspension,100 mL,59.95,B2,2025-03-01,1
+CEFOTAIN2,Cefotaxime,1 g,Injection,Vial,20.20,C,2025-03-01,1
+CEFOTAIN1,Cefotaxime,500 mg,Injection,Vial,14.85,C,2025-03-01,1
+CEFTRIIN3,Ceftriazone,1g,Injection,Vial,13.20,C,2025-03-01,1
+CEFTRIIN2,Ceftriazone,500 mg,Injection,Vial,8.80,C,2025-03-01,1
+CEFUROIN2,Cefuroxime Injection 1.5 g,,Injection,Vial,35.42,B2,2025-03-01,1
+CEFUROIN1,Cefuroxime,750 mg,Injection,Vial,13.20,B2,2025-03-01,1
+CEFUROSU1,Cefuroxime,125 mg/5 mL,Suspension,50mL,20.56,B2,2025-03-01,1
+CEFUROTA1,Cefuroxime,125 mg,Tablet,Tablet,4.29,B2,2025-03-01,1
+CEFUROTA2,Cefuroxime,250 mg,Tablet,Tablet,2.17,B2,2025-03-01,1
+CELECOTA1,Celecoxib Tablet 100 mg,,Tablet,Tablet,1.32,C,2025-03-01,1
+CELECOTA2,Celecoxib Tablet 200 mg,,Tablet,Tablet,2.75,C,2025-03-01,1
+CETIRISY1,Cetirizine,5 mg/5 mL,Syrup,30 mL,8.80,B2,2025-03-01,1
+CETIRITA1,Cetirizine,10 mg,Tablet,Tablet,0.07,A,2025-03-01,1
+CETRIMSO1,Cetrimide Solution,,SO,200 mL,7.15,M,2025-03-01,1
+CHLORAED1,Chloramphenicol,5%,Ear Drops,10 mL,6.88,A,2025-03-01,1
+CHLORAID1,Chloramphenicol,0.5%,Eye Drops,10 mL,6.38,A,2025-03-01,1
+CHLORAEO1,Chloramphenicol,1%,Eye Ointment,5G,8.80,A,2025-03-01,1
+CHLORAIN1,Chloramphenicol,1 g,Injection,1G,1.65,C,2025-03-01,1
+CHLORASU1,Chloramphenicol,125mg/5mL,Suspension,100 mL,8.58,B2,2025-03-01,1
+CHLORHCR1,Chlorhexidine,1%,Cream,15 G,28.60,A,2025-03-01,1
+CHLORHGE1,Chlorhexidine Gel 7.1 % ( digluconate ) delivering 4% chlorhexidine,,Gel,25g,24.75,A,2025-03-01,1
+CHLORHMW2,Chlorhexidine Mouth wash 0.12%,,Mouth Wash,300ml,22.69,A,2025-03-01,1
+CHLORHSO1,Chlorhexidine Solution,2.5%,SO,100 mL,75.13,A,2025-03-01,1
+CHLPHESY1,Chlorphenamine,2 mg/5 mL,Syrup,100 mL,11.00,A,2025-03-01,1
+CHLPHETA1,Chlorphenamine,4 mg,Tablet,Tablet,0.17,A,2025-03-01,1
+CHLPROIN1,Chlorpromazine,25 mg/mL in 2 mL,Injection,Ampoule,7.70,B2,2025-03-01,1
+CHLPROTA3,Chlorpromazine,100 mg,Tablet,Tablet,0.58,B1,2025-03-01,1
+CHLPROTA1,Chlorpromazine,25 mg,Tablet,Tablet,5.94,B1,2025-03-01,1
+CHLPROTA2,Chlorpromazine,50 mg,Tablet,Tablet,0.20,B1,2025-03-01,1
+CHREFLIN2,Cholera Replacement Fluid,(5:4:1) 1 Litre,Injection,1000 mL,19.60,B1,2025-03-01,1
+CHREFLIN1,Cholera Replacement Fluid,(5:4:1) 500 mL,Injection,500 mL,10.98,B1,2025-03-01,1
+CIPTINTA1,Ciprofloxacin + Tinidazole,500 mg + 500 mg,Tablet,Tablet,2.85,B2,2025-03-01,1
+CIPROFID1,Ciprofloxacin,0.3%,Eye Drops,10 mL,5.17,B2,2025-03-01,1
+CIPROFIN1,Ciprofloxacin,2 mg/mL in 100 mL,Injection,Bottle,9.35,B2,2025-03-01,1
+CIPROFTA1,Ciprofloxacin,250 mg,Tablet,Tablet,0.61,B1,2025-03-01,1
+CIPROFTA2,Ciprofloxacin,500 mg,Tablet,Tablet,0.61,B1,2025-03-01,1
+CLARITCA1,Clarithromycin,250 mg,Capsule,Capsule,3.08,C,2025-03-01,1
+CLARITCA2,Clarithromycin,500 mg,Capsule,Capsule,5.50,C,2025-03-01,1
+CLARITSU1,Clarithromycin Paediatric,125 mg/5 mL,Suspension,100 mL,110.28,C,2025-03-01,1
+CLINDACA1,Clindamycin,150 mg,Capsule,Capsule,0.77,C,2025-03-01,1
+CLINDAIN1,Clindamycin,150 mg/mL in 2 mL,Injection,Vial,29.17,C,2025-03-01,1
+CLINDASU1,Clindamycin,75 mg/5 mL,Suspension,100 mL,207.90,C,2025-03-01,1
+CLINDASO1,Clindamycin Topical Solution,1%,SO,30 mL,100.10,C,2025-03-01,1
+CLOPROCR1,Clobetasol Propionate,0.05%,Cream,15 G,57.48,C,2025-03-01,1
+CLOHYDCR1,Clotrimazole + Hydrocortisone,1% + 1%,Cream,15 G,16.50,C,2025-03-01,1
+CLOTRICR1,Clotrimazole,1%,Cream,30 G,8.80,A,2025-03-01,1
+CLOTRICR2,Clotrimazole,2%,Cream,30 G,11.55,A,2025-03-01,1
+CLOTRIVP1,Clotrimazole Pessary,100 mg,Vaginal Pessary,6 Pess.,11.55,M,2025-03-01,1
+CLOTRIVP2,Clotrimazole Pessary,200 mg,Vaginal Pessary,3 Pess.,24.20,M,2025-03-01,1
+CLOTRIVP3,Clotrimazole Pessary,500 mg,Vaginal Pessary,1 Pess.,21.01,B1,2025-03-01,1
+CLOXACIN1,Cloxacillin,250 mg,Injection,Vial,2.71,B1,2025-03-01,1
+CLOXACIN2,Cloxacillin,500 mg,Injection,Vial,11.28,B1,2025-03-01,1
+CODEINTA1,Codeine,30 mg,Tablet,Tablet,1.80,B2,2025-03-01,1
+COOENOTA1,Conjugated Oestrogen + Norgesterol,625 microgram + 150 microgram,Tablet,Tablet,3.77,C,2025-03-01,1
+CONOESTA1,Conjugated Oestrogen,625 microgram,Tablet,Tablet,6.02,D,2025-03-01,1
+CONOESVC1,Conjugated Oestrogen,625 microgram/g,Vaginal Cream,1G,255.20,D,2025-03-01,1
+CORANTID1,Corticosteroid + Antibiotic,,Eye Drops,10 mL,41.80,C,2025-03-01,1
+CORANTEO1,Corticosteroid + Antibiotic,,Eye Ointment,10 G,53.90,C,2025-03-01,1
+COTRIMSU1,Co-trimoxazole,(200+40) mg/5 mL,Suspension,100 mL,9.46,A,2025-03-01,1
+COTRIMTA1,Cotrimoxazole,(400+80) mg,Tablet,Tablet,0.23,A,2025-03-01,1
+CYCLOPID1,Cyclopentolate,1%,Eye Drops,5 mL,42.13,SM,2025-03-01,1
+CYCLOPIN1,Cyclophosphamide,500 mg,Injection,Vial,39.47,D,2025-03-01,1
+DALSODIN1,Prefilled Dalteparin Sodium,5000 units/0.2 mL Syringe,Injection,,102.08,D,2025-03-01,1
+DARROWIN1,Darrow's Solution,Half Strength 250 mL,Injection,250 mL,8.71,B1,2025-03-01,1
+DEXAMEID1,Dexamethasone,1%,Eye Drops,5 mL,8.84,C,2025-03-01,1
+DEXAMEEO1,Dexamethasone,1%,Eye Ointment,5G,42.63,C,2025-03-01,1
+DEXAMEIN1,Dexamethasone,4 mg/mL,Injection,1mL,3.03,C,2025-03-01,1
+DEXAMEIN2,Dexamethasone,8 mg/2 mL,Injection,2mL,2.20,C,2025-03-01,1
+DEXAMETA2,Dexamethasone,2 mg,Tablet,Tablet,6.44,D,2025-03-01,1
+DEXAMETA3,Dexamethasone,4 mg,Tablet,Tablet,4.71,D,2025-03-01,1
+DEXAMETA1,Dexamethasone,500 microgram,Tablet,Tablet,0.06,D,2025-03-01,1
+DEXTROTA1,Dextromethorphan Containing Cough,,Tablet,100ml,40.70,B2,2025-03-01,1
+DESOCHIN1,Dextrose in Sodium Chloride Intravenous,4.3% in 0.18% (250 mL),Injection,250 mL,12.68,M,2025-03-01,1
+DESOCHIN2,Dextrose in Sodium Chloride Intravenous,5% in 0.9% (500 mL),Injection,500 mL,12.93,M,2025-03-01,1
+DEXTROIN3,Dextrose,10% (250 mL),Injection,250 mL,9.65,B1,2025-03-01,1
+DEXTROIN4,Dextrose,10% (500 mL),Injection,500 mL,14.20,B1,2025-03-01,1
+DEXTROIN1,Dextrose,5% (250 mL),Injection,250 mL,11.00,M,2025-03-01,1
+DEXTROIN2,Dextrose,5% (500 mL),Injection,500 mL,11.86,M,2025-03-01,1
+DEXTROIN6,Dextrose,50% (250 mL),Injection,250 mL,17.42,B1,2025-03-01,1
+DIAZEPIN1,Diazepam,5 mg/mL in 2 mL,Injection,Ampoule,7.90,B1,2025-03-01,1
+DIAZEPRS1,Rectal Diazepam Rectal Tubes,2 mg/mL in 1.25 mL Tube,Rectal Solution,,5.50,A,2025-03-01,1
+DIAZEPTA2,Diazepam,10 mg,Tablet,Tablet,0.22,M,2025-03-01,1
+DIAZEPTA1,Diazepam,5 mg,Tablet,Tablet,0.17,M,2025-03-01,1
+DICLOFCA1,Diclofenac,75 mg,Capsule,Capsule,0.40,B1,2025-03-01,1
+DICLOFGE1,Diclofenac,,Gel,30 G,5.41,M,2025-03-01,1
+DICLOFIN1,Diclofenac,75mg/3mL,Injection,Ampoule,1.10,B1,2025-03-01,1
+DICLOFRE2,Diclofenac,100 mg,Suppository,Supp.,0.96,M,2025-03-01,1
+DICLOFRE1,Diclofenac,50 mg,Suppository,Supp.,1.71,A,2025-03-01,1
+DICLOFTA2,Diclofenac,50 mg,Tablet,Tablet,0.13,A,2025-03-01,1
+DIESTITA1,Diethylstilboestrol,1 mg,Tablet,Tablet,0.11,SM,2025-03-01,1
+DIESTITA2,Diethylstilboestrol,5 mg,Tablet,Tablet,8.65,SM,2025-03-01,1
+DIGOXIEL1,Digoxin,50 microgram/mL,Elixir,60 mL,1.38,C,2025-03-01,1
+DIGOXITA2,Digoxin,125 microgram,Tablet,Tablet,1.71,C,2025-03-01,1
+DIGOXITA3,Digoxin,250 microgram,Tablet,Tablet,1.98,C,2025-03-01,1
+DIGOXITA1,Digoxin,62.5 microgram,Tablet,Tablet,1.03,C,2025-03-01,1
+DIHPIPPO1,Dihydroartemisin + Piperaquine,10 mg + 80 mg,Powder/Granules,Sachet,3.85,A,2025-03-01,1
+DIHYDRTA1,Dihydrocodeine,30 mg,Tablet,Tablet,0.72,C,2025-03-01,1
+DISOPYCA1,Disopyramide,100 mg,Capsule,Capsule,6.60,D,2025-03-01,1
+DISPHOIN1,Disopyramide Phosphate,10 mg/mL in 5 mL,Injection,Ampoule,357.50,D,2025-03-01,1
+DOCETAIN1,Docetaxel,20 mg/mL,Injection,Ampoule,212.50,D,2025-03-01,1
+DOMPERTA1,Domperidone,10 mg,Tablet,Tablet,1.76,D,2025-03-01,1
+DOPAMIIN1,Dopamine,40 mg/mL in 5 mL,Injection,Vial,24.75,D,2025-03-01,1
+DOXAPRIN1,Doxapram,20 mg/mL in 5 mL,Injection,Vial,187.00,D,2025-03-01,1
+DOXORUIN1,Doxorubicin Injection 50 mg Intravenous,,Injection,Vial,130.00,D,2025-03-01,1
+DOXYCYCA1,Doxycycline,100 mg,Capsule,Capsule,0.92,B1,2025-03-01,1
+ENOSODIN2,Prefilled Enoxaparin Sodium,40 mg/0.4 mL Syringe,Injection,,126.50,B2,2025-03-01,1
+EPHEDRIN1,Ephedrine HCI,30 mg/mL,Injection,Ampoule,23.10,C,2025-03-01,1
+EPHEDRND1,Ephedrine,0.5%,Nasal Drops,10 mL,6.83,A,2025-03-01,1
+EPHEDRND2,Ephedrine,1%,Nasal Drops,10 mL,9.90,A,2025-03-01,1
+ERGOMEIN1,Ergometrine,0.2 mg/mL,Injection,1 mL,10.04,M,2025-03-01,1
+ERGOMEIN2,Ergometrine,0.5 mg/ml,Injection,1 mL,12.10,M,2025-03-01,1
+ERGOMETA1,Ergometrine,0.5 mg,Tablet,Tablet,0.66,A,2025-03-01,1
+ERGOTATA1,Ergotamine,2 mg,Tablet,Tablet,5.15,C,2025-03-01,1
+ERYTHRSY1,Erythromycin,125 mg/5 mL,Syrup,100 mL,23.65,B1,2025-03-01,1
+ERYTHRTA1,Erythromycin,250 mg,Tablet,Tablet,1.10,B1,2025-03-01,1
+ESOMEPCA1,Esomeprazole,20 mg,Capsule,Capsule,1.98,C,2025-03-01,1
+ESOMEPCA2,Esomeprazole,40 mg,Capsule,Capsule,3.40,C,2025-03-01,1
+ETHOSUSY1,Ethosuximide,250 mg/5 mL,Syrup,200 mL,21.51,D,2025-03-01,1
+ETHOSUTA1,Ethosuximide,250 mg,Tablet,Tablet,4.95,D,2025-03-01,1
+ETOPOSIN1,Etoposide Injection 100 mg Intravenous,,Injection,Vial,59.95,D,2025-03-01,1
+FEAMCISU1,Ferric Ammonium Citrate Mixture (FAC),,Suspension,200 mL,7.48,A,2025-03-01,1
+FERFUMTA1,Ferrous Fumarate,100 mg (Elemental Iron),Tablet,Tablet,0.22,A,2025-03-01,1
+FERSULSY1,Ferrous Sulphate (BPC),60 mg/5 mL,Syrup,200 mL,18.70,A,2025-03-01,1
+FESUFOTA1,Ferrous Sulphate + Folic Acid,50 mg (Elemental Iron) + 400 microgram,Tablet,Tablet,0.67,A,2025-03-01,1
+FERSULTA1,Ferrous Sulphate,60 mg (Elemental Iron),Tablet,Tablet,0.11,A,2025-03-01,1
+FINASTTA1,Finasteride,5 mg,Tablet,Tablet,4.33,SM,2025-03-01,1
+FLUCLOCA1,Flucloxacillin,250 mg,Capsule,Capsule,0.82,B2,2025-03-01,1
+FLUCLOIN1,Flucloxacillin,250 mg,Injection,Vial,10.18,B2,2025-03-01,1
+FLUCLOIN2,Flucloxacillin,500 mg,Injection,Vial,19.80,B2,2025-03-01,1
+FLUCLOSU1,Flucloxacillin,125 mg/5 mL,Suspension,100 mL,15.95,B1,2025-03-01,1
+FLUCONCA1,Fluconazole,150 mg,Capsule,Capsule,10.67,B1,2025-03-01,1
+FLUCONCA2,Fluconazole,200 mg,Capsule,Capsule,8.80,B2,2025-03-01,1
+FLUCONSU1,Fluconazole,10 mg/mL,Suspension,35 mL,32.45,B2,2025-03-01,1
+FLUCONSU2,Fluconazole,50 mg/5 mL,Suspension,35 mL,50.00,B2,2025-03-01,1
+FLUCONTA1,Fluconazole,50 mg,Tablet,Tablet,27.72,B2,2025-03-01,1
+FLUDROTA1,Fludrocortisone,100 microgram,Tablet,Tablet,10.78,D,2025-03-01,1
+FLUOXECA1,Fluoxetine,20 mg,Capsule,Capsule,1.43,C,2025-03-01,1
+FLUPENTA2,Flupentixol,1mg,Tablet,Tablet,1.65,C,2025-03-01,1
+FLUPENTA1,Flupentixol,500 microgram,Tablet,Tablet,1.53,C,2025-03-01,1
+FLUDECIN1,Fluphenazine Deconoate,25 mg/mL,Injection,1 mL,12.21,SM,2025-03-01,1
+FLUSALGA1,Fluticasone + Salmeterol Inhaler,250 microgram/50 Inhaler microgram (60 Doses),Gaseous,,275.00,B2,2025-03-01,1
+FLUTICGA2,Fluticasone MDI,125 microgram (120 Dose),Gaseous,Inhaler,191.73,B2,2025-03-01,1
+FLUTICGA3,Fluticasone MDI,250 microgram (120 Dose),Gaseous,Inhaler,128.70,B2,2025-03-01,1
+FLUVASCA1,Fluvastatin,20 mg,Capsule,Capsule,1.69,D,2025-03-01,1
+FOLACITA1,Folic Acid,5 mg,Tablet,Tablet,0.05,A,2025-03-01,1
+FUROSEIN1,Furosemide,10 mg/mL in 2 mL,Injection,Ampoule,1.56,B2,2025-03-01,1
+FUROSETA1,Furosemide,40 mg,Tablet,Tablet,0.28,B1,2025-03-01,1
+GELATIIN1,Gelatin Infusion (Succinylated Gelatin),,Injection,500 mL,82.61,B2,2025-03-01,1
+GENTAMED1,Gentamicin,0.3%,Ear Drops,10mL,6.62,B1,2025-03-01,1
+GENTAMID1,Gentamicin,0.3%,Eye Drops,10 mL,6.60,B1,2025-03-01,1
+GENTAMIN1,Gentamicin,40 mg/mL in 2 mL,Injection,Ampoule,2.75,C,2025-03-01,1
+GLIBENTA1,Glibenclamide,5 mg,Tablet,Tablet,0.15,B1,2025-03-01,1
+GLICLATA1,Gliclazide,80 mg,Tablet,Tablet,0.66,C,2025-03-01,1
+GLIMEPTA1,Glimepiride,1 mg,Tablet,Tablet,1.10,C,2025-03-01,1
+GLIMEPTA2,Glimepiride,2 mg,Tablet,Tablet,0.19,C,2025-03-01,1
+GLIMEPTA3,Glimepiride,3 mg,Tablet,Tablet,1.57,C,2025-03-01,1
+GLIMEPTA4,Glimepiride,4 mg,Tablet,Tablet,0.24,C,2025-03-01,1
+GLUCAGIN1,Glucagon,1 mg,Injection,Ampoule,455.40,C,2025-03-01,1
+GLTRSUTA1,100 Glyceryl Trinitrate Sublingual,500 microgram Tablets,Tablet,,121.63,C,2025-03-01,1
+GRANISIN1,Granisetron,1 mg/1mL,Injection,Ampoule,83.85,D,2025-03-01,1
+GRANISTA1,Granisetron,1 mg,Tablet,Tablet,17.88,D,2025-03-01,1
+GRISEOSU1,Griseofulvin,125 mg/5 mL,Suspension,100 mL,29.26,B2,2025-03-01,1
+GRISEOTA1,Griseofulvin,125 mg,Tablet,Tablet,0.35,B1,2025-03-01,1
+GRISEOTA2,Griseofulvin,500 mg,Tablet,Tablet,2.20,B1,2025-03-01,1
+GUAIFESY1,Guaifenesin Containing Expectorant,,Syrup,100ml,34.93,B2,2025-03-01,1
+HALOPEIN1,Haloperidol,5 mg/5 mL,Injection,Ampoule,9.24,SM,2025-03-01,1
+HALOPETA1,Haloperidol,0.5 mg,Tablet,Tablet,0.95,C,2025-03-01,1
+HALOPETA2,Haloperidol,5 mg,Tablet,Tablet,1.41,C,2025-03-01,1
+HALOPETA3,Haloperidol,10 mg,Tablet,Tablet,1.65,C,2025-03-01,1
+HEPARIIN1,Heparin,1000 units/mL in 5 mL,Injection,Ampoule,111.21,D,2025-03-01,1
+HEPARIIN2,Heparin,5000 units/mL in 1mL,Injection,Ampoule,90.86,D,2025-03-01,1
+HEPARIIN3,Heparin,5000 units/mL in 5 mL,Injection,Vial,137.50,D,2025-03-01,1
+HUIMTEIN1,Human Immune Tetanus Globulins,250 IU/mL,Injection,1 mL,42.85,B1,2025-03-01,1
+HUIMTEIN2,Human Immune Tetanus Globulins,500 IU/mL,Injection,2 mL,42.85,B1,2025-03-01,1
+HYDRALIN1,Hydralazine,20 mg,Injection,Ampoule,26.95,C,2025-03-01,1
+HYDRALTA1,Hydralazine,25 mg,Tablet,Tablet,3.25,B2,2025-03-01,1
+HYDROCCR1,Hydrocortisone,1%,Cream,15 G,12.06,B1,2025-03-01,1
+HYDROCID1,Hydrocortisone,1%,Eye Drops,5 mL,16.50,C,2025-03-01,1
+HYDROCEO1,Hydrocortisone,1%,Eye Ointment,5G,13.86,C,2025-03-01,1
+HYSOSUIN1,Hydrocortisone Sodium Succinate,100 mg,Injection,Vial,11.00,M,2025-03-01,1
+HYDROXIN1,Hydroxocobalamin,1 mg/mL,Injection,1 mL,9.61,D,2025-03-01,1
+HYDROXCA1,Hydroxyurea,500mg,Capsule,Capsule,3.52,SM,2025-03-01,1
+HYOBUTIN1,Hyoscine Butylbromide,20 mg/ mL,Injection,1 mL,6.60,M,2025-03-01,1
+HYOBUTTA1,Hyoscine Butylbromide,10 mg,Tablet,Tablet,0.99,M,2025-03-01,1
+IBUPROSU1,Ibuprofen,100 mg/5 mL,Suspension,100 mL,12.65,A,2025-03-01,1
+IBUPROTA1,Ibuprofen,200 mg,Tablet,Tablet,0.22,A,2025-03-01,1
+IBUPROTA2,Ibuprofen,400 mg,Tablet,Tablet,0.28,A,2025-03-01,1
+IMIPRATA1,Imipramine,25 mg,Tablet,Tablet,0.33,C,2025-03-01,1
+INPRMIIN1,Insulin premixed (30/70) HM,100 units/mL in 10 mL,Injection,Vial,84.42,C,2025-03-01,1
+INSSOLIN1,Insulin Soluble HM,100 units/mL in 10 mL,Injection,Vial,80.87,C,2025-03-01,1
+INTRALSO1,Intralipid Solution (for TPN),,SO,500 mL,165.00,D,2025-03-01,1
+IPRBROGA1,Ipratropium Bromide Nebulizer 250 micrograms,,Gaseous,Dose,11.00,B2,2025-03-01,1
+IPRBROGA2,Ipratropium Bromide Nebulizer 500 micrograms,,Gaseous,Dose,14.30,B2,2025-03-01,1
+IROPOLCA1,Iron (III) Polymaltose Complex,,Capsule,Capsule,0.28,M,2025-03-01,1
+IROPOLSU1,Iron (III) Polymaltose Complex,,Suspension,200 mL,9.75,M,2025-03-01,1
+IRODEXIN1,Iron Dextran,100mg/2mL,Injection,2 mL,27.50,C,2025-03-01,1
+IROSUCIN1,Iron Sucrose,20 mg/mL,Injection,Ampoule,60.50,SM,2025-03-01,1
+ISOINSIN1,Isophane Insulin Injection (HM),100 units/mL in 10 mL,Injection,Vial,100.10,C,2025-03-01,1
+ISODINTA1,Isosorbide Dinitrate,10 mg,Tablet,Tablet,1.97,C,2025-03-01,1
+ITRACOCA1,Itraconazole,100 mg,Capsule,Capsule,5.50,D,2025-03-01,1
+ITRACOSU1,Itraconazole,10 mg/mL,Suspension,30 mL,7.33,D,2025-03-01,1
+KETOCOCR1,Ketoconazole,30g,Cream,Tube,22.00,B1,2025-03-01,1
+KETOCOTA1,Ketoconazole,200 mg,Tablet,Tablet,8.50,C,2025-03-01,1
+LABETAIN1,Labetalol,5 mg/mL in 20 mL,Injection,Ampoule,85.80,D,2025-03-01,1
+LABETATA1,Labetalol,100 mg,Tablet,Tablet,3.30,D,2025-03-01,1
+LABETATA2,Labetalol,200 mg,Tablet,Tablet,4.40,B2,2025-03-01,1
+LACTULLI1,Lactulose Liquid 3.1–3.7 g/5 mL,,Liquid,300 mL,75.35,C,2025-03-01,1
+LAMOTRTA1,Lamotrigine Tablet 100 mg,,Tablet,Tablet,2.05,D,2025-03-01,1
+LEVOFLIN1,Levofloxacin infusion 500mg,,Injection,100mL,189.64,D,2025-03-01,1
+LEVSODTA3,Levothyroxine Sodium,100 microgram,Tablet,Tablet,1.32,C,2025-03-01,1
+LEVSODTA1,Levothyroxine Sodium,25 microgram,Tablet,Tablet,0.92,C,2025-03-01,1
+LEVSODTA2,Levothyroxine Sodium,50 microgram,Tablet,Tablet,1.10,C,2025-03-01,1
+LIDOCACR1,Lidocaine,2%,Cream,15 G,38.50,M,2025-03-01,1
+LIDOCAGE1,Lidocaine,4%,Gel,15 G,76.67,M,2025-03-01,1
+LISHYDTA1,Lisinopril + Hydrochlorthiazide,(10 mg + 12.5 mg),Tablet,Tablet,1.26,C,2025-03-01,1
+LISHYDTA2,Lisinopril + Hydrochlorthiazide,(20 mg + 12.5 mg),Tablet,Tablet,2.57,C,2025-03-01,1
+LISINOTA3,Lisinopril,10 mg,Tablet,Tablet,0.21,B2,2025-03-01,1
+LISINOTA1,Lisinopril,2.5 mg,Tablet,Tablet,0.47,B2,2025-03-01,1
+LISINOTA4,Lisinopril,20 mg,Tablet,Tablet,0.90,B2,2025-03-01,1
+LISINOTA2,Lisinopril,5 mg,Tablet,Tablet,0.39,B2,2025-03-01,1
+LODOXAID1,Lodoxamide,0.1%,Eye Drops,10 mL,8.90,C,2025-03-01,1
+LORAZEIN1,Lorazepam,4 mg/mL in 1mL,Injection,Ampoule,93.50,D,2025-03-01,1
+LORAZETA1,Lorazepam,1 mg,Tablet,Tablet,1.76,B2,2025-03-01,1
+LORAZETA2,Lorazepam,2 mg,Tablet,Tablet,0.44,B2,2025-03-01,1
+LORAZETA3,Lorazepam,2.5 mg,Tablet,Tablet,2.20,D,2025-03-01,1
+LOSARTTA3,Losartan,100 mg,Tablet,Tablet,0.54,C,2025-03-01,1
+LOSARTTA1,Losartan,25 mg,Tablet,Tablet,1.32,C,2025-03-01,1
+LOSARTTA2,Losartan,50 mg,Tablet,Tablet,0.26,C,2025-03-01,1
+MAGSULIN1,Magnesium Sulphate,20% (10 mL),Injection,Ampoule,5.96,M,2025-03-01,1
+MAGSULIN3,Magnesium Sulphate,50% (10 mL),Injection,Ampoule,19.54,M,2025-03-01,1
+MAGSULPO1,Magnesium Sulphate Salt,,Powder/Granules,1G,33.00,B2,2025-03-01,1
+MATRALMI1,Magnesium Trisilicate + Aluminium Hydroxide,,Mixture,200 mL,22.22,A,2025-03-01,1
+MATRALTA1,Magnesium Trisilicate + Aluminium Hydroxide,,Tablet,Tablet,0.22,A,2025-03-01,1
+MAGTRIMI1,Magnesium Trisilicate,,Mixture,200 mL,7.70,A,2025-03-01,1
+MAGTRITA1,Magnesium Trisilicate,500 mg,Tablet,Tablet,3.58,A,2025-03-01,1
+MANNITIN1,Mannitol,10%,Injection,500 mL,36.04,C,2025-03-01,1
+MANNITIN2,Mannitol,20%,Injection,500 mL,30.42,C,2025-03-01,1
+MEBENDSU1,Mebendazole,100 mg/5 mL,Suspension,30 mL,44.00,A,2025-03-01,1
+MEBENDTA1,Mebendazole,100 mg,Tablet,6 Tablets,14.30,A,2025-03-01,1
+MEBENDTA2,Mebendazole,500 mg,Tablet,Tablet,23.10,A,2025-03-01,1
+MEBEVETA1,Mebeverine,135 mg,Tablet,Tablet,1.50,C,2025-03-01,1
+MEDACETA1,Medroxyprogesterone Acetate,5 mg,Tablet,Tablet,8.53,D,2025-03-01,1
+MEFACICA1,Mefenamic Acid,250 mg,Capsule,Capsule,2.70,M,2025-03-01,1
+MEFACITA1,Mefenamic Acid,500 mg,Tablet,Tablet,1.29,M,2025-03-01,1
+METFORTA1,Metformin,500 mg,Tablet,Tablet,0.15,B1,2025-03-01,1
+METHOTIN1,Methotrexate,2.5 mg/ mL,Injection,Ampoule,0.11,D,2025-03-01,1
+METHOTIN2,Methotrexate,25 mg/ mL in 2mL,Injection,Ampoule,54.65,D,2025-03-01,1
+METHOTTA2,Methotrexate,10 mg,Tablet,Tablet,38.50,D,2025-03-01,1
+METHOTTA1,Methotrexate,2.5 mg,Tablet,Tablet,3.08,D,2025-03-01,1
+METCELID1,Methyl Cellulose,0.3%,Eye Drops,10 mL,22.55,C,2025-03-01,1
+METHYLTA1,Methyldopa,250 mg,Tablet,Tablet,0.93,M,2025-03-01,1
+METOCLIN1,Metoclopramide,5 mg/mL in 2 mL,Injection,Ampoule,8.80,C,2025-03-01,1
+METOCLSY1,Metoclopramide,5 mg/5 mL,Syrup,200 mL,92.40,C,2025-03-01,1
+METOCLTA1,Metoclopramide,10 mg,Tablet,Tablet,0.77,B2,2025-03-01,1
+METOLATA1,Metolazone,5 mg,Tablet,Tablet,5.39,D,2025-03-01,1
+METTARTA1,Metoprolol Tartrate Tablet 100 mg,,Tablet,Tablet,1.85,C,2025-03-01,1
+METRONIN1,Metronidazole,5 mg/mL in 100 mL,Injection,Bottle,9.01,B1,2025-03-01,1
+METRONRE1,Metronidazole,500 mg,Suppository,Supp.,15.95,B2,2025-03-01,1
+METRONSU1,Metronidazole,100 mg/5 mL (as benzoate),Suspension,100 mL,10.92,A,2025-03-01,1
+METRONSU2,Metronidazole,200 mg/5 mL(as benzoate),Suspension,100 mL,12.02,A,2025-03-01,1
+METRONTA1,Metronidazole,200 mg,Tablet,Tablet,0.13,A,2025-03-01,1
+METRONTA2,Metronidazole,400 mg,Tablet,Tablet,0.25,A,2025-03-01,1
+MICHYDCR1,Miconazole + Hydrocortisone,2% + 1%,Cream,15 G,51.87,C,2025-03-01,1
+MICONACR1,Miconazole,2%,Cream,15 G,38.50,B2,2025-03-01,1
+MICONAOG1,Miconazole,25 mg/mL,Oral Gel,40 G,73.70,B2,2025-03-01,1
+MICONAVP1,Miconazole Ovule,400 mg,Vaginal Pessary,3 Ovules,46.20,A,2025-03-01,1
+MIDAZOIN1,Midazolam,5 mg/5mL,Injection,Ampoule,70.13,C,2025-03-01,1
+MIDAZOTA1,Midazolam,15 mg,Tablet,Tablet,13.89,B2,2025-03-01,1
+MORPHIIN1,Morphine,10 mg/mL,Injection,Ampoule,21.97,B2,2025-03-01,1
+MORPHIIN2,Morphine,10 mg/mL (Preservative Free),Injection,Ampoule,39.55,SM,2025-03-01,1
+MORSULTA1,Morphine Sulphate,10 mg (Slow release),Tablet,Tablet,5.61,B2,2025-03-01,1
+MORSULTA2,Morphine Sulphate,30 mg (Slow release),Tablet,Tablet,8.83,B2,2025-03-01,1
+MULTIVDR1,Multivitamin,,Drops,20 mL,24.20,A,2025-03-01,1
+MULTIVSY1,Multivitamin,,Syrup,125 mL,8.10,A,2025-03-01,1
+MULTIVTA1,Multivitamin,,Tablet,Tablet,0.07,A,2025-03-01,1
+NALOXOIN1,Naloxone,400 microgram/mL in 1mL,Injection,Ampoule,28.55,C,2025-03-01,1
+NEOMYCTA1,Neomycin,500 mg,Tablet,Tablet,55.00,C,2025-03-01,1
+NEOBROTA1,Neostigmine Bromide,15 mg,Tablet,Tablet,6.47,D,2025-03-01,1
+NEOSTIIN1,Neostigmine,2.5 mg/mL,Injection,Ampoule,27.50,C,2025-03-01,1
+NIFEDICA1,Nifedipine,10 mg,Capsule,Capsule,1.21,D,2025-03-01,1
+NIFEDITA1,Nifedipine,10 mg (slow release),Tablet,Tablet,1.10,B2,2025-03-01,1
+NIFEDITA2,Nifedipine,20 mg (slow release),Tablet,Tablet,0.20,B2,2025-03-01,1
+NIFEDITA3,Nifedipine,30 mg (GITS),Tablet,Tablet,0.30,B2,2025-03-01,1
+NITROFTA1,Nitrofurantoin,100 mg,Tablet,Tablet,4.18,B2,2025-03-01,1
+NORETHTA1,Norethisterone,5 mg,Tablet,Tablet,2.98,D,2025-03-01,1
+NYSTATOI1,"Nystatin Ointment, 100",000 IU,Ointment,30 G,25.74,B2,2025-03-01,1
+NYSTATTA1,"Nystatin Pessary, 100",000 IU,Tablet,Pessary,52.71,B1,2025-03-01,1
+NYSTATSU1,"Nystatin Suspension, 100",000 IU/mL,Suspension,15 mL,71.17,B1,2025-03-01,1
+NYSTATTA2,"Nystatin Tablet, 500",000 IU,Tablet,Tablet,36.14,B1,2025-03-01,1
+OLANZATA1,Olanzapine Tablet 10 mg,,Tablet,Tablet,1.63,SM,2025-03-01,1
+OMEPRAIN2,Omeprazole,40 mg,Injection,Vial,19.80,B2,2025-03-01,1
+OMEPRATA1,Omeprazole,20 mg,Tablet,Tablet,0.23,B1,2025-03-01,1
+ONDANSTA1,Ondansetrone,4 mg,Tablet,Tablet,1.65,D,2025-03-01,1
+ORRESAPO1,Oral Rehydration Salts Powder,,Powder/Granules,Sachet,1.47,A,2025-03-01,1
+OXYTOCIN2,Oxytocin,10 units/mL,Injection,Ampoule,10.19,M,2025-03-01,1
+OXYTOCIN1,Oxytocin,5 units/mL,Injection,Ampoule,16.47,M,2025-03-01,1
+PACLITIN1,Paclitaxel,100 mg/16.7mL,Injection,Vial,343.20,D,2025-03-01,1
+PARACERE1,Paracetamol,125 mg,Suppository,Supp,1.50,A,2025-03-01,1
+PARACERE2,Paracetamol,250 mg,Suppository,Supp,2.34,A,2025-03-01,1
+PARACERE3,Paracetamol,500 mg,Suppository,Supp,2.41,A,2025-03-01,1
+PARACESY1,Paracetamol,120 mg/5 mL,Syrup,125 mL,8.50,A,2025-03-01,1
+PARACETA1,Paracetamol,500 mg,Tablet,Tablet,0.12,A,2025-03-01,1
+PARAFFLI1,Paraffin,,Liquid,100 mL,25.30,A,2025-03-01,1
+PETHIDIN1,Pethidine,50 mg/mL in 2 mL,Injection,Ampoule,39.56,B2,2025-03-01,1
+PHENOBEL1,Phenobarbital,15 mg/5 mL,Elixir,100 mL,60.50,B1,2025-03-01,1
+PHENOBIN1,Phenobarbital,200 mg/mL,Injection,Ampoule,34.58,B1,2025-03-01,1
+PHENOBTA1,Phenobarbital,30 mg,Tablet,Tablet,0.22,B1,2025-03-01,1
+PHENOBTA2,Phenobarbital,60 mg,Tablet,Tablet,0.33,B1,2025-03-01,1
+PHENOLIN1,Phenol 5% in Almond Oil,,Injection,50 mL,0.39,SM,2025-03-01,1
+PHEPENTA1,Phenoxymethyl Penicillin,250 mg,Tablet,Tablet,0.84,B1,2025-03-01,1
+PHENYTIN1,Phenytoin,50 mg/mL in 5 mL,Injection,Ampoule,38.50,D,2025-03-01,1
+PHENYTCA2,Phenytoin Sodium,100 mg,Capsule,Capsule,1.54,B1,2025-03-01,1
+PHENYTTA1,Phenytoin Sodium,100 mg,Tablet,Tablet,1.32,B1,2025-03-01,1
+PHYTOMIN1,Phytomenadione,1 mg/mL (Paediatric),Injection,Ampoule,6.93,M,2025-03-01,1
+PHYTOMIN2,Phytomenadione,10 mg/mL,Injection,Ampoule,12.10,M,2025-03-01,1
+PILOCAID1,Pilocarpine,2%,Eye Drops,10 mL,35.75,C,2025-03-01,1
+PILOCAID2,Pilocarpine,4%,Eye Drops,10 mL,19.25,C,2025-03-01,1
+PIOGLITA1,Pioglitazone,15 mg,Tablet,Tablet,0.74,C,2025-03-01,1
+PIOGLITA2,Pioglitazone,30 mg,Tablet,Tablet,0.91,C,2025-03-01,1
+PIRACETA1,Piracetam,800 mg,Tablet,Tablet,5.50,C,2025-03-01,1
+POTCHLIN1,Potassium Chloride,20 mEq/10 mL,Injection,Vial,17.16,C,2025-03-01,1
+POTCHLTA1,Potassium Chloride,600 mg (Enteric Coated),Tablet,Tablet,3.85,B1,2025-03-01,1
+POTCITMI1,Potassium Citrate Mixture BP,,Mixture,200 mL,9.35,A,2025-03-01,1
+POVIDOSO1,Povidone Iodine Aqueous Solution,10%,SO,100 mL,46.20,A,2025-03-01,1
+POVIDOOI1,Povidone Iodine,10%,Ointment,10 G,28.88,A,2025-03-01,1
+PRAZIQTA1,Praziquantel,600 mg,Tablet,Tablet,11.55,B1,2025-03-01,1
+PRAZOSTA1,Prazosin,500 microgram,Tablet,Tablet,2.90,D,2025-03-01,1
+PREDNIDT1,Prednisolone 5mg Dispersible Tablets,,Dispersible Tablet,Tablet,0.28,B1,2025-03-01,1
+PREDNIID1,Prednisolone,0.5%,Eye Drops,10 mL,15.40,SM,2025-03-01,1
+PREDNIID2,Prednisolone,1%,Eye Drops,10 mL,22.00,SM,2025-03-01,1
+PREDNISY1,Prednisolone Oral Solution,5mg/5ml,Syrup,60ml,62.70,B1,2025-03-01,1
+PREDNITA1,Prednisolone,5 mg,Tablet,Tablet,0.20,B2,2025-03-01,1
+PRIMIDTA1,Primidone,250 mg,Tablet,Tablet,0.33,C,2025-03-01,1
+PROBENIN1,Procaine Benzylpenicillin,4 MU,Injection,Vial,9.90,B2,2025-03-01,1
+PROHYDEL1,Promethazine Hydrochloride,5 mg/5 mL,Elixir,60 mL,9.21,A,2025-03-01,1
+PROHYDIN1,Promethazine Hydrochloride,25 mg/mL in 2 mL,Injection,Ampoule,2.20,B1,2025-03-01,1
+PROMETTA1,Promethazine Hydrochloride,25 mg,Tablet,Tablet,0.28,A,2025-03-01,1
+PROTHETA1,Promethazine Theoclate,25 mg,Tablet,Tablet,0.22,M,2025-03-01,1
+PROPRAIN1,Propranolol,1 mg/mL in 1mL,Injection,Ampoule,0.18,D,2025-03-01,1
+PROPRATA1,Propranolol,10 mg,Tablet,Tablet,0.84,B2,2025-03-01,1
+PROPRATA2,Propranolol,40 mg,Tablet,Tablet,0.22,B2,2025-03-01,1
+PROPRATA3,Propranolol,80 mg,Tablet,Tablet,1.88,B2,2025-03-01,1
+PROPYLTA1,Propylthiouracil,50 mg,Tablet,Tablet,5.23,D,2025-03-01,1
+PROSULIN1,Protamine Sulphate,10 mg/mL in 5 mL,Injection,Ampoule,47.52,D,2025-03-01,1
+QUINININ1,Quinine,300 mg/mL in 2 mL,Injection,Ampoule,4.68,B2,2025-03-01,1
+QUININSY1,Quinine,75 mg/5 mL,Syrup,125 mL,12.10,B1,2025-03-01,1
+QUININTA1,Quinine,300 mg,Tablet,Tablet,1.47,M,2025-03-01,1
+RAMIPRTA1,Ramipril,2.5 mg,Tablet,Tablet,1.01,C,2025-03-01,1
+RAMIPRTA2,Ramipril,5 mg,Tablet,Tablet,1.22,C,2025-03-01,1
+RANITITA1,Ranitidine,150 mg,Tablet,Tablet,1.99,B2,2025-03-01,1
+RETSOFCA2,"Retinol Soft Capsule, 200",000 IU,Capsule,Capsule,0.24,A,2025-03-01,1
+RINLACSO1,Ringer - Lactate Solution,500 mL,SO,500 mL,13.10,M,2025-03-01,1
+RISPERLI1,Risperidone,1 mg/mL,Liquid,10 mL,4.29,SM,2025-03-01,1
+RISPERTA2,Risperidone,1 mg,Tablet,Tablet,1.10,SM,2025-03-01,1
+RISPERTA3,Risperidone,2 mg,Tablet,Tablet,1.60,SM,2025-03-01,1
+RISPERTA1,Risperidone,500 microgram,Tablet,Tablet,5.67,SM,2025-03-01,1
+RITUXIIN1,Rituximab Injection 100mg/10ml Vial,,Injection,"2,300.0",0.00,SM,2025-03-01,1
+RITUXIIN2,Rituximab Injection 500mg/10ml Vial,,Injection,"6,515.0",0.00,SM,2025-03-01,1
+SALBUTGA1,"Salbutamol Inhaler, 100 microgram/metered dose",Inhaler 200 doses,Gaseous,,49.50,A,2025-03-01,1
+SALBUTGA2,Salbutamol Nebules,2.5 mg,Gaseous,Dose,10.12,B1,2025-03-01,1
+SALBUTGA3,Salbutamol Nebules,5 mg,Gaseous,Dose,17.60,B1,2025-03-01,1
+SALSULIN1,Salbutamol Sulphate,500 microgram/mL in 1mL,Injection,Ampoule,16.50,B2,2025-03-01,1
+SALBUTSY1,Salbutamol,2 mg/5 mL,Syrup,200 mL,18.70,B1,2025-03-01,1
+SALACIOI1,Salicylic Acid,2%,Ointment,40G,18.70,B1,2025-03-01,1
+SECNIDTA1,Secnidazole,500 mg,Tablet,Tablet,8.80,B2,2025-03-01,1
+SELSULSH1,Selenium Sulphide,2.5%,Shampoo,50 mL,12.93,C,2025-03-01,1
+SERTRATA2,Sertraline,100 mg,Tablet,Tablet,1.93,SM,2025-03-01,1
+SERTRATA1,Sertraline,50 mg,Tablet,Tablet,1.34,SM,2025-03-01,1
+SILSULCR1,Silver Sulphadiazine,1%,Cream,50 G,26.40,A,2025-03-01,1
+SIMLINSY1,Simple Linctus BPC (Paediatric),,Syrup,125mL,6.97,A,2025-03-01,1
+SIMLINSY2,Simple Linctus BPC,,Syrup,200mL,7.54,A,2025-03-01,1
+SIMVASTA1,Simvastatin,10 mg,Tablet,Tablet,0.66,C,2025-03-01,1
+SIMVASTA2,Simvastatin,20 mg,Tablet,Tablet,1.02,C,2025-03-01,1
+SIMVASTA3,Simvastatin,40 mg,Tablet,Tablet,1.27,C,2025-03-01,1
+SIMVASTA4,Simvastatin,80 mg,Tablet,Tablet,1.98,D,2025-03-01,1
+SODBICIN1,Sodium Bicarbonate,8.4% in 10 mL,Injection,Ampoule,50.05,C,2025-03-01,1
+SODCHLIN1,Sodium Chloride,0.45% (250 mL),Injection,250 mL,48.38,B1,2025-03-01,1
+SODCHLIN3,Sodium Chloride,0.9% (500 mL),Injection,500 mL,14.37,M,2025-03-01,1
+SODCHLND1,Sodium Chloride,0.9%,Nasal Drops,10 mL,6.60,A,2025-03-01,1
+SODVALCA2,Sodium Valproate Capsule (Slow Release),500 mg,Capsule,Capsule,11.70,D,2025-03-01,1
+SODVALCA1,Sodium Valproate,200 mg,Capsule,Capsule,3.08,D,2025-03-01,1
+SODVALSY1,Sodium Valproate,200 mg/5 Ml,Syrup,300 mL,294.80,D,2025-03-01,1
+SODVALTA1,Sodium Valproate,200 mg,Tablet,Tablet,3.28,D,2025-03-01,1
+SOANSTOI1,Soothing Agent + Local Anaesthetic + Steroid,,Ointment,15 G,85.80,B1,2025-03-01,1
+SOANSTRE1,Soothing Agent + Local Anaesthetic + Steroid,,Suppository,Supp,7.70,B1,2025-03-01,1
+SOOANAOI1,Soothing Agent + Local Anaesthetic,,Ointment,15 G,42.46,M,2025-03-01,1
+SOOANARE1,Soothing Agent + Local Anaesthetic,,Suppository,Supp,6.93,M,2025-03-01,1
+SPIRONTA1,Spironolactone,25 mg,Tablet,Tablet,1.10,C,2025-03-01,1
+SPIRONTA2,Spironolactone,50 mg,Tablet,Tablet,1.45,C,2025-03-01,1
+STREPTIN1,"Streptokinase Injection, 100",000 unit-vial,Injection,Vial,432.00,D,2025-03-01,1
+STREPTIN2,"Streptokinase Injection, 250",000 unit-vial,Injection,Vial,482.00,D,2025-03-01,1
+STREPTIN3,"Streptokinase Injection, 750",000 unit-vial,Injection,Vial,557.19,D,2025-03-01,1
+SULFASTA1,Sulfasalazine,500 mg,Tablet,Tablet,4.73,D,2025-03-01,1
+TAMOXITA1,Tamoxifen,10 mg,Tablet,Tablet,2.97,SM,2025-03-01,1
+TAMOXITA2,Tamoxifen,20 mg,Tablet,Tablet,4.11,SM,2025-03-01,1
+TAMSULCA1,Tamsulosin,400 microgram,Capsule,Capsule,2.18,SM,2025-03-01,1
+TERAZOTA1,Terazosin,2 mg,Tablet,Tablet,2.86,SM,2025-03-01,1
+TERAZOTA2,Terazosin,5 mg,Tablet,Tablet,4.38,SM,2025-03-01,1
+TERBINTA1,Terbinafine HCl,250 mg,Tablet,Tablet,3.03,D,2025-03-01,1
+TETRACCA1,Tetracycline,250 mg,Capsule,Capsule,0.28,B1,2025-03-01,1
+TETRACEO2,Tetracycline,1%,Eye Ointment,5G,8.25,M,2025-03-01,1
+THEOPHTA1,Theophylline,200 mg (slow release),Tablet,Tablet,16.50,B2,2025-03-01,1
+THIAMIIN1,Thiamine,100mg/2mL,Injection,Ampoule,11.00,C,2025-03-01,1
+THIAMITA2,Thiamine,100 mg,Tablet,Tablet,1.10,C,2025-03-01,1
+THIAMITA1,Thiamine,50 mg,Tablet,Tablet,0.66,C,2025-03-01,1
+TIABENTA1,Tiabendazole,500 mg,Tablet,Tablet,1.58,B1,2025-03-01,1
+TIMMALID1,Timolol Maleate,0.5%,Eye Drops,10 mL,13.20,C,2025-03-01,1
+TINIDACA1,Tinidazole,500 mg,Capsule,Capsule,28.05,B2,2025-03-01,1
+TIROFIIN2,Tirofiban,250 micrograms/ml (concentrate),Injection,100 mL,514.80,D,2025-03-01,1
+TIROFIIN1,Tirofiban,50 micrograms/mL,Injection,100 mL,371.80,D,2025-03-01,1
+TOLBUTTA1,Tolbutamide,500 mg,Tablet,Tablet,9.65,C,2025-03-01,1
+TRAACICA1,Tranexamic Acid,250 mg,Capsule,Capsule,3.52,C,2025-03-01,1
+TRAACIIN1,Tranexamic Acid,500 mg/5mL,Injection,Ampoule,26.82,D,2025-03-01,1
+TRAACITA1,Tranexamic Acid,500 mg,Tablet,Tablet,4.68,C,2025-03-01,1
+TRIHEXTA1,Trihexyphenidyl,2 mg,Tablet,Tablet,2.64,C,2025-03-01,1
+TRIHEXTA2,Trihexyphenidyl,5 mg,Tablet,Tablet,1.82,C,2025-03-01,1
+VERAPATA1,Verapamil,40 mg,Tablet,Tablet,0.44,C,2025-03-01,1
+VERAPATA2,Verapamil,80 mg,Tablet,Tablet,1.00,C,2025-03-01,1
+VINCRIIN1,Vincristine Injection 1 mg Intravenous,,Injection,Vial,67.10,D,2025-03-01,1
+VINCRIIN2,Vincristine Injection 2 mg Intravenous,,Injection,Vial,20.91,D,2025-03-01,1
+WARFARTA1,Warfarin,1 mg,Tablet,Tablet,0.36,D,2025-03-01,1
+WARFARTA2,Warfarin,3 mg,Tablet,Tablet,0.61,D,2025-03-01,1
+WARFARTA3,Warfarin,5 mg (scored),Tablet,Tablet,0.81,D,2025-03-01,1
+WATFORIN1,Water for,,Injection,10 mL,1.10,A,2025-03-01,1
+ZINCOOTA1,Zinc,10 mg,Tablet,Tablet,0.18,A,2025-03-01,1
+ZINCOOTA2,Zinc,20 mg,Tablet,Tablet,0.17,A,2025-03-01,1
+5FLUORIN1,5-Fluorouracil,50 mg/mL,Injection,10 mL,14.47,D,2025-03-01,1

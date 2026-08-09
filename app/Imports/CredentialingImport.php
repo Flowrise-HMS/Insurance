@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Imports;
 
+use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Models\ProviderCredentialing;
 
 class CredentialingImport extends CsvMasterDataImporter
@@ -20,6 +21,15 @@ class CredentialingImport extends CsvMasterDataImporter
             return ['error' => 'Either staff_id or provider_name is required.'];
         }
 
+        $level = NhisPrescribingLevel::resolve(
+            $row['prescribing_level_code'] ?? null,
+            $row['prescribing_level'] ?? 'A',
+        );
+
+        if ($level === null) {
+            return ['error' => 'Invalid prescribing level.'];
+        }
+
         $specialities = array_values(array_filter(array_map(
             fn (string $value): string => strtoupper(trim($value)),
             preg_split('/[;,|]+/', (string) ($row['specialities'] ?? '')) ?: []
@@ -27,7 +37,8 @@ class CredentialingImport extends CsvMasterDataImporter
 
         $attributes = [
             'provider_name' => $providerName !== '' ? $providerName : null,
-            'prescribing_level' => max(1, min(3, (int) ($row['prescribing_level'] ?? 1))),
+            'prescribing_level_code' => $level['code'],
+            'prescribing_level' => $level['ordinal'],
             'specialities' => $specialities,
             'accreditation_number' => $this->nullable($row['accreditation_number'] ?? ''),
             'level_of_care' => $this->nullable($row['level_of_care'] ?? ''),

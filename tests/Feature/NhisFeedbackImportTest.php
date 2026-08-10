@@ -142,7 +142,7 @@ class NhisFeedbackImportTest extends TestCase
     public function test_import_throws_on_missing_file(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        app(NhisFeedbackImportService::class)->import('/tmp/opencode/does-not-exist.xml');
+        app(NhisFeedbackImportService::class)->import(storage_path('app/testing/nhia-feedback/does-not-exist.xml'));
     }
 
     public function test_import_throws_on_invalid_xml(): void
@@ -170,7 +170,13 @@ class NhisFeedbackImportTest extends TestCase
 
     protected function writeFeedback(string $xml): string
     {
-        $path = '/tmp/opencode/nhia-feedback-'.uniqid().'.xml';
+        $directory = storage_path('app/testing/nhia-feedback');
+
+        if (! is_dir($directory)) {
+            mkdir($directory, 0775, true);
+        }
+
+        $path = $directory.'/nhia-feedback-'.uniqid().'.xml';
         file_put_contents($path, $xml);
 
         return $path;

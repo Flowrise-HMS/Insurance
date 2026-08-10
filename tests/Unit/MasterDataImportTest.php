@@ -114,11 +114,11 @@ class MasterDataImportTest extends TestCase
 
     public function test_credentialing_import_upserts_by_staff_id(): void
     {
-        User::factory()->create(['id' => 42]);
+        $user = User::factory()->create();
 
         $path = $this->writeCsv([
             ['staff_id', 'provider_name', 'prescribing_level', 'specialities'],
-            ['42', 'Dr. Ama', '2', 'OPDC;ORTH'],
+            [(string) $user->id, 'Dr. Ama', '2', 'OPDC;ORTH'],
         ]);
 
         $importer = app(CredentialingImport::class);

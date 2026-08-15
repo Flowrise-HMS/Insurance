@@ -32,7 +32,7 @@ flowchart LR
 
 ## Current status
 
-**Complete** for operational claims workflows. Deferred: Phase 2 feedback XML import, NHIS catalog sync implementation, dedicated PatientPolicy/TariffItem Filament resources, and private insurer connector beyond the generic stub.
+**Complete** for operational claims workflows. Built: NHIS batch export, NHIA feedback XML import, master-data Filament resources (tariff books with tariff-item relation manager, medicines, G-DRG/ICD map, members master, provider credentialing), member verification. Deferred: NHIS catalog sync implementation (`processed: 0` from connector paths), dedicated PatientPolicy Filament resource, private insurer connector beyond the generic stub.
 
 See [module status](../../docs/shared/module-status.md) for the canonical matrix.
 

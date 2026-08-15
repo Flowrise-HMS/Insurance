@@ -9,12 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Billing\Models\Invoice;
-use Modules\Clinical\Models\Encounter;
 use Modules\Insurance\Enums\ClaimStatus;
 use Modules\Patient\Models\Patient;
 
 /**
- * @property-read Encounter|null $encounter
+ * @property-read \Modules\Clinical\Models\Encounter|null $encounter
  *
  * @method \Illuminate\Database\Eloquent\Relations\BelongsTo encounter()
  */

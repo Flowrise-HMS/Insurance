@@ -6,13 +6,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\Billing\Models\Invoice;
 use Modules\Clinical\Enums\DischargeDisposition;
-use Modules\Clinical\Enums\EncounterStatus;
-use Modules\Clinical\Enums\EncounterType;
 use Modules\Clinical\Models\Encounter;
-use Modules\Clinical\Models\EncounterDiagnosis;
-use Modules\Clinical\Models\RequestItem;
 use Modules\Core\Enums\CoverageType;
 use Modules\Core\Support\Currency;
+use Modules\Core\Support\OptionalClass;
 use Modules\Insurance\DTOs\ClaimGenerationResult;
 use Modules\Insurance\Enums\ClaimLineType;
 use Modules\Insurance\Enums\ClaimStatus;
@@ -23,7 +20,6 @@ use Modules\Insurance\Models\PatientPolicy;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Support\ClaimBatchCriteria;
-use Modules\Pharmacy\Models\Dispense;
 
 class NhisClaimAssembler
 {
@@ -90,7 +86,7 @@ class NhisClaimAssembler
             'pharmacy_included' => 'NO',
             'all_inclusive' => 'NO',
             'outcome_type' => $this->mapOutcomeType($encounter->discharge_disposition),
-            'admission_type' => $encounter->type === EncounterType::EMERGENCY ? 'EME' : 'ACU',
+            'admission_type' => $this->isEmergencyEncounter($encounter) ? 'EME' : 'ACU',
             'speciality_code' => data_get($encounter->department?->metadata, 'nhis_speciality_code')
                 ?: ($this->settings->default_speciality_code ?: 'OPDC'),
             'admission_date' => ($encounter->admitted_at ?? $encounter->created_at)?->toDateString(),
@@ -119,13 +115,17 @@ class NhisClaimAssembler
         $primaryOutpatientCode = null;
         $primaryOutpatientTariff = '0.00';
 
-        $diagnoses = EncounterDiagnosis::query()
-            ->where('encounter_id', $encounter->id)
-            ->where('is_active', true)
-            ->with('diagnosisCode')
-            ->orderByRaw("CASE WHEN type = 'primary' THEN 0 ELSE 1 END")
-            ->orderByDesc('is_new_case')
-            ->get();
+        $diagnoses = OptionalClass::when(
+            'Modules\\Clinical\\Models\\EncounterDiagnosis',
+            fn (string $class) => $class::query()
+                ->where('encounter_id', $encounter->id)
+                ->where('is_active', true)
+                ->with('diagnosisCode')
+                ->orderByRaw("CASE WHEN type = 'primary' THEN 0 ELSE 1 END")
+                ->orderByDesc('is_new_case')
+                ->get(),
+            'Clinical',
+        ) ?? collect();
 
         $primaryIcd = $diagnoses->first()?->icd10_code
             ?? $diagnoses->first()?->icd_code
@@ -146,10 +146,14 @@ class NhisClaimAssembler
             }
         }
 
-        $requestItems = RequestItem::query()
-            ->whereHas('serviceRequest', fn ($q) => $q->where('encounter_id', $encounter->id))
-            ->with(['service', 'serviceRequest'])
-            ->get();
+        $requestItems = OptionalClass::when(
+            'Modules\\Clinical\\Models\\RequestItem',
+            fn (string $class) => $class::query()
+                ->whereHas('serviceRequest', fn ($q) => $q->where('encounter_id', $encounter->id))
+                ->with(['service', 'serviceRequest'])
+                ->get(),
+            'Clinical',
+        ) ?? collect();
 
         foreach ($requestItems as $item) {
             $code = $this->codeMapper->mapServiceCode($item->service, $payer);
@@ -198,10 +202,14 @@ class NhisClaimAssembler
             }
         }
 
-        $dispenses = Dispense::query()
-            ->whereHas('requestItem.serviceRequest', fn ($q) => $q->where('encounter_id', $encounter->id))
-            ->with(['medication.service', 'requestItem'])
-            ->get();
+        $dispenses = OptionalClass::when(
+            'Modules\\Pharmacy\\Models\\Dispense',
+            fn (string $class) => $class::query()
+                ->whereHas('requestItem.serviceRequest', fn ($q) => $q->where('encounter_id', $encounter->id))
+                ->with(['medication.service', 'requestItem'])
+                ->get(),
+            'Pharmacy',
+        ) ?? collect();
 
         if ($dispenses->isNotEmpty()) {
             $nhiaPayload['pharmacy_included'] = 'YES';
@@ -280,24 +288,25 @@ class NhisClaimAssembler
         $medicationEncounterIds = null;
 
         if ($criteria->medicationId) {
-            $medicationEncounterIds = Dispense::query()
-                ->where('medication_id', $criteria->medicationId)
-                ->whereHas('requestItem.serviceRequest')
-                ->with('requestItem.serviceRequest')
-                ->get()
-                ->pluck('requestItem.serviceRequest.encounter_id')
-                ->filter()
-                ->unique()
-                ->values();
+            $medicationEncounterIds = OptionalClass::when(
+                'Modules\\Pharmacy\\Models\\Dispense',
+                fn (string $class) => $class::query()
+                    ->where('medication_id', $criteria->medicationId)
+                    ->whereHas('requestItem.serviceRequest')
+                    ->with('requestItem.serviceRequest')
+                    ->get()
+                    ->pluck('requestItem.serviceRequest.encounter_id')
+                    ->filter()
+                    ->unique()
+                    ->values(),
+                'Pharmacy',
+            ) ?? collect();
         }
 
         return Encounter::query()
             ->where('branch_id', $criteria->branchId)
             ->whereNotNull('patient_id')
-            ->whereIn('status', [
-                EncounterStatus::FINISHED->value,
-                EncounterStatus::IN_PROGRESS->value,
-            ])
+            ->whereIn('status', $this->eligibleEncounterStatusValues())
             ->where(function ($query) {
                 $query->where('coverage_type', CoverageType::NHIS)
                     ->orWhereHas('patient.insurancePolicies', function ($policyQuery) {
@@ -323,11 +332,39 @@ class NhisClaimAssembler
 
     protected function mapServiceType(Encounter $encounter): string
     {
+        $typeClass = OptionalClass::resolve('Modules\\Clinical\\Enums\\EncounterType', 'Clinical');
+        if ($typeClass === null) {
+            return 'OUT';
+        }
+
         return match ($encounter->type) {
-            EncounterType::INPATIENT => 'INP',
-            EncounterType::EMERGENCY, EncounterType::OUTPATIENT, EncounterType::VIRTUAL, EncounterType::HOME_VISIT => 'OUT',
+            $typeClass::INPATIENT => 'INP',
+            $typeClass::EMERGENCY, $typeClass::OUTPATIENT, $typeClass::VIRTUAL, $typeClass::HOME_VISIT => 'OUT',
             default => 'OUT',
         };
+    }
+
+    protected function isEmergencyEncounter(Encounter $encounter): bool
+    {
+        $typeClass = OptionalClass::resolve('Modules\\Clinical\\Enums\\EncounterType', 'Clinical');
+
+        return $typeClass !== null && $encounter->type === $typeClass::EMERGENCY;
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function eligibleEncounterStatusValues(): array
+    {
+        $statusClass = OptionalClass::resolve('Modules\\Clinical\\Enums\\EncounterStatus', 'Clinical');
+        if ($statusClass === null) {
+            return ['finished', 'in_progress'];
+        }
+
+        return [
+            $statusClass::FINISHED->value,
+            $statusClass::IN_PROGRESS->value,
+        ];
     }
 
     protected function mapOutcomeType(?DischargeDisposition $disposition): string

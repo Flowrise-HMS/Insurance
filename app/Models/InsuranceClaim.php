@@ -13,6 +13,11 @@ use Modules\Clinical\Models\Encounter;
 use Modules\Insurance\Enums\ClaimStatus;
 use Modules\Patient\Models\Patient;
 
+/**
+ * @property-read Encounter|null $encounter
+ *
+ * @method \Illuminate\Database\Eloquent\Relations\BelongsTo encounter()
+ */
 class InsuranceClaim extends Model
 {
     use HasFactory, HasUuids;
@@ -62,11 +67,6 @@ class InsuranceClaim extends Model
     public function payer(): BelongsTo
     {
         return $this->belongsTo(Payer::class, 'payer_id');
-    }
-
-    public function encounter(): BelongsTo
-    {
-        return $this->belongsTo(Encounter::class, 'encounter_id');
     }
 
     public function reviewedBy(): BelongsTo

@@ -3,9 +3,9 @@
 namespace Modules\Insurance\Providers;
 
 use Modules\Billing\Models\InvoiceLine;
-use Modules\Clinical\Models\Encounter;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Support\AppSettings;
+use Modules\Core\Support\OptionalClass;
 use Modules\Insurance\Console\ImportMasterData;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
@@ -86,9 +86,18 @@ class InsuranceServiceProvider extends ModuleServiceProvider
             return $line->hasMany(InsuranceClaimLine::class, 'invoice_line_id');
         });
 
-        Encounter::resolveRelationUsing('insuranceClaims', function (Encounter $encounter) {
-            return $encounter->hasMany(InsuranceClaim::class, 'encounter_id');
-        });
+        OptionalClass::when(
+            'Modules\\Clinical\\Models\\Encounter',
+            function (string $encounterClass): void {
+                $encounterClass::resolveRelationUsing('insuranceClaims', function ($encounter) {
+                    return $encounter->hasMany(InsuranceClaim::class, 'encounter_id', 'id');
+                });
+                InsuranceClaim::resolveRelationUsing('encounter', function ($claim) use ($encounterClass) {
+                    return $claim->belongsTo($encounterClass, 'encounter_id', 'id');
+                });
+            },
+            'Clinical',
+        );
     }
 
     protected function insuranceModuleEnabled(): bool

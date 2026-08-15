@@ -13,12 +13,12 @@ use Filament\Resources\Pages\Page;
 use Filament\Schemas\Schema;
 use Modules\Core\Models\Branch;
 use Modules\Core\Models\Service;
+use Modules\Core\Support\OptionalClass;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\ClaimBatches\ClaimBatchResource;
 use Modules\Insurance\Services\ClaimGenerationService;
 use Modules\Insurance\Settings\InsuranceSettings;
 use Modules\Insurance\Support\ClaimBatchCriteria;
 use Modules\Patient\Models\Patient;
-use Modules\Pharmacy\Models\Medication;
 
 /**
  * @property-read Schema $form
@@ -75,7 +75,11 @@ class GenerateClaims extends Page implements HasForms
                     ->nullable(),
                 Select::make('medication_id')
                     ->label('Medication')
-                    ->options(fn () => Medication::query()->pluck('generic_name', 'id'))
+                    ->options(fn () => OptionalClass::when(
+                        'Modules\\Pharmacy\\Models\\Medication',
+                        fn (string $class) => $class::query()->pluck('generic_name', 'id'),
+                        'Pharmacy',
+                    ) ?? collect())
                     ->searchable()
                     ->nullable(),
                 Checkbox::make('all')->label('Include all eligible encounters'),

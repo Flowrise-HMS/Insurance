@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Modules\Core\Filament\Support\ClientIdentityColumn;
 use Modules\Core\Filament\Tables\Columns\CurrencyColumn;
 use Modules\Core\Support\Currency;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\InsuranceClaimResource;
@@ -23,7 +24,7 @@ class ClaimsRelationManager extends RelationManager
         return $table
             ->columns([
                 TextColumn::make('claim_number')->searchable(),
-                TextColumn::make('patient.first_name')->label('Patient'),
+                ClientIdentityColumn::make(label: __('Patient')),
                 TextColumn::make('encounter.admitted_at')->label('Visit')->dateTime(),
                 CurrencyColumn::make('total_billed_amount')
                     ->currency(fn (InsuranceClaim $record): string => (string) ($record->currency ?? $record->batch?->currency ?? Currency::defaultCode())),

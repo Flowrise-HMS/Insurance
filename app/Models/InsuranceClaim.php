@@ -9,17 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Billing\Models\Invoice;
+use Modules\Clinical\Models\Encounter;
+use Modules\Core\Concerns\ResolvesPatientClientIdentity;
+use Modules\Core\Contracts\ProvidesClientIdentity;
 use Modules\Insurance\Enums\ClaimStatus;
 use Modules\Patient\Models\Patient;
 
 /**
- * @property-read \Modules\Clinical\Models\Encounter|null $encounter
+ * @property-read Encounter|null $encounter
  *
  * @method \Illuminate\Database\Eloquent\Relations\BelongsTo encounter()
  */
-class InsuranceClaim extends Model
+class InsuranceClaim extends Model implements ProvidesClientIdentity
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, ResolvesPatientClientIdentity;
 
     protected $table = 'insurance_claims';
 

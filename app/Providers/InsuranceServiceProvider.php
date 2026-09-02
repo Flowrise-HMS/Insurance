@@ -2,11 +2,13 @@
 
 namespace Modules\Insurance\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Modules\Billing\Models\InvoiceLine;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Support\AppSettings;
 use Modules\Core\Support\OptionalClass;
 use Modules\Insurance\Console\ImportMasterData;
+use Modules\Insurance\Console\RefreshOtacToken;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
@@ -15,6 +17,8 @@ use Modules\Insurance\Schemes\Nhis\NhisSchemeHandler;
 use Modules\Insurance\Services\ClaimBatchService;
 use Modules\Insurance\Services\ClaimGenerationService;
 use Modules\Insurance\Services\DefaultInsurancePricingService;
+use Modules\Insurance\Services\Otac\NhisAttendanceService;
+use Modules\Insurance\Services\Otac\OtacClient;
 use Modules\Insurance\Services\PatientInsuranceService;
 use Modules\Patient\Models\Patient;
 use Nwidart\Modules\Support\ModuleServiceProvider;
@@ -38,6 +42,7 @@ class InsuranceServiceProvider extends ModuleServiceProvider
      */
     protected array $commands = [
         ImportMasterData::class,
+        RefreshOtacToken::class,
     ];
 
     /**
@@ -68,6 +73,21 @@ class InsuranceServiceProvider extends ModuleServiceProvider
         });
         $this->app->singleton(ClaimGenerationService::class);
         $this->app->singleton(ClaimBatchService::class);
+        $this->app->singleton(OtacClient::class);
+        $this->app->singleton(NhisAttendanceService::class);
+    }
+
+    protected function configureSchedules(Schedule $schedule): void
+    {
+        $schedule->command('insurance:otac-refresh-token')
+            ->hourly()
+            ->when(function (): bool {
+                try {
+                    return app(OtacClient::class)->isConfigured();
+                } catch (\Throwable) {
+                    return false;
+                }
+            });
     }
 
     public function boot(): void

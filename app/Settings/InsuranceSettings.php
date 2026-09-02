@@ -40,10 +40,19 @@ class InsuranceSettings extends Settings
 
     public string $member_verification_mode = 'offline';
 
-    public bool $verify_members_on_encounter = false;
+    public bool $otac_enabled = false;
+
+    public ?string $otac_username = null;
+
+    public ?string $otac_password = null;
 
     public static function group(): string
     {
         return 'insurance';
+    }
+
+    public static function encrypted(): array
+    {
+        return ['otac_password'];
     }
 }

@@ -4,12 +4,12 @@ return [
     'name' => 'Insurance',
     'enabled' => env('INSURANCE_MODULE_ENABLED', true),
     'nhis' => [
-        'submission_endpoint' => env('NHIS_SUBMISSION_ENDPOINT'),
-        'feedback_endpoint' => env('NHIS_FEEDBACK_ENDPOINT'),
-        'token' => env('NHIS_TOKEN'),
         'feedback_secret' => env('NHIS_FEEDBACK_SECRET'),
-        'timeout' => (int) env('NHIS_TIMEOUT', 15),
         'xml_version' => env('NHIS_XML_VERSION', '8.6'),
+    ],
+    'otac' => [
+        'base_url' => env('NHIS_OTAC_BASE_URL', 'https://otac.nhia.gov.gh'),
+        'timeout' => (int) env('NHIS_OTAC_TIMEOUT', 15),
     ],
     'queues' => [
         'claims' => env('INSURANCE_CLAIMS_QUEUE', 'insurance-claims'),

@@ -40,9 +40,7 @@ class PatientInsuranceService
 
         $metadata = $policy?->metadata ?? [];
         foreach ([
-            'insurance_card_serial_number' => 'card_serial_number',
             'insurance_mother_member_number' => 'mother_member_number',
-            'insurance_mother_card_serial_number' => 'mother_card_serial_number',
             'insurance_temporary_card_number' => 'temporary_card_number',
         ] as $dataKey => $metadataKey) {
             if (! array_key_exists($dataKey, $data)) {
@@ -83,9 +81,7 @@ class PatientInsuranceService
         return [
             'insurance_payer_id' => $policy->payer_id,
             'insurance_member_number' => $policy->member_number,
-            'insurance_card_serial_number' => data_get($policy->metadata, 'card_serial_number'),
             'insurance_mother_member_number' => data_get($policy->metadata, 'mother_member_number'),
-            'insurance_mother_card_serial_number' => data_get($policy->metadata, 'mother_card_serial_number'),
             'insurance_effective_from' => $policy->effective_from,
             'insurance_effective_to' => $policy->effective_to,
         ];

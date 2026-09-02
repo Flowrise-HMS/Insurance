@@ -11,33 +11,25 @@ class OfflineMasterVerifier implements MemberVerifier
 {
     public function verify(PatientPolicy $policy, ?CarbonInterface $referenceDate = null): MemberVerification
     {
-        $memberNumber = trim((string) $policy->member_number);
-        $cardSerial = trim((string) data_get($policy->metadata, 'card_serial_number'));
-
-        return $this->verifyNumbers($memberNumber, $cardSerial, $referenceDate);
+        return $this->verifyNumbers(trim((string) $policy->member_number), $referenceDate);
     }
 
     public function verifyNumbers(
         string $memberNumber,
-        string $cardSerial,
         ?CarbonInterface $referenceDate = null,
     ): MemberVerification {
-        if ($memberNumber === '' || $cardSerial === '') {
-            return $this->result('invalid', '204', $referenceDate);
+        if ($memberNumber === '') {
+            return $this->result('invalid', '203', $referenceDate);
         }
 
         $master = MembersMaster::query()
             ->where('member_number', $memberNumber)
-            ->where('card_serial_number', $cardSerial)
+            ->orderByDesc('is_active')
+            ->orderByDesc('valid_to')
             ->first();
 
         if (! $master) {
-            $memberExists = MembersMaster::query()
-                ->where('member_number', $memberNumber)
-                ->where('is_active', true)
-                ->exists();
-
-            return $this->result('invalid', $memberExists ? '204' : '203', $referenceDate);
+            return $this->result('invalid', '203', $referenceDate);
         }
 
         if (! $master->is_active) {

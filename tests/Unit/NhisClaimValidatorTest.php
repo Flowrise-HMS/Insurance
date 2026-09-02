@@ -25,7 +25,7 @@ class NhisClaimValidatorTest extends TestCase
         $this->migrateModules(['Core', 'Patient', 'Insurance']);
     }
 
-    public function test_validator_requires_card_serial_and_accepts_acu_admission_type(): void
+    public function test_validator_accepts_claim_without_card_serial(): void
     {
         $claim = $this->makeClaim([
             'metadata' => [],
@@ -38,8 +38,7 @@ class NhisClaimValidatorTest extends TestCase
 
         $result = app(NhisClaimValidator::class)->validate($claim);
 
-        $this->assertFalse($result->valid);
-        $this->assertTrue(collect($result->codedErrors)->contains(fn ($e) => $e['code'] === '204'));
+        $this->assertTrue($result->valid, implode(' ', $result->errors));
     }
 
     public function test_validator_passes_with_identity_and_allow_list_codes(): void
@@ -119,7 +118,6 @@ class NhisClaimValidatorTest extends TestCase
         $this->assertFalse($result->valid);
         $codes = collect($result->codedErrors)->pluck('code')->all();
         $this->assertContains('203', $codes);
-        $this->assertContains('204', $codes);
     }
 
     public function test_validator_passes_for_infant_claim_with_mother_identity(): void

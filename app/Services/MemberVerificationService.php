@@ -22,7 +22,6 @@ class MemberVerificationService
     {
         $result = $this->verifyNumbers(
             trim((string) $policy->member_number),
-            trim((string) data_get($policy->metadata, 'card_serial_number')),
             $referenceDate,
         );
 
@@ -31,7 +30,7 @@ class MemberVerificationService
         return $result;
     }
 
-    public function verifyNumbers(string $memberNumber, string $cardSerial, ?string $referenceDate = null): MemberVerification
+    public function verifyNumbers(string $memberNumber, ?string $referenceDate = null): MemberVerification
     {
         if ($this->settings->member_verification_mode === 'disabled') {
             return new MemberVerification(
@@ -43,7 +42,7 @@ class MemberVerificationService
 
         $reference = $referenceDate !== null ? Carbon::parse($referenceDate) : null;
 
-        return $this->resolver()->verifyNumbers($memberNumber, $cardSerial, $reference);
+        return $this->resolver()->verifyNumbers($memberNumber, $reference);
     }
 
     protected function resolver(): MemberVerifier

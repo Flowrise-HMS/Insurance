@@ -31,19 +31,54 @@ class PatientInsuranceServiceTest extends TestCase
         $policy = $this->service->syncFromFormData($patient->id, [
             'insurance_payer_id' => $payer->id,
             'insurance_member_number' => '123456789',
-            'insurance_card_serial_number' => 'UWJPL120A0093',
             'insurance_mother_member_number' => '87654321',
-            'insurance_mother_card_serial_number' => 'MOTHERSERIAL1',
         ]);
 
         $this->assertInstanceOf(PatientPolicy::class, $policy);
         $this->assertTrue($policy->exists);
         $this->assertEquals($payer->id, $policy->payer_id);
         $this->assertEquals('123456789', $policy->member_number);
-        $this->assertSame('UWJPL120A0093', data_get($policy->metadata, 'card_serial_number'));
         $this->assertSame('87654321', data_get($policy->metadata, 'mother_member_number'));
         $this->assertTrue($policy->is_primary);
         $this->assertTrue($policy->is_active);
+    }
+
+    public function test_sync_ignores_removed_card_serial_form_keys(): void
+    {
+        $patient = Patient::factory()->create();
+        $payer = Payer::factory()->create();
+
+        $policy = $this->service->syncFromFormData($patient->id, [
+            'insurance_payer_id' => $payer->id,
+            'insurance_member_number' => '123456789',
+            'insurance_card_serial_number' => 'UWJPL120A0093',
+            'insurance_mother_card_serial_number' => 'MOTHERSERIAL1',
+        ]);
+
+        $this->assertNull(data_get($policy->metadata, 'card_serial_number'));
+        $this->assertNull(data_get($policy->metadata, 'mother_card_serial_number'));
+    }
+
+    public function test_sync_preserves_existing_card_serial_metadata(): void
+    {
+        $patient = Patient::factory()->create();
+        $payer = Payer::factory()->create();
+
+        $existing = PatientPolicy::query()->create([
+            'patient_id' => $patient->id,
+            'payer_id' => $payer->id,
+            'member_number' => '123456789',
+            'is_primary' => true,
+            'is_active' => true,
+            'metadata' => ['card_serial_number' => 'UWJPL120A0093'],
+        ]);
+
+        $this->service->syncFromFormData($patient->id, [
+            'insurance_payer_id' => $payer->id,
+            'insurance_member_number' => '123456789',
+        ]);
+
+        $this->assertSame('UWJPL120A0093', data_get($existing->fresh()->metadata, 'card_serial_number'));
     }
 
     public function test_sync_updates_existing_policy_no_duplicate(): void
@@ -54,13 +89,11 @@ class PatientInsuranceServiceTest extends TestCase
         $this->service->syncFromFormData($patient->id, [
             'insurance_payer_id' => $payer->id,
             'insurance_member_number' => '123456789',
-            'insurance_card_serial_number' => 'UWJPL120A0093',
         ]);
 
         $this->service->syncFromFormData($patient->id, [
             'insurance_payer_id' => $payer->id,
             'insurance_member_number' => '987654321',
-            'insurance_card_serial_number' => 'UWJPL120A0094',
         ]);
 
         $policies = PatientPolicy::query()
@@ -70,7 +103,6 @@ class PatientInsuranceServiceTest extends TestCase
 
         $this->assertCount(1, $policies);
         $this->assertEquals('987654321', $policies->first()->member_number);
-        $this->assertSame('UWJPL120A0094', data_get($policies->first()->metadata, 'card_serial_number'));
     }
 
     public function test_form_data_from_policy_round_trips(): void
@@ -81,9 +113,7 @@ class PatientInsuranceServiceTest extends TestCase
         $input = [
             'insurance_payer_id' => $payer->id,
             'insurance_member_number' => '123456789',
-            'insurance_card_serial_number' => 'UWJPL120A0093',
             'insurance_mother_member_number' => '55555555',
-            'insurance_mother_card_serial_number' => 'MOTHERSERIAL1',
         ];
 
         $policy = $this->service->syncFromFormData($patient->id, $input);
@@ -92,34 +122,8 @@ class PatientInsuranceServiceTest extends TestCase
 
         $this->assertEquals($payer->id, $roundTripped['insurance_payer_id']);
         $this->assertEquals('123456789', $roundTripped['insurance_member_number']);
-        $this->assertSame('UWJPL120A0093', $roundTripped['insurance_card_serial_number']);
         $this->assertSame('55555555', $roundTripped['insurance_mother_member_number']);
-        $this->assertSame('MOTHERSERIAL1', $roundTripped['insurance_mother_card_serial_number']);
-    }
-
-    public function test_sync_clears_card_serial_when_form_value_removed(): void
-    {
-        $patient = Patient::factory()->create();
-        $payer = Payer::factory()->create();
-
-        $this->service->syncFromFormData($patient->id, [
-            'insurance_payer_id' => $payer->id,
-            'insurance_member_number' => '123456789',
-            'insurance_card_serial_number' => 'UWJPL120A0093',
-        ]);
-
-        $this->service->syncFromFormData($patient->id, [
-            'insurance_payer_id' => $payer->id,
-            'insurance_member_number' => '123456789',
-            'insurance_card_serial_number' => '',
-        ]);
-
-        $policy = PatientPolicy::query()
-            ->where('patient_id', $patient->id)
-            ->where('payer_id', $payer->id)
-            ->first();
-
-        $this->assertNull(data_get($policy->metadata, 'card_serial_number'));
+        $this->assertArrayNotHasKey('insurance_card_serial_number', $roundTripped);
     }
 
     public function test_sync_preserves_temporary_card_number_when_not_in_form(): void

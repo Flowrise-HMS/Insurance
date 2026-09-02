@@ -4,6 +4,7 @@ namespace Modules\Insurance\Filament\Clusters\Insurance\Pages;
 
 use BackedEnum;
 use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use Filament\Actions\Action;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,6 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
+use Modules\Insurance\Services\Otac\OtacClient;
 use Modules\Insurance\Settings\InsuranceSettings;
 
 /**
@@ -53,8 +55,60 @@ class ManageInsuranceSettings extends Page implements HasForms
             'prescribing_level' => $settings->prescribing_level,
             'enable_prescribing_level_warning' => $settings->enable_prescribing_level_warning,
             'member_verification_mode' => $settings->member_verification_mode,
-            'verify_members_on_encounter' => $settings->verify_members_on_encounter,
+            'otac_enabled' => $settings->otac_enabled,
+            'otac_username' => $settings->otac_username,
+            'otac_password' => $settings->otac_password,
         ]);
+    }
+
+    /**
+     * @return array<int, Action>
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('testOtacConnection')
+                ->label('Test OTAC Connection')
+                ->icon(Heroicon::OutlinedSignal)
+                ->disabled(fn (): bool => ! app(OtacClient::class)->isConfigured())
+                ->action(function (): void {
+                    $client = app(OtacClient::class);
+
+                    if ($client->login(force: true) === null) {
+                        Notification::make()
+                            ->title('OTAC login failed')
+                            ->body('NHIA rejected the saved credentials. Check the username and password, then save and retry.')
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+
+                    $info = $client->hpInfo();
+
+                    if (! $info['ok']) {
+                        Notification::make()
+                            ->title('OTAC connection failed')
+                            ->body("Logged in, but the facility lookup failed (HTTP {$info['status']}).")
+                            ->danger()
+                            ->send();
+
+                        return;
+                    }
+
+                    $facility = trim(sprintf(
+                        '%s (%s)',
+                        data_get($info['body'], 'hpName', 'Unknown facility'),
+                        data_get($info['body'], 'hpn', '—'),
+                    ));
+
+                    Notification::make()
+                        ->title('OTAC connection OK')
+                        ->body("Connected as {$facility}.")
+                        ->success()
+                        ->send();
+                }),
+        ];
     }
 
     public function form(Schema $schema): Schema
@@ -83,8 +137,23 @@ class ManageInsuranceSettings extends Page implements HasForms
                             ->label('Member Verification Mode')
                             ->options(['offline' => 'Offline (Members Master Table)', 'disabled' => 'Disabled'])
                             ->helperText('Verification is offline against the imported Members Master Table.'),
-                        Toggle::make('verify_members_on_encounter')
-                            ->label('Verify members at encounter time'),
+                    ]),
+                Section::make('NHIA OTAC — Claim Check Codes')
+                    ->description('Automatically generate NHIS claim check codes and verify membership via the NHIA OTAC API when an NHIS encounter is created. Save settings before using "Test OTAC Connection".')
+                    ->schema([
+                        Toggle::make('otac_enabled')
+                            ->label('Enable OTAC claim code generation')
+                            ->helperText('Each generated code logs a real attendance at NHIA — keep this off outside production.'),
+                        TextInput::make('otac_username')
+                            ->label('OTAC Username')
+                            ->tel()
+                            ->placeholder('e.g. 0245426972')
+                            ->helperText('The phone number used to log in at otac.nhia.gov.gh.'),
+                        TextInput::make('otac_password')
+                            ->label('OTAC Password')
+                            ->password()
+                            ->revealable()
+                            ->helperText('Stored encrypted. Must be re-entered if the application key is rotated.'),
                     ]),
                 TextInput::make('provider_accreditation_number')
                     ->label('Provider Accreditation Number')
@@ -116,7 +185,9 @@ class ManageInsuranceSettings extends Page implements HasForms
         $settings->prescribing_level = (int) ($state['prescribing_level'] ?? 1);
         $settings->enable_prescribing_level_warning = (bool) ($state['enable_prescribing_level_warning'] ?? true);
         $settings->member_verification_mode = (string) ($state['member_verification_mode'] ?? 'offline');
-        $settings->verify_members_on_encounter = (bool) ($state['verify_members_on_encounter'] ?? false);
+        $settings->otac_enabled = (bool) ($state['otac_enabled'] ?? false);
+        $settings->otac_username = filled($state['otac_username'] ?? null) ? (string) $state['otac_username'] : null;
+        $settings->otac_password = filled($state['otac_password'] ?? null) ? (string) $state['otac_password'] : null;
         $settings->save();
 
         Notification::make()->title('Insurance settings saved')->success()->send();

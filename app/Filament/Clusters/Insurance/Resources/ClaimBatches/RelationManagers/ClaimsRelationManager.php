@@ -7,9 +7,11 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Modules\Core\Filament\Support\ClientIdentityColumn;
+use Modules\Core\Filament\Support\SuperAdminExportAction;
 use Modules\Core\Filament\Tables\Columns\CurrencyColumn;
 use Modules\Core\Support\Currency;
 use Modules\Insurance\Filament\Clusters\Insurance\Resources\Claims\InsuranceClaimResource;
+use Modules\Insurance\Filament\Exports\InsuranceClaimExporter;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Services\ClaimBatchService;
 
@@ -29,6 +31,9 @@ class ClaimsRelationManager extends RelationManager
                 CurrencyColumn::make('total_billed_amount')
                     ->currency(fn (InsuranceClaim $record): string => (string) ($record->currency ?? $record->batch?->currency ?? Currency::defaultCode())),
                 TextColumn::make('status')->badge(),
+            ])
+            ->headerActions([
+                SuperAdminExportAction::make(InsuranceClaimExporter::class),
             ])
             ->recordActions([
                 Action::make('review')

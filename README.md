@@ -91,5 +91,5 @@ See [module status](../../docs/shared/module-status.md) for current rollout stat
 - Provider wiring includes:
   - `InsurancePricingResolver` -> `DefaultInsurancePricingService`
   - dynamic relations: `Patient::insurancePolicies` and `InvoiceLine::insuranceClaimLines`
-- NHIS path uses `NhisXmlEncoder`, `NhisConnector`, and `NhisFeedbackParser`.
+- NHIS claims are batch-export-only (v8.6 XML via `NhisBatchXmlEncoder` for CLAIM-it upload); feedback imports use `NhisFeedbackParser`.
 

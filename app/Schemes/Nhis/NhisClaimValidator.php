@@ -24,13 +24,9 @@ class NhisClaimValidator
 
         $isInfant = $this->isInfantClaim($claim);
 
-        if ($isInfant) {
-            $memberNumber = (string) data_get($claim->policy?->metadata, 'mother_member_number', '');
-            $cardSerial = (string) data_get($claim->policy?->metadata, 'mother_card_serial_number', '');
-        } else {
-            $memberNumber = (string) ($claim->policy?->member_number ?? '');
-            $cardSerial = (string) data_get($claim->policy?->metadata, 'card_serial_number', '');
-        }
+        $memberNumber = $isInfant
+            ? (string) data_get($claim->policy?->metadata, 'mother_member_number', '')
+            : (string) ($claim->policy?->member_number ?? '');
 
         if ($memberNumber === '') {
             $this->pushError(
@@ -43,19 +39,6 @@ class NhisClaimValidator
             );
         } elseif (strlen($memberNumber) < 8) {
             $this->pushError($errors, $codedErrors, '203', 'Member number must be at least 8 characters.');
-        }
-
-        if ($cardSerial === '') {
-            $this->pushError(
-                $errors,
-                $codedErrors,
-                '204',
-                $isInfant
-                    ? 'Mother card serial number is required for an infant claim.'
-                    : 'Card serial number is required.'
-            );
-        } elseif (! preg_match('/^[A-Za-z0-9]{13}$/', $cardSerial)) {
-            $this->pushError($errors, $codedErrors, '204', 'Card serial number must be exactly 13 alphanumeric characters.');
         }
 
         $serviceType = data_get($claim->nhia_payload, 'service_type');

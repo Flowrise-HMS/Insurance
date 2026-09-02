@@ -50,10 +50,10 @@ class NhisBusinessValidator
             return [];
         }
 
-        [$memberNumber, $cardSerial] = $this->verificationIdentifiers($claim);
+        $memberNumber = $this->verificationIdentifiers($claim);
         $reference = (string) data_get($claim->nhia_payload, 'admission_date');
 
-        $result = $this->verification->verifyNumbers($memberNumber, $cardSerial, $reference !== '' ? $reference : null);
+        $result = $this->verification->verifyNumbers($memberNumber, $reference !== '' ? $reference : null);
 
         if ($result->verified()) {
             return [];
@@ -63,9 +63,7 @@ class NhisBusinessValidator
             code: (string) ($result->errorCode ?? '016'),
             message: $result->errorCode === '203'
                 ? "Member number {$memberNumber} is not found in the NHIS members master table."
-                : ($result->errorCode === '016'
-                    ? 'Member is inactive or the card validity period has lapsed.'
-                    : "Member number {$memberNumber} does not match card serial number {$cardSerial}."),
+                : 'Member is inactive or the card validity period has lapsed.',
             claimNumber: $claim->claim_number,
         )];
     }
@@ -339,22 +337,13 @@ class NhisBusinessValidator
         return $participant?->user_id ?? $encounter->admitted_by ?? $encounter->created_by;
     }
 
-    /**
-     * @return array{0: string, 1: string}
-     */
-    protected function verificationIdentifiers(InsuranceClaim $claim): array
+    protected function verificationIdentifiers(InsuranceClaim $claim): string
     {
         if ($this->isInfantClaim($claim)) {
-            return [
-                (string) data_get($claim->policy?->metadata, 'mother_member_number', ''),
-                (string) data_get($claim->policy?->metadata, 'mother_card_serial_number', ''),
-            ];
+            return (string) data_get($claim->policy?->metadata, 'mother_member_number', '');
         }
 
-        return [
-            (string) ($claim->policy?->member_number ?? ''),
-            (string) data_get($claim->policy?->metadata, 'card_serial_number', ''),
-        ];
+        return (string) ($claim->policy?->member_number ?? '');
     }
 
     protected function isInfantClaim(InsuranceClaim $claim): bool

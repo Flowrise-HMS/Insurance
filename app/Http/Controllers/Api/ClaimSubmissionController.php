@@ -5,10 +5,12 @@ namespace Modules\Insurance\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Modules\Insurance\Enums\ClaimStatus;
 use Modules\Insurance\Jobs\SubmitInsuranceClaimJob;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
+use Modules\Insurance\Models\Payer;
 
 class ClaimSubmissionController extends Controller
 {
@@ -27,6 +29,12 @@ class ClaimSubmissionController extends Controller
             'lines.*.quantity' => ['required', 'integer', 'min:1'],
             'lines.*.billed_amount' => ['required', 'numeric', 'min:0'],
         ]);
+
+        if (Payer::query()->whereKey($data['payer_id'])->where('code', 'nhis')->exists()) {
+            throw ValidationException::withMessages([
+                'payer_id' => 'NHIS claims cannot be submitted over HTTP; use the claim batch export (CLAIM-it XML) workflow instead.',
+            ]);
+        }
 
         $claim = InsuranceClaim::query()->create([
             'payer_id' => $data['payer_id'],

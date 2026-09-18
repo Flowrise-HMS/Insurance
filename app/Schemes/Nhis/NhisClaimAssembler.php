@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Schemes\Nhis;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\Billing\Models\Invoice;
@@ -309,9 +310,12 @@ class NhisClaimAssembler
             ->whereIn('status', $this->eligibleEncounterStatusValues())
             ->where(function ($query) {
                 $query->where('coverage_type', CoverageType::NHIS)
-                    ->orWhereHas('patient.insurancePolicies', function ($policyQuery) {
+                    // `patient.insurancePolicies` is registered at runtime (resolveRelationUsing),
+                    // so the nested builder's model has to be declared for static analysis.
+                    ->orWhereHas('patient.insurancePolicies', function (Builder $policyQuery) {
+                        /** @var Builder<PatientPolicy> $policyQuery */
                         $policyQuery->where('is_active', true)
-                            ->whereHas('payer', fn ($payer) => $payer->where('code', 'nhis'));
+                            ->whereHas('payer', fn (Builder $payer) => $payer->where('code', 'nhis'));
                     });
             })
             ->when($criteria->patientId, fn ($q) => $q->where('patient_id', $criteria->patientId))

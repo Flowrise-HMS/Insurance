@@ -32,18 +32,17 @@ flowchart LR
 
 ## Current status
 
-**Complete** for operational claims workflows. Built: NHIS batch export, NHIA feedback XML import, master-data Filament resources (tariff books with tariff-item relation manager, medicines, G-DRG/ICD map, members master, provider credentialing), member verification. Deferred: NHIS catalog sync implementation (`processed: 0` from connector paths), dedicated PatientPolicy Filament resource, private insurer connector beyond the generic stub.
+**Complete** for operational claims workflows (verified against code 2026-09-20). Built: NHIS claim batch generation with pre-flight report, vetting and NHIA v8.6 XML export, NHIA feedback XML import, NHIA **OTAC** claim-check-code generation (settings, hourly token refresh, `NhisAttendanceService` used by Clinical encounters), master-data Filament resources (tariff books with tariff-item relation manager, NHIS medicines, G-DRG/ICD map, members master, provider credentialing), member verification (offline members master; badge on the patient list and Patient Profile), patient insurance fields on the patient form, `insurance:import-master-data` command. Deferred: NHIS catalog sync implementation (`processed: 0` from connector paths), dedicated PatientPolicy Filament resource / patient Policies tab (the `PatientPoliciesRelationManager` referenced by the Patient module does not exist yet), private insurer connector beyond the generic stub. HTTP claim submission for the NHIS payer was removed on 2026-09-02; NHIS claims are file-export only.
 
 See [module status](../../docs/shared/module-status.md) for the canonical matrix.
 
 ## What you can do with it
 
-- Manage payers, tariffs, patient policies, and claim records through services and API endpoints.
-- Use the **Payers** Filament resource for payer administration.
-- Submit claims through authenticated API endpoints.
-- Process payer feedback and reconcile statuses.
-- Support both NHIS-specific XML workflows and private insurer connectors.
-- **NHIS claims workflow:** filter encounters → generate batch → review/vet claims → export NHIA v8.6 XML for Claim-It upload.
+- Work in the **Insurance** cluster (Finance sidebar group, `/insurance-cluster`): **Claims** (claim batches: Generate Claims page, Pre-flight Report, Submit All / Vet, Export XML, Download XML once exported, Claims in Batch tab with Review / Mark Ready), **Payers** (NHIS type cannot be created; the seeded NHIS row is not protected from edit/delete), master data rendered with Filament's default labels (**Nhis Medicines**, **Tariff Books** with tariff items, **Members Masters**, **Provider Credentialings**, **Gdrg Icd Maps**, all under the Infrastructure sub-group), **Import NHIA Feedback**, and **NHIS Settings** (incl. Test OTAC Connection); the last two carry no sub-group and sit at the top of the cluster menu.
+- Record NHIS membership on the patient form (Insurance Information: Insurance Payer, Member Number, and Mother Member Number once a payer is chosen; the effective-date fields are defined but hidden) and see the **NHIS Member** verification badge on the patient list / profile.
+- Generate NHIS claim check codes on encounters (auto via OTAC when the encounter is saved with NHIS coverage, or manual entry; the **Generate NHIS Claim Code** button only renders for NHIS-covered, uncompleted encounters without a code).
+- Submit **private insurer** claims through the authenticated API endpoint and process payer feedback / reconcile statuses (generic connector stub).
+- **NHIS claims workflow:** filter encounters (branch, patient, year, month, service, medication, or all eligible) → generate batch → pre-flight → review / Mark Ready or Submit All / Vet → export NHIA v8.6 XML → upload to Claim-It → import NHIA feedback XML.
 
 ## How it works (simple)
 
@@ -55,21 +54,26 @@ See [module status](../../docs/shared/module-status.md) for the canonical matrix
 
 ## API endpoints
 
-- `POST /api/v1/insurance/catalog/sync` (authenticated)
-- `POST /api/v1/insurance/claims/submit` (authenticated)
-- `POST /api/v1/insurance/claims/feedback`
+- `POST /api/v1/insurance/catalog/sync` (Sanctum + `api.branch`; connector placeholder returns `processed: 0`)
+- `POST /api/v1/insurance/claims/submit` (Sanctum + `api.branch`; rejects the NHIS payer with 422 — use the batch XML export)
+- `POST /api/v1/insurance/claims/feedback` (no auth; shared secret `NHIS_FEEDBACK_SECRET`)
 
 ## What is inside this folder
 
 | Path | Purpose |
 |------|---------|
-| `app/Models/` | Payers, policies, claims, claim lines, submissions, feedback. |
-| `app/Services/` | Submission, reconciliation, connector registry, catalog sync. |
-| `app/Services/Connectors/` | NHIS and private insurer connector implementations. |
-| `app/Jobs/` | Async claim submit and feedback polling workflows. |
+| `app/Models/` | `Payer`, `PatientPolicy`, `ClaimBatch`, `InsuranceClaim`, `InsuranceClaimLine`, `InsuranceClaimSubmission`, `InsuranceClaimFeedback`, `InsuranceCatalogSync`, `NhisMedicine`, `TariffBook`, `TariffItem`, `MembersMaster`, `ProviderCredentialing`, `GdrgIcdMap` (14 models, 6 migrations). |
+| `app/Services/` | `ClaimBatchService`, `ClaimGenerationService`, `ClaimSubmissionService`, `ClaimReconciliationService`, `NhisFeedbackImportService`, `MemberVerificationService`, `PatientInsuranceService`, `CatalogSyncService`, `DefaultInsurancePricingService`, `PayerConnectorRegistry`, `Otac/` (OTAC client, `NhisAttendanceService`). |
+| `app/Services/Connectors/` | `Nhis/` (batch XML encoder, feedback parser) and `PrivateInsurer/` connector implementations. |
+| `app/Schemes/Nhis/` | `NhisSchemeHandler` (scheme enable checks). |
+| `app/Jobs/` | `SubmitInsuranceClaimJob`, `PollInsuranceClaimFeedbackJob` (queues `INSURANCE_CLAIMS_QUEUE`, `INSURANCE_CATALOG_QUEUE`). |
+| `app/Console/` | `insurance:import-master-data {type} {file}` (medicines, members, credentialing, annex-c, tariff), `insurance:otac-refresh-token` (scheduled hourly). |
+| `app/Settings/InsuranceSettings.php` | NHIS Settings page values (module/NHIS/private/pricing/catalog-sync toggles, accreditation and eClaim numbers, speciality code, master table versions, claim-check-code requirement, prescribing level, member verification mode, OTAC credentials). |
+| `app/Filament/` | `InsuranceCluster`, resources (ClaimBatches with Generate/Pre-flight pages, InsuranceClaimResource "Claim Review" hidden from nav, Payers, MasterData/*), pages (NhiaFeedbackImport, ManageInsuranceSettings), `Schemas/PatientInsuranceSchema` (fields injected into the patient form), exporters. |
 | `app/Contracts/` | Pricing and connector contracts. |
 | `app/Http/Controllers/Api/` | Claims/catalog API handlers. |
 | `app/Providers/` | Module registration and relation wiring. |
+| `database/` | 14 factories; seeders `InsuranceDatabaseSeeder` (payers `nhis`, `private-generic`, medicines list), `NhisMedicinesList2025Seeder`, `NhisClaimsDemoSeeder`; `data/nhis_medicines_list_2025.csv`; `scripts/extract_nhis_ml_2025.py`. |
 
 ## Dependencies
 
@@ -92,4 +96,7 @@ See [module status](../../docs/shared/module-status.md) for current rollout stat
   - `InsurancePricingResolver` -> `DefaultInsurancePricingService`
   - dynamic relations: `Patient::insurancePolicies` and `InvoiceLine::insuranceClaimLines`
 - NHIS claims are batch-export-only (v8.6 XML via `NhisBatchXmlEncoder` for CLAIM-it upload); feedback imports use `NhisFeedbackParser`.
+- Env keys: `INSURANCE_MODULE_ENABLED`, `NHIS_FEEDBACK_SECRET`, `NHIS_XML_VERSION` (8.6), `NHIS_OTAC_BASE_URL`, `NHIS_OTAC_TIMEOUT`, `INSURANCE_CLAIMS_QUEUE`, `INSURANCE_CATALOG_QUEUE`.
+- Permissions: Shield abilities on ClaimBatch, InsuranceClaim, Payer, NhisMedicine, TariffBook, MembersMaster, ProviderCredentialing, GdrgIcdMap plus `View InsuranceCluster` and page permissions; no custom snake_case permissions.
+- Tests: `php artisan test --compact Modules/Insurance/tests` (32 test files).
 

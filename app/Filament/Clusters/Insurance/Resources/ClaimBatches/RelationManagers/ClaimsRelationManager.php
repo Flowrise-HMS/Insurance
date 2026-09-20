@@ -6,6 +6,7 @@ use Filament\Actions\Action;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Core\Filament\Support\ClientIdentityColumn;
 use Modules\Core\Filament\Support\SuperAdminExportAction;
 use Modules\Core\Filament\Tables\Columns\CurrencyColumn;
@@ -24,6 +25,7 @@ class ClaimsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->with(['patient', 'encounter', 'batch']))
             ->columns([
                 TextColumn::make('claim_number')->searchable(),
                 ClientIdentityColumn::make(label: __('Patient')),

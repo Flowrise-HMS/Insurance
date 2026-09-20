@@ -11,6 +11,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Storage;
+use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Services\NhisFeedbackImportService;
 
@@ -24,6 +25,8 @@ class NhiaFeedbackImport extends Page implements HasForms
     protected static ?string $cluster = InsuranceCluster::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowUpTray;
+
+    protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::ADMINISTRATION;
 
     protected static ?string $navigationLabel = 'Import NHIA Feedback';
 

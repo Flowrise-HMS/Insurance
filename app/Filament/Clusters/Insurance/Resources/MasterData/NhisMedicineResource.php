@@ -32,6 +32,14 @@ class NhisMedicineResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::INFRASTRUCTURE;
 
+    protected static ?string $navigationLabel = 'NHIS medicines';
+
+    protected static ?string $modelLabel = 'NHIS medicine';
+
+    protected static ?string $pluralModelLabel = 'NHIS medicines';
+
+    protected static ?int $navigationSort = 30;
+
     protected static ?string $cluster = InsuranceCluster::class;
 
     public static function form(Schema $schema): Schema

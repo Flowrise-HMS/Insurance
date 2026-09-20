@@ -16,6 +16,7 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Modules\Core\Enums\NavigationGroup;
 use Modules\Insurance\Enums\NhisPrescribingLevel;
 use Modules\Insurance\Filament\Clusters\Insurance\InsuranceCluster;
 use Modules\Insurance\Services\Otac\OtacClient;
@@ -31,6 +32,8 @@ class ManageInsuranceSettings extends Page implements HasForms
     protected static ?string $cluster = InsuranceCluster::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
+
+    protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::SETTINGS;
 
     protected static ?string $navigationLabel = 'NHIS Settings';
 

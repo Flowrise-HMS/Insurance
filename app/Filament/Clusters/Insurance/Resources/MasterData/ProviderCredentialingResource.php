@@ -34,6 +34,14 @@ class ProviderCredentialingResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::INFRASTRUCTURE;
 
+    protected static ?string $navigationLabel = 'Provider credentialing';
+
+    protected static ?string $modelLabel = 'provider credential';
+
+    protected static ?string $pluralModelLabel = 'provider credentials';
+
+    protected static ?int $navigationSort = 40;
+
     protected static ?string $cluster = InsuranceCluster::class;
 
     public static function form(Schema $schema): Schema

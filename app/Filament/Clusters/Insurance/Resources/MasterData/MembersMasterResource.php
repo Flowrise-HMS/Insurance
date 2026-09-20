@@ -31,6 +31,14 @@ class MembersMasterResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::INFRASTRUCTURE;
 
+    protected static ?string $navigationLabel = 'Members master';
+
+    protected static ?string $modelLabel = 'member record';
+
+    protected static ?string $pluralModelLabel = 'member records';
+
+    protected static ?int $navigationSort = 20;
+
     protected static ?string $cluster = InsuranceCluster::class;
 
     public static function form(Schema $schema): Schema

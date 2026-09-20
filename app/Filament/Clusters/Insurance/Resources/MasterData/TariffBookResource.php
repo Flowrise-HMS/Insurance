@@ -32,6 +32,14 @@ class TariffBookResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::INFRASTRUCTURE;
 
+    protected static ?string $navigationLabel = 'Tariff books';
+
+    protected static ?string $modelLabel = 'tariff book';
+
+    protected static ?string $pluralModelLabel = 'tariff books';
+
+    protected static ?int $navigationSort = 50;
+
     protected static ?string $cluster = InsuranceCluster::class;
 
     public static function form(Schema $schema): Schema

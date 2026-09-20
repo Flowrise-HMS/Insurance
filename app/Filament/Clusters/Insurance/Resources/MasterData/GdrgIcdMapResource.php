@@ -31,6 +31,14 @@ class GdrgIcdMapResource extends Resource
 
     protected static string|\UnitEnum|null $navigationGroup = NavigationGroup::INFRASTRUCTURE;
 
+    protected static ?string $navigationLabel = 'G-DRG / ICD map';
+
+    protected static ?string $modelLabel = 'G-DRG / ICD mapping';
+
+    protected static ?string $pluralModelLabel = 'G-DRG / ICD mappings';
+
+    protected static ?int $navigationSort = 10;
+
     protected static ?string $cluster = InsuranceCluster::class;
 
     public static function form(Schema $schema): Schema

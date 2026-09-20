@@ -34,7 +34,7 @@ class PayerPolicy
 
     public function delete(AuthUser $authUser, Payer $payer): bool
     {
-        return $authUser->can('Delete Payer');
+        return ! $payer->isSystem() && $authUser->can('Delete Payer');
     }
 
     public function restore(AuthUser $authUser, Payer $payer): bool

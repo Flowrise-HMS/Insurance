@@ -16,13 +16,13 @@ class EditPayer extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make()
-                ->visible(fn () => $this->record->code !== 'nhis'),
+                ->visible(fn () => ! $this->record->isSystem()),
         ];
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        if ($this->record->code === 'nhis') {
+        if ($this->record->isSystem()) {
             unset($data['code'], $data['type']);
         }
 

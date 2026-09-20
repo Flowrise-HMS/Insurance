@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Insurance\Enums\PayerType;
+use RuntimeException;
 
 class Payer extends Model
 {
@@ -29,6 +30,22 @@ class Payer extends Model
         'is_active' => 'boolean',
         'config' => 'encrypted:array',
     ];
+
+    protected static function booted(): void
+    {
+        // The NHIS scheme payer is seeded and referenced by coverage, member
+        // verification and claim generation; it must never be deleted.
+        static::deleting(function (Payer $payer): void {
+            if ($payer->isSystem()) {
+                throw new RuntimeException('The NHIS payer is system-managed and cannot be deleted.');
+            }
+        });
+    }
+
+    public function isSystem(): bool
+    {
+        return $this->type === PayerType::NHIS;
+    }
 
     public function policies(): HasMany
     {

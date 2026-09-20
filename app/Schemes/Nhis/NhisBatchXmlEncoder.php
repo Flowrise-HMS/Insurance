@@ -77,7 +77,7 @@ class NhisBatchXmlEncoder
 
             $patientData->addChild('HospitalRecordNumber', htmlspecialchars((string) ($patient?->mrn ?? '')));
             $patientData->addChild('CardSerialNumber', htmlspecialchars($cardSerial));
-            $patientData->addChild('Gender', htmlspecialchars(strtoupper(substr((string) ($patient?->gender?->value ?? 'M'), 0, 1))));
+            $patientData->addChild('Gender', htmlspecialchars(strtoupper(substr((string) (enum_value($patient?->gender) ?? 'M'), 0, 1))));
 
             $claimsNode = $patientData->addChild('Claims');
 

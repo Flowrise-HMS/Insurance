@@ -12,6 +12,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Modules\Insurance\Enums\PayerType;
+use Modules\Insurance\Models\Payer;
 
 class PayersTable
 {
@@ -31,11 +32,15 @@ class PayersTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteAction::make()
+                    ->visible(fn (Payer $record): bool => ! $record->isSystem()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    // Per-record authorization runs PayerPolicy::delete(), which
+                    // refuses the system NHIS payer; the model guard backs it up.
+                    DeleteBulkAction::make()
+                        ->authorizeIndividualRecords('delete'),
                 ]),
             ]);
     }

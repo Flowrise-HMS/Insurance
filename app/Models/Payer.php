@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Insurance\Enums\PayerType;
 use RuntimeException;
 
+/**
+ * @property string $id
+ * @property string $code
+ * @property string $name
+ * @property PayerType|null $type
+ * @property bool $is_active
+ * @property array<string, mixed>|null $config
+ */
 class Payer extends Model
 {
     use HasFactory, HasUuids;

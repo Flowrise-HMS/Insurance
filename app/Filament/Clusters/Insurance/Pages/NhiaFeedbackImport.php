@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Filament\Clusters\Insurance\Pages;
 
 use BackedEnum;
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -20,7 +21,7 @@ use Modules\Insurance\Services\NhisFeedbackImportService;
  */
 class NhiaFeedbackImport extends Page implements HasForms
 {
-    use InteractsWithForms;
+    use InteractsWithForms, HasPageShield;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

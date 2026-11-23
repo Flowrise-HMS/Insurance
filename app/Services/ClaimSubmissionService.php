@@ -20,7 +20,7 @@ class ClaimSubmissionService
     {
         $started = microtime(true);
         $claim->loadMissing('payer');
-        $connectorCode = $claim->payer?->code ?? 'private-generic';
+        $connectorCode = $claim->payer !== null ? $this->connectors->codeFor($claim->payer) : 'private-generic';
         $idempotencyKey = (string) Str::uuid();
 
         $submission = DB::transaction(function () use ($claim, $connectorCode, $idempotencyKey) {

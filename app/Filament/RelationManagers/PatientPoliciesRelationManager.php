@@ -2,17 +2,22 @@
 
 namespace Modules\Insurance\Filament\RelationManagers;
 
+use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Insurance\Filament\Clusters\Insurance\Resources\PatientPolicies\Actions\VerifyMemberAction;
+use Modules\Insurance\Filament\Clusters\Insurance\Resources\PatientPolicies\Schemas\PatientPolicyForm;
+use Modules\Insurance\Filament\Clusters\Insurance\Resources\PatientPolicies\Tables\PatientPoliciesTable;
+use Modules\Insurance\Models\PatientPolicy;
 
 /**
- * Read-only view of a patient's insurance policies on the patient record.
- * Policies are maintained through the patient form's Insurance Information
- * fields (and the NHIS members master), not edited here.
+ * A patient's insurance policies on the patient record. Policies can also be
+ * maintained from the patient form's Insurance Information fields and the
+ * Insurance → Patient Policies resource; all three share the same records.
  */
 class PatientPoliciesRelationManager extends RelationManager
 {
@@ -25,35 +30,35 @@ class PatientPoliciesRelationManager extends RelationManager
         return __('Insurance Policies');
     }
 
+    /**
+     * Editable on the patient View page too; Create/Update PatientPolicy
+     * permissions still gate the actions.
+     */
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return PatientPolicyForm::configure($schema);
+    }
+
     public function table(Table $table): Table
     {
         return $table
             ->modifyQueryUsing(fn (Builder $query): Builder => $query->with('payer'))
-            ->columns([
-                TextColumn::make('payer.name')
-                    ->label(__('Payer')),
-                TextColumn::make('member_number')
-                    ->label(__('Member number'))
-                    ->searchable(),
-                TextColumn::make('plan_code')
-                    ->label(__('Plan'))
-                    ->placeholder('—'),
-                TextColumn::make('effective_from')
-                    ->label(__('Effective from'))
-                    ->date()
-                    ->placeholder('—'),
-                TextColumn::make('effective_to')
-                    ->label(__('Effective to'))
-                    ->date()
-                    ->placeholder('—'),
-                IconColumn::make('is_primary')
-                    ->label(__('Primary'))
-                    ->boolean(),
-                IconColumn::make('is_active')
-                    ->label(__('Active'))
-                    ->boolean(),
-            ])
+            ->columns(PatientPoliciesTable::columns(withPatient: false))
             ->defaultSort('created_at', 'desc')
+            ->headerActions([
+                CreateAction::make()
+                    ->after(fn (PatientPolicy $record) => $record->demoteOtherPrimaries()),
+            ])
+            ->recordActions([
+                EditAction::make()
+                    ->after(fn (PatientPolicy $record) => $record->demoteOtherPrimaries()),
+                VerifyMemberAction::make(),
+            ])
             ->emptyStateHeading(__('No insurance policies'));
     }
 }

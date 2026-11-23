@@ -16,6 +16,8 @@ use RuntimeException;
  * @property PayerType|null $type
  * @property bool $is_active
  * @property array<string, mixed>|null $config
+ * @property string|null $connector_code
+ * @property array<string, mixed>|null $connector_config
  */
 class Payer extends Model
 {
@@ -31,12 +33,15 @@ class Payer extends Model
         'type',
         'is_active',
         'config',
+        'connector_code',
+        'connector_config',
     ];
 
     protected $casts = [
         'type' => PayerType::class,
         'is_active' => 'boolean',
         'config' => 'encrypted:array',
+        'connector_config' => 'encrypted:array',
     ];
 
     protected static function booted(): void
@@ -53,6 +58,11 @@ class Payer extends Model
     public function isSystem(): bool
     {
         return $this->type === PayerType::NHIS;
+    }
+
+    public function catalogSyncs(): HasMany
+    {
+        return $this->hasMany(InsuranceCatalogSync::class, 'payer_id');
     }
 
     public function policies(): HasMany

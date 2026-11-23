@@ -57,7 +57,7 @@ class CatalogSyncService
             ]);
 
             try {
-                $result = $this->connectors->forCode($payer->code)->syncCatalogs($payer, $watermark);
+                $result = $this->connectors->forPayer($payer)->syncCatalogs($payer, $watermark);
                 $sync->update([
                     'status' => 'success',
                     'ended_at' => now(),

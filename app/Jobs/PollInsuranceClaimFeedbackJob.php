@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Modules\Insurance\Exceptions\ClaimFeedbackPendingException;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Services\ClaimReconciliationService;
 use Modules\Insurance\Services\PayerConnectorRegistry;
@@ -33,9 +34,18 @@ class PollInsuranceClaimFeedbackJob implements ShouldQueue
             return;
         }
 
-        $feedback = $registry
-            ->forCode((string) $claim->payer->code)
-            ->fetchClaimFeedback($claim, $this->externalReference);
+        try {
+            $feedback = $registry
+                ->forPayer($claim->payer)
+                ->fetchClaimFeedback($claim, $this->externalReference);
+        } catch (ClaimFeedbackPendingException) {
+            // Not decided yet: poll again with the job's backoff until tries run out.
+            if ($this->attempts() < $this->tries) {
+                $this->release($this->backoff[min($this->attempts() - 1, count($this->backoff) - 1)]);
+            }
+
+            return;
+        }
 
         if (! $feedback) {
             return;

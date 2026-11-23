@@ -3,6 +3,7 @@
 namespace Modules\Insurance\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Gate;
 use Modules\Billing\Models\InvoiceLine;
 use Modules\Core\Contracts\InsurancePricingResolver;
 use Modules\Core\Support\AppSettings;
@@ -12,6 +13,7 @@ use Modules\Insurance\Console\RefreshOtacToken;
 use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\PatientPolicy;
+use Modules\Insurance\Policies\PatientPolicyPolicy;
 use Modules\Insurance\Schemes\InsuranceSchemeRegistry;
 use Modules\Insurance\Schemes\Nhis\NhisSchemeHandler;
 use Modules\Insurance\Services\ClaimBatchService;
@@ -97,6 +99,9 @@ class InsuranceServiceProvider extends ModuleServiceProvider
         if (! $this->insuranceModuleEnabled()) {
             return;
         }
+
+        // Named *PolicyPolicy: Modules\Patient\Policies\PatientPolicy authorises the Patient model.
+        Gate::policy(PatientPolicy::class, PatientPolicyPolicy::class);
 
         Patient::resolveRelationUsing('insurancePolicies', function (Patient $patient) {
             return $patient->hasMany(PatientPolicy::class, 'patient_id');

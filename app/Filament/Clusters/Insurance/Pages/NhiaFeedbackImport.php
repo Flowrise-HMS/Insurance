@@ -21,7 +21,7 @@ use Modules\Insurance\Services\NhisFeedbackImportService;
  */
 class NhiaFeedbackImport extends Page implements HasForms
 {
-    use InteractsWithForms, HasPageShield;
+    use HasPageShield, InteractsWithForms;
 
     protected static ?string $cluster = InsuranceCluster::class;
 

@@ -1,9 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Core\Services\ApiRouteRegistrar;
 use Modules\Insurance\Http\Controllers\Api\CatalogSyncController;
+use Modules\Insurance\Http\Controllers\Api\ClaimBatchController;
 use Modules\Insurance\Http\Controllers\Api\ClaimFeedbackController;
 use Modules\Insurance\Http\Controllers\Api\ClaimSubmissionController;
+use Modules\Insurance\Http\Controllers\Api\InsuranceClaimController;
+use Modules\Insurance\Http\Controllers\Api\PatientPolicyController;
+use Modules\Insurance\Http\Controllers\Api\PayerController;
+use Modules\Insurance\Http\Controllers\Api\TariffItemController;
 
 /*
 | The claim-feedback endpoint is intentionally unauthenticated: NHIA posts
@@ -21,4 +27,16 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::post('insurance/claims/feedback', [ClaimFeedbackController::class, 'store'])->name('insurance.claims.feedback');
+});
+
+/*
+| Insurance REST API (`/api/v1`, Sanctum + branch, token scope "insurance").
+| The legacy insurance/* endpoints above stay for existing integrations.
+*/
+ApiRouteRegistrar::register(scope: 'insurance', routes: function (): void {
+    PayerController::routes('payers');
+    PatientPolicyController::routes('patient-policies', ['index', 'show', 'store', 'update', 'destroy'], ['verify' => 'verify']);
+    InsuranceClaimController::routes('claims', ['index', 'show', 'store'], ['submit' => 'submit']);
+    ClaimBatchController::routes('claim-batches', ['index', 'show']);
+    TariffItemController::routes('tariff-items', ['index', 'show']);
 });

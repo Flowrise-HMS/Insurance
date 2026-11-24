@@ -32,7 +32,7 @@ flowchart LR
 
 ## Current status
 
-**Complete** for operational claims workflows (verified against code 2026-09-20). Built: NHIS claim batch generation with pre-flight report, vetting and NHIA v8.6 XML export, NHIA feedback XML import, NHIA **OTAC** claim-check-code generation (settings, hourly token refresh, `NhisAttendanceService` used by Clinical encounters), master-data Filament resources (tariff books with tariff-item relation manager, NHIS medicines, G-DRG/ICD map, members master, provider credentialing), member verification (offline members master; badge on the patient list and Patient Profile), patient insurance fields on the patient form, `insurance:import-master-data` command. Also built: **Patient Policies** resource and an editable **Insurance Policies** tab on the patient record (shared form/table, Verify member, single primary policy per patient), and a configurable **HTTP / REST** claims connector for private payers (catalog sync, claim submission, feedback polling; settings encrypted per payer). NHIS master data is loaded from CSV (`insurance:import-master-data`); NHIA offers no catalog API. HTTP claim submission for the NHIS payer was removed on 2026-09-02; NHIS claims are file-export only.
+**Complete** for operational claims workflows (verified against code 2026-11-24). Built: NHIS claim batch generation with pre-flight report, vetting and NHIA v8.6 XML export, NHIA feedback XML import, NHIA **OTAC** claim-check-code generation (settings, hourly token refresh, `NhisAttendanceService` used by Clinical encounters), master-data Filament resources (tariff books with tariff-item relation manager, NHIS medicines, G-DRG/ICD map, members master, provider credentialing), member verification (offline members master; badge on the patient list and Patient Profile), patient insurance fields on the patient form, `insurance:import-master-data` command. Also built: **Patient Policies** resource and an editable **Insurance Policies** tab on the patient record (shared form/table, Verify member, single primary policy per patient), and a configurable **HTTP / REST** claims connector for private payers (catalog sync, claim submission, feedback polling; settings encrypted per payer). NHIS master data is loaded from CSV (`insurance:import-master-data`); NHIA offers no catalog API. HTTP claim submission for the NHIS payer was removed on 2026-09-02; NHIS claims are file-export only.
 
 See [module status](../../docs/shared/module-status.md) for the canonical matrix.
 
@@ -54,9 +54,10 @@ See [module status](../../docs/shared/module-status.md) for the canonical matrix
 
 ## API endpoints
 
-- `POST /api/v1/insurance/catalog/sync` (Sanctum + `api.branch`; runs the payer's connector — HTTP connectors upsert tariff items, the generic connector records 0)
-- `POST /api/v1/insurance/claims/submit` (Sanctum + `api.branch`; rejects the NHIS payer with 422 — use the batch XML export)
-- `POST /api/v1/insurance/claims/feedback` (no auth; shared secret `NHIS_FEEDBACK_SECRET`)
+- REST (Api module, token scope `insurance`): `payers`, `patient-policies` (`verify`), `claims` (private payers; `submit`), `claim-batches` and `tariff-items` (read; tariff items follow the tariff book's permissions). A claim's policy, invoice and lines must belong to the claimed patient.
+- Legacy `POST /api/v1/insurance/catalog/sync` (Sanctum + `api.branch` + scope; needs update on the payer; runs the payer's connector — HTTP connectors upsert tariff items, the generic connector records 0)
+- Legacy `POST /api/v1/insurance/claims/submit` (Sanctum + `api.branch` + scope; needs create on claims; rejects the NHIS payer with 422 — use the batch XML export)
+- `POST /api/v1/insurance/claims/feedback` (no auth; shared secret `NHIS_FEEDBACK_SECRET`; **open to anyone while the secret is empty**)
 
 ## What is inside this folder
 
@@ -98,5 +99,5 @@ See [module status](../../docs/shared/module-status.md) for current rollout stat
 - NHIS claims are batch-export-only (v8.6 XML via `NhisBatchXmlEncoder` for CLAIM-it upload); feedback imports use `NhisFeedbackParser`.
 - Env keys: `INSURANCE_MODULE_ENABLED`, `NHIS_FEEDBACK_SECRET`, `NHIS_XML_VERSION` (8.6), `NHIS_OTAC_BASE_URL`, `NHIS_OTAC_TIMEOUT`, `INSURANCE_CLAIMS_QUEUE`, `INSURANCE_CATALOG_QUEUE`.
 - Permissions: Shield abilities on ClaimBatch, InsuranceClaim, Payer, NhisMedicine, TariffBook, MembersMaster, ProviderCredentialing, GdrgIcdMap plus `View InsuranceCluster` and page permissions; no custom snake_case permissions.
-- Tests: `php artisan test --compact Modules/Insurance/tests` (32 test files).
+- Tests: `php artisan test --compact Modules/Insurance/tests` (49 test files).
 

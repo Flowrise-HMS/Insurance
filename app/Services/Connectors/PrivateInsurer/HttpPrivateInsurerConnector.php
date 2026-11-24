@@ -225,7 +225,7 @@ class HttpPrivateInsurerConnector implements PayerConnectorContract
         $normalized = strtolower(trim($payerStatus));
         $mapped = strtolower((string) Arr::get($map, $normalized, $normalized));
 
-        return ClaimDecisionStatus::tryFrom(match ($mapped) {
+        return enum_try_from(ClaimDecisionStatus::class, match ($mapped) {
             'accepted', 'paid', 'approved' => 'approved',
             'partially_approved', 'partial' => 'partial',
             'denied', 'declined', 'rejected' => 'rejected',

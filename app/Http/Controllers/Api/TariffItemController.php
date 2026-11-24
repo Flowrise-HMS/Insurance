@@ -2,6 +2,7 @@
 
 namespace Modules\Insurance\Http\Controllers\Api;
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Http\Controllers\Api\ResourceApiController;
 use Modules\Insurance\Models\TariffItem;
 
@@ -19,6 +20,16 @@ class TariffItemController extends ResourceApiController
     public static function model(): string
     {
         return TariffItem::class;
+    }
+
+    /**
+     * Tariff items follow their tariff book's permissions, as in the panel.
+     */
+    protected function authorizeResource(string $ability, ?Model $record = null): void
+    {
+        $ability === 'viewAny' || $record?->tariffBook === null
+            ? $this->requirePermission('ViewAny TariffBook')
+            : $this->authorizeApi('view', $record->tariffBook);
     }
 
     public function fields(): array

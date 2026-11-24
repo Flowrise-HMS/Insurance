@@ -90,7 +90,8 @@ describe('claim batches', function () use ($modules): void {
 describe('tariff items', function () use ($modules): void {
     ApiResourceTestSuite::register([
         'uri' => 'tariff-items',
-        'subject' => 'TariffItem',
+        // Follows the tariff book, as in the panel.
+        'subject' => 'TariffBook',
         'scope' => 'insurance',
         'modules' => $modules,
         'branchIsolated' => false,

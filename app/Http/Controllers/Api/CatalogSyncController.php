@@ -4,6 +4,7 @@ namespace Modules\Insurance\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\CatalogSyncService;
 
@@ -23,6 +24,7 @@ class CatalogSyncController extends Controller
         ]);
 
         $payer = Payer::query()->where('code', $data['payer_code'])->firstOrFail();
+        Gate::authorize('update', $payer);
         $sync = $syncService->sync($payer, (string) ($data['sync_type'] ?? 'medication'), $data['watermark'] ?? null);
 
         return response()->json([

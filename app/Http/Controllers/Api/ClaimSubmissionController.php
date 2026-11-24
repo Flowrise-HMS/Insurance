@@ -4,6 +4,7 @@ namespace Modules\Insurance\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Modules\Insurance\Enums\ClaimStatus;
@@ -21,6 +22,8 @@ class ClaimSubmissionController extends Controller
 {
     public function store(Request $request)
     {
+        Gate::authorize('create', InsuranceClaim::class);
+
         $data = $request->validate([
             'payer_id' => ['required', 'uuid'],
             'policy_id' => ['nullable', 'uuid'],

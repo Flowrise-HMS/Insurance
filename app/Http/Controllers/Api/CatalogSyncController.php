@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Modules\Insurance\Models\Payer;
 use Modules\Insurance\Services\CatalogSyncService;
 
+/**
+ * @group Insurance
+ *
+ * Legacy: trigger a payer tariff catalog sync through its connector.
+ */
 class CatalogSyncController extends Controller
 {
     public function store(Request $request, CatalogSyncService $syncService)

@@ -12,6 +12,11 @@ use Modules\Insurance\Models\InsuranceClaim;
 use Modules\Insurance\Models\InsuranceClaimLine;
 use Modules\Insurance\Models\Payer;
 
+/**
+ * @group Insurance
+ *
+ * Legacy: create and queue a private-payer claim (prefer POST /claims + submit).
+ */
 class ClaimSubmissionController extends Controller
 {
     public function store(Request $request)

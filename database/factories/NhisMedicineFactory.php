@@ -15,7 +15,7 @@ class NhisMedicineFactory extends Factory
         $level = fake()->randomElement(NhisPrescribingLevel::cases());
 
         return [
-            'code' => strtoupper(fake()->bothify('MED###')),
+            'code' => strtoupper(fake()->unique()->bothify('MED######')),
             'name' => fake()->word(),
             'strength' => fake()->randomElement(['500mg', '250mg', '10mg/5ml']),
             'form' => fake()->randomElement(['Tablet', 'Syrup', 'Injection']),
